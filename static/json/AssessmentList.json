@@ -1,0 +1,46 @@
+{
+  	"result": 0,
+  	"msg": "成功",
+  	"data": [
+  		{
+  			"category":"SEL能力评估",
+  	 		"category_id":"123",
+  	 		"data":[
+  	 			{
+			  	 	"evaluation_id":"1",
+			  	 	"name":"测评名称",
+			  	 	"user_access":"0",
+			  	 	"abstract":"测评简介",
+			  	 	"price":"0",
+			  	 	"person_count":"102",
+			  	 	"picture":""
+		  	 	},
+		  	 	{
+			  	 	"evaluation_id":"2",
+			  	 	"name":"测评名称",
+			  	 	"user_access":"0",
+			  	 	"abstract":"测评简介",
+			  	 	"price":"0",
+			  	 	"person_count":"102",
+			  	 	"picture":""
+		  	 	}
+  	 		]
+  		},
+  		{
+  			"category":"SEL问题评估",
+  	 		"category_id":"124",
+  	 		"data":[
+  	 			{
+			  	 	"evaluation_id":"3",
+			  	 	"name":"测评名称",
+			  	 	"user_access":"0",
+			  	 	"abstract":"测评简介",
+			  	 	"price":"0",
+			  	 	"person_count":"102",
+			  	 	"picture":""
+		  	 	}
+  	 		]
+  		}
+
+  	]
+}

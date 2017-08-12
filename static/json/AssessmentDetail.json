@@ -1,0 +1,17 @@
+{
+  	"result": 0,
+  	"msg": "成功",
+  	"data": {
+		"evaluation_id":"1",
+		"name":"适应性行为测试",
+		"category":"类别",
+		"user_access":"0",
+		"abstract":"测评简介",
+		"price":"0",
+		"person_count":"102",
+		"details":"",
+		"picture":"",
+		"sample_report":"报告存储路径",
+		"question_count":"20"
+	}
+}

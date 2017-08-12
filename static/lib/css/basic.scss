@@ -1,0 +1,41 @@
+@import './base/mixin/baseMixin';
+@import './base/variable/base-color';
+@import './base/reset.css';
+
+*{
+	@include prefix(box-sizing,border-box)
+	&::before{
+		@include prefix(box-sizing,border-box)
+	}
+	&::after{
+		@include prefix(box-sizing,border-box)
+	}
+}
+
+.text-red{
+	color: $text-red-color;
+}
+
+.p-container{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 10rem;
+}
+
+.p-com-container{
+	height: calc(100% - 59px);
+	width: 100%;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	::-webkit-scrollbar {
+		width: 0;
+		display: none;
+	}
+	::-webkit-scrollbar-button:horizontal:decrement:hover {
+		display: none;
+		width: 0;
+	}
+}

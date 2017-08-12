@@ -1,6 +1,6 @@
-<!-- 测评 -->
+<!-- 我的 -->
 <template>
-	<div class="assessment p-com-container">
+	<div class="mine p-com-container">
 		
 	</div>
 </template>
@@ -10,8 +10,7 @@
 	}
 </script>
 <style lang='scss'>
-	.assessment{
-		
+	.mine{
 		
 	}
 </style>

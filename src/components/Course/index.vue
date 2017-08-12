@@ -1,6 +1,6 @@
-<!-- 测评 -->
+<!-- 课程 -->
 <template>
-	<div class="assessment p-com-container">
+	<div class="course p-com-container">
 		
 	</div>
 </template>
@@ -10,8 +10,7 @@
 	}
 </script>
 <style lang='scss'>
-	.assessment{
-		
+	.course{
 		
 	}
 </style>
