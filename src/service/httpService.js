@@ -4,7 +4,7 @@ import axios from 'axios'
 export const fetch = (url,data={}) =>{
 	return new Promise((resolve,reject) => {
 		axios({
-			methods:'get',
+			method:'get',
 			url:url,
 			params:data
 		}).then(resp=>{
@@ -17,7 +17,7 @@ export const fetch = (url,data={}) =>{
 export const postData = (url,data={}) =>{
 	return new Promise((resolve,reject)=>{
 		axios({
-			methods:'post',
+			method:'post',
 			url:url,
 			data:data
 		}).then(resp=>{

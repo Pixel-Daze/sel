@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router from './router'
+import axios from 'axios'
 import App from './App'
 
 /* fastclick */ 
@@ -23,8 +24,15 @@ Vue.use(ExtendPlugin)
 import _ from './plugins/lodash'
 Vue.use(_)
 
+/* httpInterceptor */
+import {request,response} from './service/httpInterceptor'
+axios.interceptors.request.use(request)
+axios.interceptors.response.use(response);
+
 /* store */
 import store from './store'
+
+/* router */
 
 Vue.config.productionTip = false
 
