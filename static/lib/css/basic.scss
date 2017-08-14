@@ -16,6 +16,20 @@
 	color: $text-red-color;
 }
 
+.text-font{
+	color: $text-black-color;
+}
+
+.text-gray{
+	color: $text-gray-color;
+}
+
+.activeBg{
+	&:active{
+		background-color: $BgColorActive;
+	}
+}
+
 .p-container{
 	position: absolute;
 	top: 0;

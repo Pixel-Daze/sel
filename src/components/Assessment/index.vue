@@ -1,15 +1,22 @@
 <!-- 测评 -->
 <template>
 	<div class="assessment p-com-container">
-		
+		<ass-cell-wrapper v-for="item in assList" :ass="item" :key="item.category_id">
+			<ass-cell v-for="cell in item.data" :cell="cell" :key="cell.evaluation_id"></ass-cell>
+		</ass-cell-wrapper>
 	</div>
 </template>
 <script>
+	import { AssCell,AssCellWrapper } from './assComponent'
 	export default{
 		data(){
 			return {
 				assList:[]
 			}
+		},
+		components:{
+			AssCell,
+			AssCellWrapper
 		},
 		methods:{
 			loadInfo(){

@@ -8,21 +8,21 @@
   	 		"data":[
   	 			{
 			  	 	"evaluation_id":"1",
-			  	 	"name":"测评名称",
+			  	 	"name":"适应性行为测评",
 			  	 	"user_access":"0",
-			  	 	"abstract":"测评简介",
+			  	 	"abstract":"曲水流觞，是中国古代民间的一种传统习俗，后来发展成为文人墨客诗酒唱酬的一种雅事。夏历的三月上巳日人们举行祓禊（fuxi)仪式",
 			  	 	"price":"0",
 			  	 	"person_count":"102",
-			  	 	"picture":""
+			  	 	"picture":"../../../static/imgs/ass/1.jpg"
 		  	 	},
 		  	 	{
 			  	 	"evaluation_id":"2",
-			  	 	"name":"测评名称",
+			  	 	"name":"问题行为测评",
 			  	 	"user_access":"0",
-			  	 	"abstract":"测评简介",
+			  	 	"abstract":"曲水流觞，是中国古代民间的一种传统习俗，后来发展成为文人墨客诗酒唱酬的一种雅事。",
 			  	 	"price":"0",
 			  	 	"person_count":"102",
-			  	 	"picture":""
+			  	 	"picture":"../../../static/imgs/ass/2.jpg"
 		  	 	}
   	 		]
   		},
@@ -32,12 +32,51 @@
   	 		"data":[
   	 			{
 			  	 	"evaluation_id":"3",
-			  	 	"name":"测评名称",
+			  	 	"name":"问题行为深入测评",
 			  	 	"user_access":"0",
-			  	 	"abstract":"测评简介",
+			  	 	"abstract":"曲水流觞，是中国古代民间的一种传统习俗",
 			  	 	"price":"0",
 			  	 	"person_count":"102",
-			  	 	"picture":""
+			  	 	"picture":"../../../static/imgs/ass/3.jpg"
+		  	 	}
+  	 		]
+  		},
+  		{
+  			"category":"SEL能力评估",
+  	 		"category_id":"123",
+  	 		"data":[
+  	 			{
+			  	 	"evaluation_id":"1",
+			  	 	"name":"适应性行为测评",
+			  	 	"user_access":"0",
+			  	 	"abstract":"曲水流觞，是中国古代民间的一种传统习俗，后来发展成为文人墨客诗酒唱酬的一种雅事。夏历的三月上巳日人们举行祓禊（fuxi)仪式",
+			  	 	"price":"0",
+			  	 	"person_count":"102",
+			  	 	"picture":"../../../static/imgs/ass/1.jpg"
+		  	 	},
+		  	 	{
+			  	 	"evaluation_id":"2",
+			  	 	"name":"问题行为测评",
+			  	 	"user_access":"0",
+			  	 	"abstract":"曲水流觞，是中国古代民间的一种传统习俗，后来发展成为文人墨客诗酒唱酬的一种雅事。",
+			  	 	"price":"0",
+			  	 	"person_count":"102",
+			  	 	"picture":"../../../static/imgs/ass/2.jpg"
+		  	 	}
+  	 		]
+  		},
+  		{
+  			"category":"SEL问题评估",
+  	 		"category_id":"124",
+  	 		"data":[
+  	 			{
+			  	 	"evaluation_id":"3",
+			  	 	"name":"问题行为深入测评",
+			  	 	"user_access":"0",
+			  	 	"abstract":"曲水流觞，是中国古代民间的一种传统习俗",
+			  	 	"price":"0",
+			  	 	"person_count":"102",
+			  	 	"picture":"../../../static/imgs/ass/3.jpg"
 		  	 	}
   	 		]
   		}
