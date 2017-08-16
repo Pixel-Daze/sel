@@ -1,9 +1,7 @@
 <!-- 我的 -->
 <template>
 	<div class="mine p-com-container">
-		<div class="header">
-			
-		</div>
+		<icon-header></icon-header>
 		<tabbar class="vux-1px-b">
 	      <tabbar-item class="activeBg" @click.native="goTab(0)">
 	        <span slot="icon" class="icon iconfont icon-ceping"></span>
@@ -22,6 +20,7 @@
 </template>
 <script>
 	import { Tabbar, TabbarItem } from 'vux'
+	import { IconHeader } from './mineComponent'
 	export default{
 		methods:{
 			goTab(){
@@ -30,16 +29,13 @@
 		},
 		components: {
 	      	Tabbar,
-	      	TabbarItem
+	      	TabbarItem,
+	      	IconHeader
 	    }
 	}
 </script>
 <style lang='scss'>
 	.mine{
-		.header{
-			height: 4.0rem;
-			background:#77c34f;
-		}
 		.weui-tabbar{
 			position: relative;
 			.weui-tabbar__item{
