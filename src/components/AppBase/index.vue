@@ -3,15 +3,15 @@
 	<div class="app-base p-container">
 		<router-view class="router-view"></router-view>	
 		<tabbar v-model="selected">
-      <tabbar-item @click.native="changeTab(0)">
+      <tabbar-item class="activeBg" @click.native="changeTab(0)">
         <span slot="icon" class="icon iconfont icon-ceping"></span>
         <span slot="label">测评</span>
       </tabbar-item>
-      <tabbar-item @click.native="changeTab(1)">
+      <tabbar-item class="activeBg" @click.native="changeTab(1)">
         <span slot="icon" class="icon iconfont icon-kecheng"></span>
         <span slot="label">课程</span>
       </tabbar-item>
-      <tabbar-item @click.native="changeTab(2)">
+      <tabbar-item class="activeBg" @click.native="changeTab(2)">
         <span slot="icon" class="icon iconfont icon-wode"></span>
         <span slot="label">我的</span>
       </tabbar-item>

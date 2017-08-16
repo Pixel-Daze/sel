@@ -1,7 +1,7 @@
 <!-- 测评 -->
 <template>
 	<div class="assessment p-com-container">
-		<ass-cell-wrapper v-for="item in assList" :ass="item" :key="item.category_id">
+		<ass-cell-wrapper v-for="item in assList" :ass="item" :key="item.category">
 			<ass-cell v-for="cell in item.data" :cell="cell" :key="cell.evaluation_id"></ass-cell>
 		</ass-cell-wrapper>
 	</div>
