@@ -25,5 +25,6 @@ export default {
 @import '~vux/src/styles/1px.less';
 html,body,#app {
 	height:100%;
+  background:#f2f2f2;
 }
 </style>

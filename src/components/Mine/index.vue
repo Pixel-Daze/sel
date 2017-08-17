@@ -1,7 +1,7 @@
 <!-- 我的 -->
 <template>
 	<div class="mine p-com-container">
-		<icon-header></icon-header>
+		<icon-header @click.native="login"></icon-header>
 		<tabbar class="vux-1px-b">
 	      <tabbar-item class="activeBg" @click.native="goTab(0)">
 	        <span slot="icon" class="icon iconfont icon-ceping"></span>
@@ -25,6 +25,9 @@
 		methods:{
 			goTab(){
 
+			},
+			login(){
+				this.$router.push({name:'Login'})
 			}
 		},
 		components: {

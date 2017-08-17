@@ -4,6 +4,7 @@ import {routerMode} from '../config/env'
 Vue.use(Router)
 
 const AppBase = resolve => require(['../components/AppBase'],resolve)
+const Login = resolve => require(['../components/AppBase/Login'],resolve)
 const Assessment = resolve => require(['../components/Assessment'],resolve)
 
 const Course = resolve => require(['../components/Course'],resolve)
@@ -16,7 +17,7 @@ var routerMaps = [
       {name:'Course',path:'course',component:Course},
       {name:'Mine',path:'mine',component:Mine}
   ]},
-  
+  {name:'Login',path:'/login',component:Login},
 	{path: '*', redirect: '/appbase/assessment'}
 ]
 

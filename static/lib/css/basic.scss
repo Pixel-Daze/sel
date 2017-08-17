@@ -1,6 +1,7 @@
 @import './base/mixin/baseMixin';
 @import './base/variable/base-color';
 @import './base/reset.css';
+@import './widget/fn.scss';
 
 *{
 	@include prefix(box-sizing,border-box)
