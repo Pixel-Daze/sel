@@ -41,6 +41,6 @@
 </script>
 <style lang='scss'>
 	.course{
-		
+		background-color: #fff;
 	}
 </style>

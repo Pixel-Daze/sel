@@ -5,7 +5,10 @@ Vue.use(Router)
 
 const AppBase = resolve => require(['../components/AppBase'],resolve)
 const Login = resolve => require(['../components/AppBase/Login'],resolve)
+
 const Assessment = resolve => require(['../components/Assessment'],resolve)
+const AssFreeDetail = resolve => require(['../components/Assessment/AssFreeDetail'],resolve)
+const AssPriceDetail = resolve => require(['../components/Assessment/AssPriceDetail'],resolve)
 
 const Course = resolve => require(['../components/Course'],resolve)
 
@@ -17,6 +20,8 @@ var routerMaps = [
       {name:'Course',path:'course',component:Course},
       {name:'Mine',path:'mine',component:Mine}
   ]},
+  {name:'AssFreeDetail',path:'/assFreeDetail',component:AssFreeDetail},
+  {name:'AssPriceDetail',path:'/assPriceDetail',component:AssPriceDetail},
   {name:'Login',path:'/login',component:Login},
 	{path: '*', redirect: '/appbase/assessment'}
 ]

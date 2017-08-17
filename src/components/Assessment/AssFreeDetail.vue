@@ -1,0 +1,58 @@
+<!-- 免费测评页面详情 -->
+<template>
+	<div class="ass-free-detail p-container">
+		<x-header :left-options="{backText: ''}" title="测评详情" class="vux-1px-b"></x-header>
+		<ass-info :info="assInfo" class="p-com-wrapper" v-if="endLoad"></ass-info>
+		<div class="ass-btn">开始测试</div>
+	</div>
+</template>
+<script>
+	import {XHeader} from 'vux'
+	import {AssInfo} from './assComponent'
+	import * as api from '../../api/assessmentApi'
+	export default {
+		name:'assFreeDetail',
+		data(){
+			return {
+				assInfo:{},
+				endLoad:false
+			}
+		},
+		components:{
+			XHeader,AssInfo
+		},
+		methods:{
+			loadInfo(){
+				let vm = this
+				api.getAssDetail().then(resp=>{
+					if(resp.data.result == 0){
+						vm.assInfo = resp.data.data
+						vm.endLoad = true
+					}
+				})
+			}
+		},
+		created(){
+			this.loadInfo()
+		}
+	}
+</script>
+<style lang='scss'>
+	.ass-free-detail{
+		.p-com-wrapper{
+			background-color: #fff;
+			height: calc(100% - 1.2rem - 46px);
+		}
+		.ass-btn{
+			position: absolute;
+			bottom: 0;
+			color: #fff;
+			background-color: #f9532d;
+			height: 1.2rem;
+			width: 10rem;
+			line-height: 1.2rem;
+			text-align: center;
+			font-size: 0.426667rem;
+		}
+	}
+</style>

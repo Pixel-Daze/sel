@@ -47,10 +47,9 @@
 	width: 10rem;
 }
 
-.p-com-container{
-	height: calc(100% - 59px);
+.p-com-container,.p-com-wrapper{
 	width: 100%;
-	overflow-y: scroll;
+	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
 	::-webkit-scrollbar {
 		width: 0;
@@ -60,4 +59,12 @@
 		display: none;
 		width: 0;
 	}
+}
+
+.p-com-container{
+	height: calc(100% - 59px);
+}
+
+.p-com-wrapper{
+	height: calc(100% - 46px);
 }
