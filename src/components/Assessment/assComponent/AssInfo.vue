@@ -12,37 +12,15 @@
 				<span>{{info.person_count}}人测试过</span>
 			</div>
 		</div>
-		<div class="ass-attr vux-1px-b">
-			<p class="title">{{info.name}}</p>
-			<div class="attrs text-gray">
-				<span>{{info.question_count}}道精选问题</span>
-				<span>{{info.page_number}}页专业报告</span>
-				<span>{{info.person_count}}人测试过</span>
-			</div>
-		</div>
 		<div class="ass-attr">
 			<p class="title">
 				<span class="icon iconfont icon-flag"></span>为什么测试
 			</p>
 			<div class="detail">{{info.details}}</div>
 		</div>
-		<div class="ass-attr">
-			<p class="title">
-				<span class="icon iconfont icon-flag"></span>为什么测试
-			</p>
-			<div class="detail">{{info.details}}</div>
-		</div>
-		<div class="ass-attr">
-			<p class="title">
-				<span class="icon iconfont icon-flag"></span>为什么测试
-			</p>
-			<p class="title">
-				<span class="icon iconfont icon-flag"></span>为什么测试
-			</p>
-			<p class="title">
-				<span class="icon iconfont icon-flag"></span>为什么测试
-			</p>
-			<div class="detail">{{info.details}}</div>
+		<div class="ass-pdf activeBg">
+			<span class="icon iconfont icon-pdf"></span>
+			<p>点击查看报告样例</p>
 		</div>
 	</div>
 </template>
@@ -87,6 +65,21 @@
 			.detail{
 				padding-top: 0.2rem;
 				font-size: 0.346667rem;
+			}
+		}
+		.ass-pdf{
+			text-align: center;
+			padding: 0.266667rem 0;
+			width: 5rem;
+			margin:0 auto;
+			.icon-pdf{
+				font-size: 1.6rem;
+				color: #ff5562;
+			}
+			p{
+				font-size: 0.4rem;
+				padding-top: 0.266667rem;
+				color: #565656;
 			}
 		}
 	}

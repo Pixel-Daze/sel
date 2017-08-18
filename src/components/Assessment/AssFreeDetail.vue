@@ -53,6 +53,9 @@
 			line-height: 1.2rem;
 			text-align: center;
 			font-size: 0.426667rem;
+			&:active{
+				background-color: rgba(249,83,45,.8);
+			}
 		}
 	}
 </style>
