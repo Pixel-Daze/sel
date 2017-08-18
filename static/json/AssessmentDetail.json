@@ -1,5 +1,5 @@
 {
-  	"result": 0,
+  	"res": 0,
   	"msg": "成功",
   	"data": {
 		"evaluation_id":"1",
@@ -11,7 +11,7 @@
 		"price":"0",
 		"page_number":"13",
 		"person_count":"102",
-		"picture":"../../../static/imgs/ass/1.jpg",
+		"picture":"http://img4.imgtn.bdimg.com/it/u=2104185324,1359413794&fm=26&gp=0.jpg",
 		"sample_report":"报告存储路径",
 		"question_count":"20"
 	}

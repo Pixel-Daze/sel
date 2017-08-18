@@ -5,15 +5,19 @@
 */
 
 let baseUrl = ''
-let routerMode = 'history'
+let jsonUrl = ''
+let routerMode = 'hash'
 
 if(process.env.NODE_ENV == 'development'){
 	baseUrl = '../'
+	jsonUrl = '../'
 }else if(process.env.NODE_ENV == 'production'){
-	baseUrl = 'http://production'
+	jsonUrl = 'http://sel.bless-info.com/front/dist/'
+	baseUrl = 'http://sel.bless-info.com/'
 }
 
 export {
 	baseUrl,
+	jsonUrl,
 	routerMode
 }

@@ -3,7 +3,7 @@
 	<div class="ass-free-detail p-container">
 		<x-header :left-options="{backText: ''}" title="测评详情" class="vux-1px-b"></x-header>
 		<ass-info :info="assInfo" class="p-com-wrapper" v-if="endLoad"></ass-info>
-		<div class="ass-btn">开始测试</div>
+		<div class="ass-btn" @click="OpenTest">开始测试</div>
 	</div>
 </template>
 <script>
@@ -25,11 +25,14 @@
 			loadInfo(){
 				let vm = this
 				api.getAssDetail().then(resp=>{
-					if(resp.data.result == 0){
+					if(resp.data.res == 0){
 						vm.assInfo = resp.data.data
 						vm.endLoad = true
 					}
 				})
+			},
+			OpenTest(){
+				this.$router.push({path:'assQueDetail'})
 			}
 		},
 		created(){

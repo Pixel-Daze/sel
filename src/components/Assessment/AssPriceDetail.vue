@@ -28,7 +28,7 @@
 			loadInfo(){
 				let vm = this
 				api.getAssDetail().then(resp=>{
-					if(resp.data.result == 0){
+					if(resp.data.res == 0){
 						vm.assInfo = resp.data.data
 						vm.endLoad = true
 					}

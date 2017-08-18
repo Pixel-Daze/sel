@@ -24,10 +24,12 @@
 				vm.getAssList()
 			},
 			getAssList(){
-				let vm = this
+				let vm = this,body = {
+					user_access:0
+				}
 				vm.assList = vm.$store.getters.activeAssList
 				if(vm.assList.length == 0){
-					vm.$store.dispatch('FETCH_ASSLIST')
+					vm.$store.dispatch('FETCH_ASSLIST',body)
 					.then(resp=>{
 						vm.assList = vm.$store.getters.activeAssList
 					})
