@@ -18,3 +18,8 @@ export function sendCode(body) {
 export function login(body){
 	return postData(baseUrl+'login',body)
 }
+
+export function getQue(body){
+	return fetch(baseUrl+'getevalution',body)
+	// return fetch(jsonUrl+'static/json/singleQue.json')
+}

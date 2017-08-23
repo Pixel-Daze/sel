@@ -24,14 +24,19 @@
 		methods:{
 			loadInfo(){
 				let vm = this
-				api.getAssDetail().then(resp=>{
-					if(resp.data.res == 0){
-						vm.assInfo = resp.data.data
-						vm.endLoad = true
-					}
-				})
+				vm.assInfo = vm.getMsg('assDetail','info')
+				if(vm.assInfo){
+					vm.endLoad = true
+				}
 			},
 			OpenTest(){
+				/*let body = {
+					evaluation_id:this.assInfo.evaluation_id,
+					user_id:this.assInfo.user_id,
+					child_id:this.assInfo.child_id,
+					index:0
+				}
+				this.$router.push({path:'assQueDetail',query:body})*/
 				this.$router.push({path:'assQueDetail'})
 			}
 		},
