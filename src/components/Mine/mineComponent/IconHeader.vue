@@ -1,14 +1,18 @@
 <template>
 	<div class="mine-header">
 		<div class="mine-pic">
-			<span class="icon iconfont icon-head_default absCenter"></span>
+			<!-- <span class="icon iconfont icon-head_default absCenter"></span> -->
+			<img :src="info.head_portrait" alt="">
 		</div>
-		<p class="tip">请登录</p>
+		<p class="tip">{{info.name}}</p>
 	</div>
 </template>
 <script>
 	export default{
-		name:'icon-header'
+		name:'icon-header',
+		props:{
+			info:Object
+		}
 	}
 </script>
 <style lang='scss'>
@@ -27,6 +31,11 @@
 			.icon-head_default{
 				color: #fff;
 				font-size: 1.1rem;
+			}
+			img{
+				width: inherit;
+				height: inherit;
+				border-radius: 50%;
 			}
 		}
 		.tip{

@@ -1,7 +1,7 @@
 <!-- 我的 -->
 <template>
 	<div class="mine p-com-container">
-		<icon-header @click.native="login"></icon-header>
+		<icon-header :info="info"></icon-header>
 		<tabbar class="vux-1px-b">
 	      <tabbar-item class="activeBg" @click.native="goTab(0)">
 	        <span slot="icon" class="icon iconfont icon-ceping"></span>
@@ -21,19 +21,49 @@
 <script>
 	import { Tabbar, TabbarItem } from 'vux'
 	import { IconHeader } from './mineComponent'
+	import * as api from '../../api/assessmentApi'
 	export default{
+		data(){
+			return {
+				info:{}
+			}
+		},
 		methods:{
+			loadInfo(){
+				this.getUserInfo()
+			},
+			getUserInfo(){
+				let vm = this,body = {
+					openid:vm.getCookie('openid')
+				}
+				let info = {
+					name:decodeURI(vm.getCookie('nickname')),
+					head_portrait:vm.getCookie('headimgurl')
+				}
+				if(vm.getMsg('base','userInfo')!=null){
+					vm.info = info
+				}else{
+					api.qryUser(body).then(resp=>{
+						if(resp.data.res == 0){
+							vm.setMsg('base','userInfo',resp.data.data)
+							vm.info = info
+						}else{
+							this.$router.push({name:'Login'})
+						}
+					})
+				}
+			},
 			goTab(){
 
-			},
-			login(){
-				this.$router.push({name:'Login'})
 			}
 		},
 		components: {
 	      	Tabbar,
 	      	TabbarItem,
 	      	IconHeader
+	    },
+	    created(){
+	    	this.loadInfo()
 	    }
 	}
 </script>

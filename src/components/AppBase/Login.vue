@@ -1,12 +1,12 @@
 <template>
 	<div class="login">
-		<x-header :left-options="{backText: ''}" title="登录"></x-header>
+		<x-header :left-options="{showBack: false}" title="登录"></x-header>
 		<img src="../../../static/imgs/login/login.png" alt="">
 		<group>
 	      	<x-input title="手机号码" name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" v-model="body.telno"></x-input>
-	      	<x-input title="姓名" class="weui-name" name="username" v-model="body.name" placeholder="请输入姓名" is-type="china-name"></x-input>
 	      	<x-input title="验证码" class="weui-vcode" v-model="body.number">
-		        <x-button slot="right" type="primary" mini @click.native="sendCode">发送验证码</x-button>
+		        <x-button v-if="showAccessButton" slot="right" type="primary" mini @click.native="sendCode">{{showAccessTip}}</x-button>
+		        <x-button v-if="!showAccessButton" disabled type="default" slot="right" mini >{{countdown}}秒</x-button>
 		    </x-input>
 	    </group>
 	    <div class="btn-container">
@@ -21,10 +21,12 @@
 	export default {
 		data(){
 			return {
+				showAccessTip:'获取验证码',
+				countdown:60,
+				showAccessButton:true,
 				body:{
 					telno:'',
-					number:'',
-					name:''
+					number:''
 				}
 			}
 		},
@@ -36,22 +38,76 @@
 				let vm = this,body = {
 					telno:vm.body.telno
 				}
-				api.sendCode(body).then()
+				if(vm.body.telno.length!='11'){
+					this.$vux.toast.show({
+						text: '请输入正确的手机号',
+						type: 'text',
+						width: '4.5rem'
+					})
+				}else{
+					vm.showAccessButton=false
+					api.sendCode(body)
+					let accessCountdown = setInterval(()=>{
+						vm.countdown = vm.countdown - 1
+						if(vm.countdown === -1){
+							vm.resetCode()
+							clearInterval(accessCountdown)
+						}
+					},1000)
+				}
+				
+			},
+			resetCode(){
+				let vm = this;
+				vm.showAccessButton=true
+				vm.countdown = 10
+				vm.showAccessTip = '重新获取'
 			},
 			login(){
 				let vm = this,body = {
 					telno:vm.body.telno,
 					number:vm.body.number,
-					name:vm.body.name,
 					openid:vm.getCookie('openid')
 				}
-				api.login(body).then(resp=>{
-					if(resp.data.res=='0'){
-						vm.setMsg('Index','path',0)
-						this.$router.push({name:'Assessment'})
-					}
-				})
+				if(vm.checkInfo()){
+					api.login(body).then(resp=>{
+						if(resp.data.res=='0'){
+							vm.setMsg('Index','path',0)
+							let data = vm.getMsg('login','data')
+							vm.$router.push({path:data.path,query:data.query})
+						}
+					})
+				}
+			},
+			checkInfo(){
+				let vm = this
+				if(vm.body.telno.length!='11'){
+					this.$vux.toast.show({
+						text: '请输入正确的手机号',
+						type: 'text',
+						width: '4.5rem'
+					})
+					return false
+				}else if(vm.body.number == ''){
+					this.$vux.toast.show({
+						text: '请输入验证码',
+						type: 'text',
+						width: '3.5rem'
+					})
+					return false
+				}else{
+					return true
+				}
 			}
+		},
+		beforeRouteEnter (to, from, next) {
+		    next(vm=>{
+		    	let body = {
+			    	path:from.path,
+			    	query:from.query
+			    }
+		    	vm.setMsg('login','data',body)
+		    })
 		}
 	}
 </script>
@@ -76,6 +132,13 @@
 			}
 		}
 		.weui-vcode,.weui-name{
+			button.weui-btn{
+				width: 2.653333rem;
+			}
+			.weui-btn_disabled.weui-btn_default{
+				color: #fff;
+				background-color: #ddd;
+			}
 			.weui-label{
 				width: 5em !important;
 			}

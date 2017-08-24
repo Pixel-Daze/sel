@@ -29,6 +29,9 @@ import {request,response} from './service/httpInterceptor'
 axios.interceptors.request.use(request)
 axios.interceptors.response.use(response);
 
+import  { ToastPlugin } from 'vux'
+Vue.use(ToastPlugin)
+
 /* store */
 import store from './store'
 

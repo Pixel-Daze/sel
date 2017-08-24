@@ -8,6 +8,7 @@
 </template>
 <script>
 	import { AssCell,AssCellWrapper } from '../Assessment/assComponent'
+	import * as api from '../../api/assessmentApi'
 	export default{
 		data(){
 			return {
@@ -21,13 +22,32 @@
 		methods:{
 			loadInfo(){
 				let vm = this
-				vm.getCourseList()
+				vm.getUserInfo()
 			},
-			getCourseList(){
-				let vm = this
+			getUserInfo(){
+				let vm = this,body = {
+					openid:vm.getCookie('openid')
+				}
+				if(vm.getMsg('base','userInfo')!=null){
+					vm.getCourseList(vm.getMsg('base','userInfo').role)
+				}else{
+					api.qryUser(body).then(resp=>{
+						if(resp.data.res == 0){
+							vm.setMsg('base','userInfo',resp.data.data)
+							vm.getCourseList(vm.getMsg('base','userInfo').role)
+						}else{
+							vm.getCourseList(0)
+						}
+					})
+				}
+			},
+			getCourseList(access){
+				let vm = this,body = {
+					user_access:access
+				}
 				vm.courseList = vm.$store.getters.activeCourseList
 				if(vm.courseList.length == 0){
-					vm.$store.dispatch('FETCH_COURSE_LIST')
+					vm.$store.dispatch('FETCH_COURSE_LIST',body)
 					.then(resp=>{
 						vm.courseList = vm.$store.getters.activeCourseList
 					})

@@ -42,10 +42,7 @@
           let index = parseInt(value),path=['Assessment','Course','Mine'],vm = this
           //保存已选择index
           vm.setMsg('Index','path',value)
-          //判断路由是否需要跳转
-          if(vm.selected != index){
-              vm.$router.push({name:path[index]})
-          }
+          vm.$router.push({name:path[index]})
       }
     },
     created(){

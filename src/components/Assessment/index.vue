@@ -8,6 +8,7 @@
 </template>
 <script>
 	import { AssCell,AssCellWrapper } from './assComponent'
+	import * as api from '../../api/assessmentApi'
 	export default{
 		data(){
 			return {
@@ -21,11 +22,28 @@
 		methods:{
 			loadInfo(){
 				let vm = this
-				vm.getAssList()
+				vm.getUserInfo()
 			},
-			getAssList(){
+			getUserInfo(){
 				let vm = this,body = {
-					user_access:0
+					openid:vm.getCookie('openid')
+				}
+				if(vm.getMsg('base','userInfo')!=null){
+					vm.getAssList(vm.getMsg('base','userInfo').role)
+				}else{
+					api.qryUser(body).then(resp=>{
+						if(resp.data.res == 0){
+							vm.setMsg('base','userInfo',resp.data.data)
+							vm.getAssList(vm.getMsg('base','userInfo').role)
+						}else{
+							vm.getAssList(0)
+						}
+					})
+				}
+			},
+			getAssList(access){
+				let vm = this,body = {
+					user_access:access
 				}
 				vm.assList = vm.$store.getters.activeAssList
 				if(vm.assList.length == 0){

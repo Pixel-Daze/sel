@@ -23,3 +23,7 @@ export function getQue(body){
 	return fetch(baseUrl+'getevalution',body)
 	// return fetch(jsonUrl+'static/json/singleQue.json')
 }
+
+export function qryUser(body){
+	return fetch(baseUrl+'qryuser',body)
+}
