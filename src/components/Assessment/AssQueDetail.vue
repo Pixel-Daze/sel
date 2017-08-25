@@ -2,7 +2,8 @@
 	<div class="ass-que-detail" v-if="endLoad">
 		<x-header :left-options="{backText: ''}" title="课程" class="vux-1px-b"></x-header>
 		<div class="cent">
-			<pro-bar :percent="percent" @click.native="puls"></pro-bar>
+			<div class="num">01/10</div>
+			<pro-bar class="pro" :percent="percent" @click.native="puls"></pro-bar>
 		</div>
 		
 		<div class="ass-que">
@@ -67,6 +68,14 @@
 </script>
 <style lang='scss'>
 	.ass-que-detail{
-		
+		.cent{
+			display: flex;
+			.num{
+				width: 1rem;
+			}
+			.pro{
+				flex: 1;
+			}
+		}
 	}
 </style>
