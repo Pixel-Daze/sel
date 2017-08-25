@@ -28,6 +28,12 @@ export const request = function(config){
 
 export const response = function(response){
     store.commit('updateLoadingStatus', {isLoading: false})
+    if(response.data.result == 404){
+        Vue.$vux.alert.show({
+            title: '提示',
+            content: '程序正在修复中'
+        })
+    }
     if(response.data.res!==0&&checkUrl(response)){
     	Vue.$vux.alert.show({
 			title: '提示',

@@ -38,5 +38,44 @@ export default {
             var parts = value.split("; " + name + "=");
             if (parts.length == 2) return parts.pop().split(";").shift();
         }
+
+        //配置微信jssdk
+        Vue.prototype.configWxjssdk = () =>{
+            let arr = getCookie('wxconfig').split('|')
+            let wx_info = {
+                appid:arr[0],
+                timestamp:arr[1],
+                nonce:arr[2],
+                signature:arr[3]
+            }
+            configWxSdk(wx_info)
+
+            function getCookie(name){
+                var value = "; " + document.cookie;
+                var parts = value.split("; " + name + "=");
+                if (parts.length == 2) return parts.pop().split(";").shift();
+            }
+
+            function configWxSdk(wxConfig){
+                wx.config({
+                    debug: true,
+                    appId: wxConfig.appid,
+                    timestamp: parseInt(wxConfig.timestamp),
+                    nonceStr: wxConfig.nonce,
+                    signature: wxConfig.signature,
+                    jsApiList: [
+                        'getLocation',
+                        'openLocation',
+                        'chooseImage',
+                        'scanQRCode',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'hideMenuItems',
+                        'previewImage',
+                        'uploadImage'
+                    ]
+                });
+            }
+        }
 	}
 }

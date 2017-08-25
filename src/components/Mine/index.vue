@@ -11,7 +11,7 @@
 	        <span slot="icon" class="icon iconfont icon-kecheng"></span>
 	        <span slot="label">我的课程</span>
 	      </tabbar-item>
-	      <tabbar-item class="activeBg" @click.native="goTab(2)">
+	      <tabbar-item class="activeBg" @click.native="goBaby">
 	        <span slot="icon" class="icon iconfont icon-baobeishuo"></span>
 	        <span slot="label">我的宝贝</span>
 	      </tabbar-item>
@@ -52,6 +52,9 @@
 						}
 					})
 				}
+			},
+			goBaby(){
+				this.$router.push({path:'/mineBaby'})
 			},
 			goTab(){
 

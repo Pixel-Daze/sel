@@ -14,6 +14,7 @@ const AssQueDetail = resolve => require(['../components/Assessment/AssQueDetail'
 const Course = resolve => require(['../components/Course'],resolve)
 
 const Mine = resolve => require(['../components/Mine'],resolve)
+const MineBaby = resolve => require(['../components/Mine/MineBaby'],resolve)
 
 var routerMaps = [
   {name:'AppBase',path:'/appbase',component:AppBase,children:[
@@ -24,6 +25,7 @@ var routerMaps = [
   {name:'AssFreeDetail',path:'/assFreeDetail',component:AssFreeDetail},
   {name:'AssPriceDetail',path:'/assPriceDetail',component:AssPriceDetail},
   {name:'AssQueDetail',path:'/assQueDetail',component:AssQueDetail},
+  {name:'MineBaby',path:'/mineBaby',component:MineBaby},
   {name:'Login',path:'/login',component:Login},
 	{path: '*', redirect: '/appbase/assessment'}
 ]

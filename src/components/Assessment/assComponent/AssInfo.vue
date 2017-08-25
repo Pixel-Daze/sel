@@ -18,7 +18,7 @@
 			</p>
 			<div class="detail">{{info.details}}</div>
 		</div>
-		<div class="ass-pdf activeBg">
+		<div class="ass-pdf activeBg" @click="getPDF">
 			<span class="icon iconfont icon-pdf"></span>
 			<p>点击查看报告样例</p>
 		</div>
@@ -28,6 +28,11 @@
 	export default {
 		props:{
 			info:Object
+		},
+		methods:{
+			getPDF(){
+				location.href=this.info.sample_report
+			}
 		}
 	}
 </script>
