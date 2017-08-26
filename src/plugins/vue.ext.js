@@ -58,7 +58,7 @@ export default {
 
             function configWxSdk(wxConfig){
                 wx.config({
-                    debug: true,
+                    debug: false,
                     appId: wxConfig.appid,
                     timestamp: parseInt(wxConfig.timestamp),
                     nonceStr: wxConfig.nonce,
