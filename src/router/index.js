@@ -10,6 +10,7 @@ const Assessment = resolve => require(['../components/Assessment'],resolve)
 const AssFreeDetail = resolve => require(['../components/Assessment/AssFreeDetail'],resolve)
 const AssPriceDetail = resolve => require(['../components/Assessment/AssPriceDetail'],resolve)
 const AssQueDetail = resolve => require(['../components/Assessment/AssQueDetail'],resolve)
+const AssResult =  resolve => require(['../components/Assessment/AssResult'],resolve)
 
 const Course = resolve => require(['../components/Course'],resolve)
 
@@ -25,6 +26,7 @@ var routerMaps = [
   {name:'AssFreeDetail',path:'/assFreeDetail',component:AssFreeDetail},
   {name:'AssPriceDetail',path:'/assPriceDetail',component:AssPriceDetail},
   {name:'AssQueDetail',path:'/assQueDetail',component:AssQueDetail},
+  {name:'AssResult',path:'/assResult',component:AssResult},
   {name:'MineBaby',path:'/mineBaby',component:MineBaby},
   {name:'Login',path:'/login',component:Login},
 	{path: '*', redirect: '/appbase/assessment'}

@@ -56,8 +56,13 @@
 		},
 		methods:{
 			loadInfo(){
-				let vm = this
-				api.getQue().then(resp=>{
+				let vm = this,body = {
+					evaluation_id:vm.$route.query.evaluation_id,
+					user_id:vm.$route.query.user_id,
+					child_id:vm.$route.query.child_id,
+					index:vm.$route.query.index
+				}
+				api.getQue(body).then(resp=>{
 					if(resp.data.res == 0){
 						vm.Info = resp.data.data
 						vm.percent = vm.Info.question_index/vm.Info.maxIndex*100
@@ -82,7 +87,7 @@
 				vm.percent = vm.Info.question_index/vm.Info.maxIndex*100
 			},
 			submit(){
-
+				this.$router.push({path:'/assResult'})
 			}
 		},
 		created(){

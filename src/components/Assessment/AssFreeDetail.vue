@@ -10,6 +10,7 @@
 	import {XHeader} from 'vux'
 	import {AssInfo} from './assComponent'
 	import * as api from '../../api/assessmentApi'
+	import * as mineApi from '../../api/mineApi'
 	export default {
 		name:'assFreeDetail',
 		data(){
@@ -30,14 +31,34 @@
 				}
 			},
 			OpenTest(){
-				/*let body = {
-					evaluation_id:this.assInfo.evaluation_id,
-					user_id:this.assInfo.user_id,
-					child_id:this.assInfo.child_id,
-					index:0
+				let vm = this,body = {
+					user_id:vm.getMsg('base','userInfo').user_id
 				}
-				this.$router.push({path:'assQueDetail',query:body})*/
-				this.$router.push({path:'assQueDetail'})
+				mineApi.qrychild(body).then(resp=>{
+					if(resp.data.res == 0){
+						if(resp.data.data!=null){
+							let body = {
+								evaluation_id:vm.assInfo.evaluation_id,
+								user_id:vm.getMsg('base','userInfo').user_id,
+								child_id:resp.data.data.child_id,
+								index:0
+							}
+							vm.$router.push({path:'assQueDetail',query:body})
+						}else{
+							vm.$vux.confirm.show({
+							  	// 组件除show外的属性
+							  	onCancel () {
+							    	
+							  	},
+							  	onConfirm () {
+							  		vm.$router.push({name:'Login'})
+							  	}
+							})
+						}
+					}
+				})
+				
+				
 			}
 		},
 		created(){

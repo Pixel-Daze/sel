@@ -9,3 +9,7 @@ export function qrychild(body){
 export function addchild(body){
 	return fetch(baseUrl+'addchild',body)
 }
+
+export function UploadChildImg(body){
+	return fetch(baseUrl+'UploadChildImg',body)
+}

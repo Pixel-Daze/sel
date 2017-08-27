@@ -24,6 +24,13 @@ Vue.use(ExtendPlugin)
 import _ from './plugins/lodash'
 Vue.use(_)
 
+import { alloyDebug } from './service/alloyDebugService'
+router.beforeEach((to,from,next)=>{
+   
+    alloyDebug(to,next)
+    next()
+})
+
 /* httpInterceptor */
 import {request,response} from './service/httpInterceptor'
 axios.interceptors.request.use(request)
@@ -31,6 +38,9 @@ axios.interceptors.response.use(response);
 
 import  { ToastPlugin } from 'vux'
 Vue.use(ToastPlugin)
+
+import  { ConfirmPlugin } from 'vux'
+Vue.use(ConfirmPlugin)
 
 /* store */
 import store from './store'

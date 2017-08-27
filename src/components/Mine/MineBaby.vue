@@ -3,7 +3,7 @@
 	<div class="mine-baby">
 		<x-header :left-options="{backText: ''}" title="我的宝贝"></x-header>
 		<div class="headIcon">
-			<img :src="body.head_portrait" alt="">
+			<img :src="body.head_portrait" alt="" @click="addPic">
 		</div>
 		<group>
 	      	<x-input title="儿童姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
@@ -17,6 +17,7 @@
 </template>
 <script>
 	import {Group,Datetime,XInput,Selector,XButton,XHeader} from 'vux'
+	import moment from 'moment'
 	import * as api from '../../api/mineApi'
 	export default {
 		data(){
@@ -28,7 +29,7 @@
 					gender:'0',
 					birth_date:'',
 					user_id:'',
-					child_id:''
+					child_id:'0'
 				},
 				sexList:[{key: '0', value: '男'}, {key: '1', value: '女'}]
 			}
@@ -48,7 +49,17 @@
 				if(vm.checkInfo()){
 					vm.body.user_id = vm.getMsg('base','userInfo').user_id
 					api.addchild(vm.body).then(resp=>{
-						console.log(resp)
+						if(resp.data.res == 0){
+							let text = '添加成功'
+							if(vm.body.child_id!='0'){
+								text = '修改成功'
+							}
+							this.$vux.toast.show({
+								text: text,
+								type: 'text',
+								width: '3.5rem'
+							})
+						}
 					})
 				}
 				
@@ -60,7 +71,13 @@
 				vm.configWxjssdk()
 				api.qrychild(body).then(resp=>{
 					if(resp.data.res == 0){
-						console.log(resp.data.data)
+						if(resp.data.data!=null){
+							vm.body.child_id = resp.data.data.child_id
+							vm.body.birth_date = moment(resp.data.data.birth_date).format('YYYY-MM-DD')
+							vm.body.gender = resp.data.data.gender
+							vm.body.name = resp.data.data.name
+							vm.body.head_portrait = resp.data.data.head_portrait
+						}
 					}
 				})
 			},
@@ -83,10 +100,42 @@
 				}else{
 					return true
 				}
+			},
+			addPic(){
+				let vm = this
+				wx.chooseImage({
+				    count: 1, // 默认9
+				    sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+				    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+				    success: function (res) {
+				        vm.upImg(res.localIds)
+				    }
+				});
+			},
+			upImg(localIds){
+				let vm = this
+				let localId = localIds.shift()
+
+				wx.uploadImage({
+				    localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+				    isShowProgressTips: 1, // 默认为1，显示进度提示
+				    success: function (res) {
+				        let body = {
+				        	mediaid:res.serverId
+				        }
+				        console.log(res.serverId)
+				        api.UploadChildImg(body).then(resp=>{
+				        	if(resp.data.res=='0'){
+				        		console.log(resp.data.data)
+				        		vm.body.head_portrait = resp.data.data
+				        	}
+				        })
+				    }
+				});
 			}
 		},
 		created(){
-			// this.loadInfo()
+			this.loadInfo()
 		}
 	}
 </script>
