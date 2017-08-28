@@ -1,6 +1,6 @@
 <template>
 	<div class="ass-que-detail p-container" v-if="endLoad">
-		<x-header :left-options="{backText: ''}" title="课程" class="vux-1px-b"></x-header>
+		<x-header :left-options="{backText: ''}" :title="assInfo.name" class="vux-1px-b"></x-header>
 		<div class="p-com-wrapper">
 			<div class="cent">
 				<div class="num">{{Info.question_index}}/{{Info.maxIndex}}</div>
@@ -11,12 +11,13 @@
 				<div class="ques">
 					{{Info.question_index}}、{{questions.question}}
 				</div>
-				<div v-for="item in questions.dimensions">
+				<div v-for="(item,index) in questions.dimensions">
 					<p class="dimension">{{item.dimension}}</p>
 					<group>
-				      	<radio :options="item.options" @on-change="change" @click.native="getItem(item)"></radio>
+				      	<radio :options="item.options" v-model="item.answer" @on-change="change" @click.native="getItem(item,index)"></radio>
 				    </group>
 				</div>
+
 			</div>
 			<div class="btn-container">
 		    	<span v-if="Info.question_index==1&&Info.maxIndex>1" class="first_btn" @click="next">下一题</span>
@@ -41,45 +42,68 @@
 			return {
 				Info:{},
 				endLoad:false,
-				percent:0
+				percent:0,
+				assInfo:{},
+				answer:[],
+				curIndex:0,
+				questions:[]
 			}
 		},
 		components:{
 			ProBar,Radio,Group,XHeader
 		},
 		computed:{
-			questions:function(){
-				if(this.Info.content){
-					return JSON.parse(this.Info.content)
-				}
-			}
+			
 		},
 		methods:{
-			loadInfo(){
+			loadInfo(data){
 				let vm = this,body = {
-					evaluation_id:vm.$route.query.evaluation_id,
-					user_id:vm.$route.query.user_id,
-					child_id:vm.$route.query.child_id,
-					index:vm.$route.query.index
+					evaluation_id:data?data.evaluation_id:vm.$route.query.evaluation_id,
+					user_id:data?data.user_id:vm.$route.query.user_id,
+					child_id:data?data.child_id:vm.$route.query.child_id,
+					index:data?data.index:vm.$route.query.index
 				}
 				api.getQue(body).then(resp=>{
 					if(resp.data.res == 0){
 						vm.Info = resp.data.data
+						vm.questions = JSON.parse(vm.Info.content)
+						vm.questions.dimensions.forEach(item=>{
+							vm.$set(item,'answer','')
+						})
+						console.log(vm.questions)
 						vm.percent = vm.Info.question_index/vm.Info.maxIndex*100
 						vm.endLoad = true
 					}
 				})
+				vm.assInfo = vm.getMsg('assDetail','info')
 			},
 			change(value, label){
-				console.log(value, label)
+				let vm = this
+				vm.answer[vm.curIndex] = value
 			},
-			getItem(item){
-				console.log(item)
+			getItem(item,index){
+				let vm = this
+				vm.curIndex = index
 			},
 			next(){
 				let vm = this
-				vm.Info.question_index+=1
-				vm.percent = vm.Info.question_index/vm.Info.maxIndex*100
+				if(vm.questions.dimensions.length!=vm.answer.length){
+					vm.$vux.toast.show({
+						text: '请选择答案',
+						type: 'text',
+						width: '3.5rem'
+					})
+				}else{
+					let str = ''
+					vm.answer.forEach((item,index)=>{
+						if(index==0){
+							str+=item
+						}else{
+							str+=','+item
+						}
+					})
+					vm.upAnswer(str)
+				}
 			},
 			prev(){
 				let vm = this
@@ -88,6 +112,32 @@
 			},
 			submit(){
 				this.$router.push({path:'/assResult'})
+			},
+			upAnswer(answer){
+				let vm = this,body = {
+					evaluation_id:vm.$route.query.evaluation_id,
+					user_id:vm.$route.query.user_id,
+					child_id:vm.$route.query.child_id,
+					current_question_id	:vm.Info.question_index,
+					text_result:'',
+					report_result:'',
+					answer:answer
+				}
+				api.updateevalution(body).then(resp=>{
+					if(resp.data.res == '0'){
+						vm.getNext()
+					}
+				})
+			},
+			getNext(){
+				let vm = this,body = {
+					evaluation_id:vm.$route.query.evaluation_id,
+					user_id:vm.$route.query.user_id,
+					child_id:vm.$route.query.child_id,
+					index:parseInt(vm.$route.query.index)+1
+				}
+				vm.loadInfo(body)
+				vm.$router.push({path:'assQueDetail',query:body})
 			}
 		},
 		created(){

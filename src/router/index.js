@@ -16,6 +16,8 @@ const Course = resolve => require(['../components/Course'],resolve)
 
 const Mine = resolve => require(['../components/Mine'],resolve)
 const MineBaby = resolve => require(['../components/Mine/MineBaby'],resolve)
+const MineAss = resolve => require(['../components/Mine/MineAss'],resolve)
+const MineCourse = resolve => require(['../components/Mine/MineCourse'],resolve)
 
 var routerMaps = [
   {name:'AppBase',path:'/appbase',component:AppBase,children:[
@@ -28,6 +30,8 @@ var routerMaps = [
   {name:'AssQueDetail',path:'/assQueDetail',component:AssQueDetail},
   {name:'AssResult',path:'/assResult',component:AssResult},
   {name:'MineBaby',path:'/mineBaby',component:MineBaby},
+  {name:'MineAss',path:'/mineAss',component:MineAss},
+  {name:'MineCourse',path:'/mineCourse',component:MineCourse},
   {name:'Login',path:'/login',component:Login},
 	{path: '*', redirect: '/appbase/assessment'}
 ]

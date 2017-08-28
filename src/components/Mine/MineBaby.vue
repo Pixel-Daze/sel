@@ -123,7 +123,7 @@
 				        let body = {
 				        	mediaid:res.serverId
 				        }
-				        console.log(res.serverId)
+				        // console.log(vm.body.name = res.serverId)
 				        api.UploadChildImg(body).then(resp=>{
 				        	if(resp.data.res=='0'){
 				        		console.log(resp.data.data)

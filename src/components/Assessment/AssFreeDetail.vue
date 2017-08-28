@@ -41,7 +41,7 @@
 								evaluation_id:vm.assInfo.evaluation_id,
 								user_id:vm.getMsg('base','userInfo').user_id,
 								child_id:resp.data.data.child_id,
-								index:0
+								index:1
 							}
 							vm.$router.push({path:'assQueDetail',query:body})
 						}else{

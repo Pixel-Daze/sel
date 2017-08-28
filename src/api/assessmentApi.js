@@ -28,3 +28,7 @@ export function qryUser(body){
 	return fetch(baseUrl+'qryuser',body)
 }
 
+export function updateevalution(body){
+	return fetch(baseUrl+'updateevalution',body)
+}
+
