@@ -2,12 +2,13 @@
 <template>
 	<div class="course p-com-container">
 		<ass-cell-wrapper v-for="item in courseList" :ass="item" :key="item.category">
-			<ass-cell v-for="cell in item.data" :cell="cell" :key="cell.evaluation_id" @click.native="goDetail(cell)"></ass-cell>
+			<course-cell v-for="cell in item.data" :cell="cell" :key="cell.evaluation_id" @click.native="goDetail(cell)"></courseList-cell>
 		</ass-cell-wrapper>
 	</div>
 </template>
 <script>
-	import { AssCell,AssCellWrapper } from '../Assessment/assComponent'
+	import { AssCellWrapper } from '../Assessment/assComponent'
+	import { CourseCell } from './courseComponent'
 	import * as api from '../../api/assessmentApi'
 	export default{
 		data(){
@@ -16,7 +17,7 @@
 			}
 		},
 		components:{
-			AssCell,
+			CourseCell,
 			AssCellWrapper
 		},
 		methods:{
