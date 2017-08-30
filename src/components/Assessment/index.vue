@@ -55,7 +55,7 @@
 			},
 			goDetail(cell){
 				this.setMsg('assDetail','info',cell)
-				if(cell.price>0){
+				if(parseInt(cell.price)>0){
 					this.$router.push({path:'/assPriceDetail'})
 				}else if(cell.price==0){
 					this.$router.push({path:'/assFreeDetail'})

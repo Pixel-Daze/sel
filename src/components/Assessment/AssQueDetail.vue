@@ -27,7 +27,7 @@
 		    	</div>
 		    	<div v-if="Info.question_index==Info.maxIndex" class="btn_g">
 		    		<span @click="prev">上一题</span>
-		    		<span class="submit activeBg" @click="submit">提交测评</span>
+		    		<span class="submit activeBg" @click="next">提交测评</span>
 		    	</div>
 		    </div>
 		</div>
@@ -52,9 +52,6 @@
 		components:{
 			ProBar,Radio,Group,XHeader
 		},
-		computed:{
-			
-		},
 		methods:{
 			loadInfo(data){
 				let vm = this,body = {
@@ -63,19 +60,40 @@
 					child_id:data?data.child_id:vm.$route.query.child_id,
 					index:data?data.index:vm.$route.query.index
 				}
+				// 重置
+				vm.answer = []
+				vm.curIndex = 0
 				api.getQue(body).then(resp=>{
 					if(resp.data.res == 0){
 						vm.Info = resp.data.data
 						vm.questions = JSON.parse(vm.Info.content)
-						vm.questions.dimensions.forEach(item=>{
-							vm.$set(item,'answer','')
-						})
-						console.log(vm.questions)
+						if(vm.Info.answer!=''){
+							vm.InitAnswer(vm.Info.answer,vm.questions)
+						}else{
+							vm.questions.dimensions.forEach(item=>{
+								vm.$set(item,'answer','')
+							})
+						}
 						vm.percent = vm.Info.question_index/vm.Info.maxIndex*100
 						vm.endLoad = true
+					}else if(resp.data.res == 1 && resp.data.msg == "当前题目已经做完！"){
+						this.$vux.alert.show({
+							title: '提示',
+							content: resp.data.msg,
+							onHide () {
+					           vm.$router.push({path:'/assResult'})
+					        }
+						})
 					}
 				})
 				vm.assInfo = vm.getMsg('assDetail','info')
+			},
+			InitAnswer(result,questions){
+				let vm = this
+				vm.answer = result.split(',')
+				vm.answer.forEach((item,index)=>{
+					vm.$set(vm.questions.dimensions[index],'answer',item)
+				})
 			},
 			change(value, label){
 				let vm = this
@@ -87,7 +105,7 @@
 			},
 			next(){
 				let vm = this
-				if(vm.questions.dimensions.length!=vm.answer.length){
+				if((vm.questions.dimensions.length!=vm.answer.length)||vm.checkAnswer()){
 					vm.$vux.toast.show({
 						text: '请选择答案',
 						type: 'text',
@@ -105,13 +123,24 @@
 					vm.upAnswer(str)
 				}
 			},
-			prev(){
+			checkAnswer(){
 				let vm = this
-				vm.Info.question_index-=1
-				vm.percent = vm.Info.question_index/vm.Info.maxIndex*100
+				for(let i = 0;i<vm.answer.length;i++){
+					if(vm.answer[i]==''){
+						return true
+					}
+				}
+				return false
 			},
-			submit(){
-				this.$router.push({path:'/assResult'})
+			prev(){
+				let vm = this,body = {
+					evaluation_id:vm.$route.query.evaluation_id,
+					user_id:vm.$route.query.user_id,
+					child_id:vm.$route.query.child_id,
+					index:parseInt(vm.Info.question_index)-1
+				}
+				vm.loadInfo(body)
+				vm.$router.push({path:'assQueDetail',query:body})
 			},
 			upAnswer(answer){
 				let vm = this,body = {
@@ -121,11 +150,22 @@
 					current_question_id	:vm.Info.question_index,
 					text_result:'',
 					report_result:'',
-					answer:answer
+					answer:answer,
+					maxIndex:vm.Info.maxIndex
 				}
 				api.updateevalution(body).then(resp=>{
 					if(resp.data.res == '0'){
-						vm.getNext()
+						if(vm.Info.question_index==vm.Info.maxIndex){
+							let info = vm.getMsg('assDetail','info')
+							let body = {
+								name : info.name,
+								details : info.details
+							}
+							vm.$router.push({path:'/assResult'})
+						}else{
+							vm.getNext()
+						}
+						
 					}
 				})
 			},
@@ -134,7 +174,7 @@
 					evaluation_id:vm.$route.query.evaluation_id,
 					user_id:vm.$route.query.user_id,
 					child_id:vm.$route.query.child_id,
-					index:parseInt(vm.$route.query.index)+1
+					index:parseInt(vm.Info.question_index)+1
 				}
 				vm.loadInfo(body)
 				vm.$router.push({path:'assQueDetail',query:body})

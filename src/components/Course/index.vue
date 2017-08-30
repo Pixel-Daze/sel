@@ -2,7 +2,7 @@
 <template>
 	<div class="course p-com-container">
 		<ass-cell-wrapper v-for="item in courseList" :ass="item" :key="item.category">
-			<ass-cell v-for="cell in item.data" :cell="cell" :key="cell.evaluation_id"></ass-cell>
+			<ass-cell v-for="cell in item.data" :cell="cell" :key="cell.evaluation_id" @click.native="goDetail(cell)"></ass-cell>
 		</ass-cell-wrapper>
 	</div>
 </template>
@@ -51,6 +51,14 @@
 					.then(resp=>{
 						vm.courseList = vm.$store.getters.activeCourseList
 					})
+				}
+			},
+			goDetail(cell){
+				this.setMsg('courseDetail','info',cell)
+				if(parseInt(cell.price)>0){
+					this.$router.push({path:'/coursePrice'})
+				}else if(cell.price==0){
+					this.$router.push({path:'/courseFree'})
 				}
 			}
 		},

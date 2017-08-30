@@ -7,7 +7,7 @@
 		<div class="ass-attr vux-1px-b">
 			<p class="title">{{info.name}}</p>
 			<div class="attrs text-gray">
-				<span>{{info.question_count}}道精选问题</span>
+				<span>{{info.maxIndex}}道精选问题</span>
 				<span>{{info.page_number}}页专业报告</span>
 				<span>{{info.person_count}}人测试过</span>
 			</div>

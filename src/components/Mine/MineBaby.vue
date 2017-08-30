@@ -71,12 +71,12 @@
 				vm.configWxjssdk()
 				api.qrychild(body).then(resp=>{
 					if(resp.data.res == 0){
-						if(resp.data.data!=null){
-							vm.body.child_id = resp.data.data.child_id
-							vm.body.birth_date = moment(resp.data.data.birth_date).format('YYYY-MM-DD')
-							vm.body.gender = resp.data.data.gender
-							vm.body.name = resp.data.data.name
-							vm.body.head_portrait = resp.data.data.head_portrait
+						if(resp.data.data.length>0){
+							vm.body.child_id = resp.data.data[0].child_id
+							vm.body.birth_date = moment(resp.data.data[0].birth_date).format('YYYY-MM-DD')
+							vm.body.gender = resp.data.data[0].gender
+							vm.body.name = resp.data.data[0].name
+							vm.body.head_portrait = resp.data.data[0].head_portrait
 						}
 					}
 				})

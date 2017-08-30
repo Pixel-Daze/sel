@@ -19,7 +19,7 @@ function checkUrl(resp){
 }
 
 //不拦截的请求名
-const unInterceptorUrl = ['qryuser']
+const unInterceptorUrl = ['qryuser','getevalution']
 
 export const request = function(config){
 	store.commit('updateLoadingStatus', {isLoading: true})

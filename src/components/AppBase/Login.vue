@@ -1,7 +1,7 @@
 <template>
 	<div class="login">
 		<x-header :left-options="{showBack: false}" title="登录"></x-header>
-		<img src="../../../static/imgs/login/login.png" alt="">
+		<img src="../../../static/imgs/login/logo.png" alt="">
 		<group>
 	      	<x-input title="手机号码" name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" v-model="body.telno"></x-input>
 	      	<x-input title="验证码" class="weui-vcode" v-model="body.number">

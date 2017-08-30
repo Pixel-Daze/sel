@@ -3,11 +3,11 @@
 	<div class="mine p-com-container">
 		<icon-header :info="info"></icon-header>
 		<tabbar class="vux-1px-b">
-	      <tabbar-item class="activeBg" @click.native="goTab(0)">
+	      <tabbar-item class="activeBg" @click.native="goAss">
 	        <span slot="icon" class="icon iconfont icon-ceping"></span>
 	        <span slot="label">我的测评</span>
 	      </tabbar-item>
-	      <tabbar-item class="activeBg" @click.native="goTab(1)">
+	      <tabbar-item class="activeBg" @click.native="goCourse">
 	        <span slot="icon" class="icon iconfont icon-kecheng"></span>
 	        <span slot="label">我的课程</span>
 	      </tabbar-item>
@@ -55,6 +55,12 @@
 			},
 			goBaby(){
 				this.$router.push({path:'/mineBaby'})
+			},
+			goAss(){
+				this.$router.push({path:'/mineAss'})
+			},
+			goCourse(){
+				this.$router.push({path:'/mineCourse'})
 			},
 			goTab(){
 

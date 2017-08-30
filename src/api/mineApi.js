@@ -13,3 +13,11 @@ export function addchild(body){
 export function UploadChildImg(body){
 	return fetch(baseUrl+'UploadChildImg',body)
 }
+
+export function getMineAss(body){
+	return fetch(jsonUrl+'static/json/myAss.json')
+}
+
+export function getMineCourse(body){
+	return fetch(jsonUrl+'static/json/myCourse.json')
+}
