@@ -2,7 +2,7 @@
 <template>
 	<div class="course p-com-container">
 		<ass-cell-wrapper v-for="item in courseList" :ass="item" :key="item.category">
-			<course-cell v-for="cell in item.data" :cell="cell" :key="cell.evaluation_id" @click.native="goDetail(cell)"></courseList-cell>
+			<course-cell v-for="cell in item.data" :cell="cell" :key="cell.evaluation_id" @click.native="goDetail(cell)"></course-cell>
 		</ass-cell-wrapper>
 	</div>
 </template>
