@@ -32,11 +32,12 @@
     },
     methods:{
       loadInfo(){
-        let vm = this
+        let vm = this,path=['Assessment','Course','Mine']
         //获取sessionStorage中的index,选择路由
-        if(vm.getMsg('Index','path')){
-          vm.selected = parseInt(vm.getMsg('Index','path'))
-        }
+        vm.selected = _.indexOf(path,vm.$route.name)
+        // if(vm.getMsg('Index','path')){
+        //   vm.selected = parseInt(vm.getMsg('Index','path'))
+        // }
       },
       changeTab(value){
           let index = parseInt(value),path=['Assessment','Course','Mine'],vm = this

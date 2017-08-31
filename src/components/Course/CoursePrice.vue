@@ -9,15 +9,18 @@
 	      	<swiper v-model="index" :show-dots="false">
 	        	<swiper-item v-for="(item, index) in list" :key="index">
 	        		<div  class="tab-swiper vux-center course-des" v-if="index == 0">
-	          			曲水流觞，是中国古代民间的一种传统习俗，后来发展成为文人墨客诗酒唱酬的一种雅事。夏历的三月上巳日人们举行祓禊（fuxi)仪式
+	          			{{courseInfo.details}}
 	          		</div>
 	          		<div class="tab-swiper vux-center" v-if="index == 1">
 	          			
 	          		</div>
-	          		
 	        	</swiper-item>
 	      	</swiper>
 	    </div>
+	    <div class="price-wrap">
+			<span class="price vux-1px-t">{{courseInfo.price}}元</span>
+			<span class="ass-btn">立即购买</span>
+		</div>
 	</div>
 </template>
 <script>
@@ -94,6 +97,32 @@
 					label{
 						color: #6d6d6d;
 					}
+				}
+			}
+		}
+		.price-wrap{
+			position: absolute;
+			bottom: 0;
+			background-color: #fff;
+			height: 1.2rem;
+			width: 10rem;
+			display: flex;
+			.price{
+				flex: 1;
+				line-height: 1.2rem;
+				font-size: 0.426667rem;
+				color: #f9532d;
+				padding-left: 0.4rem;
+			}
+			.ass-btn{
+				color: #fff;
+				background-color: #f9532d;
+				width: 3rem;
+				line-height: 1.2rem;
+				text-align: center;
+				font-size: 0.426667rem;
+				&:active{
+					background-color: rgba(249,83,45,.8);
 				}
 			}
 		}
