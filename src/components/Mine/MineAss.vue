@@ -3,12 +3,13 @@
 	<div class="mine-ass p-container">
 		<x-header :left-options="{backText: ''}" title="我的测评"></x-header>
 		<tab :line-width="1" custom-bar-width="60px">
-	        <tab-item selected>未完成</tab-item>
-	        <tab-item>已完成</tab-item>
+	        <tab-item :selected="selected=='0'" @on-item-click="onItemClick">未完成</tab-item>
+	        <tab-item :selected="selected=='1'" @on-item-click="onItemClick">已完成</tab-item>
 	    </tab>
 	    <div class="p-com-wrapper" v-if="assList.length>0&&endLoad">
 	    	<ass-cell v-for="item in assList" :cell="item" key="item">
-	    		<span slot="btn" class="ass-btn" @click="assGo">继续测评</span>
+	    		<span slot="btn" v-if="item.current_question_id!='-1'" class="ass-btn" @click="assGo(item)">继续测评</span>
+	    		<span slot="btn" v-else class="ass-btn" @click="assRes">查看报告</span>
 	    	</ass-cell>
 	    </div>
 	    <div class="p-com-wrapper" v-if="assList.length==0&&endLoad">
@@ -26,6 +27,8 @@
 	export default {
 		data(){
 			return {
+				selected:'0',
+				allList:[],
 				assList:[],
 				endLoad:false
 			}
@@ -35,16 +38,59 @@
 		},
 		methods:{
 			loadInfo(){
-				let vm = this
-				api.getMineAss().then(resp=>{
+				let vm = this,body = {
+					user_id:vm.getMsg('base','userInfo').user_id
+				}
+				api.getMineAss(body).then(resp=>{
 					if(resp.data.res=='0'){
-						vm.assList = resp.data.data
-						vm.endLoad = true
+						vm.allList = resp.data.data
+						resp.data.data.forEach(item=>{
+							if(item.current_question_id!='-1'){
+								vm.assList.push(item)
+							}
+						})
+					}
+					vm.endLoad = true
+				})
+			},
+			onItemClick(index){
+				let vm = this
+				vm.assList = []
+				if(index=='0'){
+					vm.allList.forEach(item=>{
+						if(item.current_question_id!='-1'){
+							vm.assList.push(item)
+						}
+					})
+				}else if(index=='1'){
+					vm.allList.forEach(item=>{
+						if(item.current_question_id=='-1'){
+							vm.assList.push(item)
+						}
+					})
+				}
+			},
+			assGo(item){
+				let vm = this,body = {
+					user_id:vm.getMsg('base','userInfo').user_id
+				}
+				vm.setMsg('assDetail','info',item)
+				api.qrychild(body).then(resp=>{
+					if(resp.data.res == 0){
+						if(resp.data.data.length>0){
+							let body = {
+								evaluation_id:item.evaluation_id,
+								user_id:vm.getMsg('base','userInfo').user_id,
+								child_id:resp.data.data[0].child_id,
+								index:1
+							}
+							vm.$router.push({path:'assQueDetail',query:body})
+						}
 					}
 				})
 			},
-			assGo(){
-				console.log('go')
+			assRes(){
+				this.$router.push({path:'/assResult'})
 			}
 		},
 		mounted(){

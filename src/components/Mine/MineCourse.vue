@@ -3,7 +3,7 @@
 	<div class="mine-course p-container">
 		<x-header :left-options="{backText: ''}" title="我的课程" class="vux-1px-b"></x-header>
 		<div class="p-com-wrapper" v-if="courseList.length>0&&endLoad">
-	    	<course-cell v-for="item in courseList" :cell="item" key="item" @click="courseGo">
+	    	<course-cell v-for="item in courseList" :cell="item" key="item" @click="courseGo(item)">
 	    		<span slot="btn" class="ass-btn" >免费</span>
 	    	</course-cell>
 	    </div>
@@ -29,16 +29,23 @@
 		},
 		methods:{
 			loadInfo(){
-				let vm = this
-				api.getMineCourse().then(resp=>{
-					if(resp.data.res=='0'){
+				let vm = this,body = {
+					user_id:vm.getMsg('base','userInfo').user_id
+				}
+				api.getMineCourse(body).then(resp=>{
+					if(resp.data.res=='0'&&resp.data.data!=null){
 						vm.courseList = resp.data.data
-						vm.endLoad = true
 					}
+					vm.endLoad = true
 				})
 			},
-			courseGo(){
-				console.log('go')
+			courseGo(cell){
+				this.setMsg('courseDetail','info',cell)
+				if(parseInt(cell.price)>0){
+					this.$router.push({path:'/coursePrice'})
+				}else if(cell.price==0){
+					this.$router.push({path:'/courseFree'})
+				}
 			}
 		},
 		mounted(){

@@ -6,7 +6,7 @@
 				<div class="name">{{cell.name}}</div>
 				<div class="abstract text-font">{{cell.abstract}}</div>
 				<div class="other">
-					<span class="time text-gray">测试时间：{{cell.evaluation_time}}</span>
+					<span class="time text-gray">测试时间：{{cell.evaluation_time|time_con}}</span>
 					<slot name="btn"></slot>
 				</div>
 			</div>
@@ -14,9 +14,15 @@
 	</div>
 </template>
 <script>
+	import moment from 'moment'
 	export default{
 		props:{
 			cell:Object
+		},
+		filters:{
+			time_con(value){
+				return moment(value).format('YYYY-MM-DD HH:mm:ss')
+			}
 		}
 	}
 </script>

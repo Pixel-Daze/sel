@@ -15,9 +15,11 @@ export function UploadChildImg(body){
 }
 
 export function getMineAss(body){
-	return fetch(jsonUrl+'static/json/myAss.json')
+	// return fetch(jsonUrl+'static/json/myAss.json')
+	return fetch(baseUrl+'QryMyEvaluation',body)
 }
 
 export function getMineCourse(body){
-	return fetch(jsonUrl+'static/json/myCourse.json')
+	// return fetch(jsonUrl+'static/json/myCourse.json')
+	return fetch(baseUrl+'QryMyCourse',body)
 }

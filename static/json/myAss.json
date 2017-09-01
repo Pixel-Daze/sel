@@ -14,7 +14,8 @@
 			"person_count": "50",
 			"picture": "http://img4.imgtn.bdimg.com/it/u=2104185324,1359413794&fm=26&gp=0.jpg",
 			"sample_report": "/front/sel.pdf",
-			"evaluation_time":"2017-07-20 18:24:16"
+			"current_question_id": "1",
+			"evaluation_time":"2017-08-29T06:13:00Z"
 		},
 		{
 			"evaluation_id": "1",
@@ -28,7 +29,8 @@
 			"person_count": "50",
 			"picture": "http://img4.imgtn.bdimg.com/it/u=2104185324,1359413794&fm=26&gp=0.jpg",
 			"sample_report": "/front/sel.pdf",
-			"evaluation_time":"2017-07-20 18:24:16"
+			"current_question_id": "-1",
+			"evaluation_time":"2017-08-29T06:14:00Z"
 		}
     ]
 }
