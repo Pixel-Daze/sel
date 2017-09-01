@@ -1,7 +1,7 @@
 <template>
 	<div class="course-free  p-container">
 		<x-header :left-options="{backText: ''}" :title="courseInfo.name" class="vux-1px-b"></x-header>
-		<div class="prism-player" id="J_prismPlayer" style="position: absolute"></div>
+		<div class="prism-player" id="J_prismPlayer" style="position: absolute" ></div>
 		<div class="info-swiper">
 	       	<tab :line-width=2 active-color='#01ab41' v-model="index">
 	        	<tab-item class="vux-center" :selected="selected === item" v-for="(item, index) in list" @click="selected = item" :key="index">{{item}}</tab-item>
@@ -17,7 +17,7 @@
 	        	</swiper-item>
 	      	</swiper>
 	    </div>
-	    <div class="ass-btn" @click="OpenTest">开始学习</div>
+	    <div class="ass-btn" @click="openStudy">开始学习</div>
 	</div>
 </template>
 <script>
@@ -31,6 +31,7 @@
 				index:0,
 				selected:'介绍',
 				list:['介绍','资源'],
+				player:{}
 			}
 		},
 		components:{
@@ -49,17 +50,22 @@
 					}
 				})
 			},
-			getMedia(media,playauth){
-				var player = new prismplayer({
+			getMedia(media,data){
+				let vm = this
+				vm.player = new prismplayer({
 		            id: 'J_prismPlayer',
 		            width: '100%',
 		            height: '230px',
 		            autoplay: false,
 		            //播放方式二：推荐
 		            vid : media,
-		            playauth : playauth,
-		            cover: 'http://liveroom-img.oss-cn-qingdao.aliyuncs.com/logo.png'
+		            playauth : data.playAuth,
+		            cover: data.coverurl
 		        });
+			},
+			openStudy(){
+				let vm = this
+				vm.player.play()
 			}
 		},
 		mounted(){

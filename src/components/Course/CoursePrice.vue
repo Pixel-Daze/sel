@@ -52,16 +52,17 @@
 					}
 				})
 			},
-			getMedia(media,playauth){
-				var player = new prismplayer({
+			getMedia(media,data){
+				let vm = this
+				vm.player = new prismplayer({
 		            id: 'J_prismPlayer',
 		            width: '100%',
 		            height: '230px',
 		            autoplay: false,
 		            //播放方式二：推荐
 		            vid : media,
-		            playauth : playauth,
-		            cover: 'http://liveroom-img.oss-cn-qingdao.aliyuncs.com/logo.png'
+		            playauth : data.playAuth,
+		            cover: data.coverurl
 		        });
 			}
 		},
