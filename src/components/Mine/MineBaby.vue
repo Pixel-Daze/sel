@@ -6,9 +6,9 @@
 			<img :src="body.head_portrait" alt="" @click="addPic">
 		</div>
 		<group>
-	      	<x-input title="儿童姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
-	      	<selector v-model="body.gender" title="省份" :options="sexList" @on-change="changeSex"></selector>
-	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="儿童生日"></datetime>
+	      	<x-input title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
+	      	<selector v-model="body.gender" title="性别" :options="sexList" @on-change="changeSex"></selector>
+	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
 	    </group>
 	    <div class="btn-container">
 	    	<x-button type="primary" action-type="button" @click.native="save">保存</x-button>

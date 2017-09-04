@@ -5,7 +5,7 @@
 		<ass-info :info="assInfo" class="p-com-wrapper" v-if="endLoad"></ass-info>
 		<div class="price-wrap">
 			<span class="price vux-1px-t">23元</span>
-			<span class="ass-btn">立即购买</span>
+			<span class="ass-btn" @click="OpenTest">立即购买</span>
 		</div>
 	</div>
 </template>
@@ -13,6 +13,7 @@
 	import {XHeader} from 'vux'
 	import {AssInfo} from './assComponent'
 	import * as api from '../../api/assessmentApi'
+	import * as mineApi from '../../api/mineApi'
 	export default {
 		name:'assPriceDetail',
 		data(){
@@ -27,12 +28,40 @@
 		methods:{
 			loadInfo(){
 				let vm = this
-				api.getAssDetail().then(resp=>{
+				vm.assInfo = vm.getMsg('assDetail','info')
+				if(vm.assInfo){
+					vm.endLoad = true
+				}
+			},
+			OpenTest(){
+				let vm = this,body = {
+					user_id:vm.getMsg('base','userInfo').user_id
+				}
+				mineApi.qrychild(body).then(resp=>{
 					if(resp.data.res == 0){
-						vm.assInfo = resp.data.data
-						vm.endLoad = true
+						if(resp.data.data.length>0){
+							let body = {
+								evaluation_id:vm.assInfo.evaluation_id,
+								user_id:vm.getMsg('base','userInfo').user_id,
+								child_id:resp.data.data[0].child_id,
+								index:0
+							}
+							vm.$router.push({path:'assQueDetail',query:body})
+						}else{
+							vm.$vux.confirm.show({
+							  	// 组件除show外的属性
+							  	onCancel () {
+							    	
+							  	},
+							  	onConfirm () {
+							  		vm.$router.push({name:'Login'})
+							  	}
+							})
+						}
 					}
 				})
+				
+				
 			}
 		},
 		created(){
