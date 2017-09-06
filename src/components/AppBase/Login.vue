@@ -74,7 +74,7 @@
 						if(resp.data.res=='0'){
 							vm.setMsg('Index','path',0)
 							let data = vm.getMsg('login','data')
-							vm.$router.push({path:data.path,query:data.query})
+							vm.getUserInfo(data)
 						}
 					})
 				}
@@ -98,6 +98,17 @@
 				}else{
 					return true
 				}
+			},
+			getUserInfo(data){
+				let vm = this,body = {
+					openid:vm.getCookie('openid')
+				}
+				api.qryUser(body).then(resp=>{
+					if(resp.data.res == 0){
+						vm.setMsg('base','userInfo',resp.data.data)
+						vm.$router.push({path:data.path,query:data.query})
+					}
+				})
 			}
 		},
 		beforeRouteEnter (to, from, next) {

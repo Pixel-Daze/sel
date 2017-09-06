@@ -1,7 +1,6 @@
 <!-- 收费测评详情 -->
 <template>
 	<div class="ass-price-detail p-container">
-		<x-header :left-options="{backText: ''}" title="测评详情" class="vux-1px-b"></x-header>
 		<ass-info :info="assInfo" class="p-com-wrapper" v-if="endLoad"></ass-info>
 		<div class="price-wrap">
 			<span class="price vux-1px-t">23元</span>
@@ -34,32 +33,50 @@
 				}
 			},
 			OpenTest(){
-				let vm = this,body = {
-					user_id:vm.getMsg('base','userInfo').user_id
-				}
-				mineApi.qrychild(body).then(resp=>{
-					if(resp.data.res == 0){
-						if(resp.data.data.length>0){
-							let body = {
-								evaluation_id:vm.assInfo.evaluation_id,
-								user_id:vm.getMsg('base','userInfo').user_id,
-								child_id:resp.data.data[0].child_id,
-								index:0
-							}
-							vm.$router.push({path:'assQueDetail',query:body})
-						}else{
-							vm.$vux.confirm.show({
-							  	// 组件除show外的属性
-							  	onCancel () {
-							    	
-							  	},
-							  	onConfirm () {
-							  		vm.$router.push({name:'Login'})
-							  	}
-							})
-						}
+				let vm = this,body = ''
+				if(vm.getMsg('base','userInfo')!=null){
+					body = {
+						user_id:vm.getMsg('base','userInfo').user_id
 					}
-				})
+					mineApi.qrychild(body).then(resp=>{
+						if(resp.data.res == 0){
+							if(resp.data.data!=null){
+								let body = {
+									evaluation_id:vm.assInfo.evaluation_id,
+									user_id:vm.getMsg('base','userInfo').user_id,
+									child_id:resp.data.data[0].child_id,
+									index:0
+								}
+								vm.$router.push({path:'assQueDetail',query:body})
+							}else{
+								vm.$vux.confirm.show({
+								  	// 组件除show外的属性
+								  	title: '提示',
+        							content: '您还未绑定儿童信息，是否前往绑定',
+								  	onCancel () {
+								    	
+								  	},
+								  	onConfirm () {
+								  		vm.$router.push({path:'/mineBaby'})
+								  	}
+								})
+							}
+						}
+					})
+				}else{
+					vm.$vux.confirm.show({
+						// 组件除show外的属性
+						title: '提示',
+        				content: '前往登录',
+						onCancel () {
+								    	
+						},
+						onConfirm () {
+							vm.$router.push({name:'Login'})
+						}
+					})
+				}
+				
 				
 				
 			}
@@ -73,7 +90,7 @@
 	.ass-price-detail{
 		.p-com-wrapper{
 			background-color: #fff;
-			height: calc(100% - 1.2rem - 46px);
+			height: calc(100% - 1.2rem);
 		}
 		.price-wrap{
 			position: absolute;
