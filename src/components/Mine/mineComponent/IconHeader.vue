@@ -1,5 +1,5 @@
 <template>
-	<div class="mine-header">
+	<div class="mine-header bgGreen">
 		<div class="mine-pic">
 			<!-- <span class="icon iconfont icon-head_default absCenter"></span> -->
 			<img :src="info.head_portrait" alt="">
@@ -16,9 +16,9 @@
 	}
 </script>
 <style lang='scss'>
+
 	.mine-header{
 		height: 5.0rem;
-		background:#01b38a;
 		text-align: center;
 		.mine-pic{
 			width: 1.8rem;

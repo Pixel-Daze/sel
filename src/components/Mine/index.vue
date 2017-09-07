@@ -30,6 +30,7 @@
 		},
 		methods:{
 			loadInfo(){
+				document.title = '我的'
 				this.getUserInfo()
 			},
 			getUserInfo(){

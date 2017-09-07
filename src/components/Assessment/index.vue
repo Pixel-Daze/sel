@@ -22,6 +22,7 @@
 		methods:{
 			loadInfo(){
 				let vm = this
+				document.title = '测评'
 				vm.getUserInfo()
 			},
 			getUserInfo(){

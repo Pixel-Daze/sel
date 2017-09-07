@@ -23,6 +23,7 @@
 		methods:{
 			loadInfo(){
 				let vm = this
+				document.title = '课程'
 				vm.getUserInfo()
 			},
 			getUserInfo(){

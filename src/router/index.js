@@ -23,7 +23,7 @@ const MineCourse = resolve => require(['../components/Mine/MineCourse'],resolve)
 
 var routerMaps = [
   {name:'AppBase',path:'/appbase',component:AppBase,children:[
-      {name:'Assessment',path:'assessment',component:Assessment},
+      {name:'Assessment',path:'assessment',component:Assessment,meta:{title:'测评'}},
       {name:'Course',path:'course',component:Course},
       {name:'Mine',path:'mine',component:Mine}
   ]},
