@@ -1,4 +1,5 @@
 /* vue自定义插件方法 */
+import moment from 'moment'
 export default {
 	install(Vue){
 
@@ -6,6 +7,13 @@ export default {
 		Vue.prototype.back = () => {
 			this.$router?this.$router.back():window.history.back()
 		}
+
+        /*格式化日期*/
+        Vue.prototype.formatDate = (date) => {
+            if(date){
+                return moment(date).format('YYYY-MM-DD')
+            }
+        }
 
 		/* 存储本地信息
 		   格式：{"app":{"selected":"appIndex"}}

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
   	<loading v-model="isLoading" text="努力加载中"></loading>
-    <router-view></router-view>
+    <transition name="pixel-pop-in">
+      <router-view class="router-view"></router-view> 
+    </transition>
   </div>
 </template>
 
@@ -27,4 +29,34 @@ html,body,#app {
 	height:100%;
   background:#f2f2f2;
 }
+      .router-view {
+        width: 100%;
+      }
+      .pixel-pop-out-enter-active,
+    .pixel-pop-out-leave-active,
+    .pixel-pop-in-enter-active,
+    .pixel-pop-in-leave-active {
+      will-change: transform;
+      transition: all 500ms ease;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      perspective: 1000;
+    }
+    .pixel-pop-out-enter {
+      opacity: 0;
+      transform: translate3d(-100%, 0, 0);
+    }
+    .pixel-pop-out-leave-active {
+      opacity: 0;
+      transform: translate3d(100%, 0, 0);
+    }
+    .pixel-pop-in-enter {
+      opacity: 0;
+      transform: translate3d(100%, 0, 0);
+    }
+    .pixel-pop-in-leave-active {
+      opacity: 0;
+      transform: translate3d(-100%, 0, 0);
+    }
 </style>

@@ -1,7 +1,6 @@
 <!-- 我的宝贝 -->
 <template>
 	<div class="mine-baby">
-		<x-header :left-options="{backText: ''}" title="我的宝贝"></x-header>
 		<div class="headIcon">
 			<img :src="body.head_portrait" alt="" @click="addPic">
 		</div>
@@ -17,7 +16,6 @@
 </template>
 <script>
 	import {Group,Datetime,XInput,Selector,XButton,XHeader} from 'vux'
-	import moment from 'moment'
 	import * as api from '../../api/mineApi'
 	export default {
 		data(){
@@ -50,15 +48,8 @@
 					vm.body.user_id = vm.getMsg('base','userInfo').user_id
 					api.addchild(vm.body).then(resp=>{
 						if(resp.data.res == 0){
-							let text = '添加成功'
-							if(vm.body.child_id!='0'){
-								text = '修改成功'
-							}
-							this.$vux.toast.show({
-								text: text,
-								type: 'text',
-								width: '3.5rem'
-							})
+							let data = vm.getMsg('mineBaby','data')
+							vm.$router.push({path:data.path,query:data.query})
 						}
 					})
 				}
@@ -68,12 +59,13 @@
 				let vm = this,body = {
 					user_id:vm.getMsg('base','userInfo').user_id
 				}
+				document.title = '我的宝贝'
 				vm.configWxjssdk()
 				api.qrychild(body).then(resp=>{
 					if(resp.data.res == 0){
 						if(resp.data.data.length>0){
 							vm.body.child_id = resp.data.data[0].child_id
-							vm.body.birth_date = moment(resp.data.data[0].birth_date).format('YYYY-MM-DD')
+							vm.body.birth_date = vm.formatDate(resp.data.data[0].birth_date)
 							vm.body.gender = resp.data.data[0].gender
 							vm.body.name = resp.data.data[0].name
 							vm.body.head_portrait = resp.data.data[0].head_portrait
@@ -126,7 +118,6 @@
 				        // console.log(vm.body.name = res.serverId)
 				        api.UploadChildImg(body).then(resp=>{
 				        	if(resp.data.res=='0'){
-				        		console.log(resp.data.data)
 				        		vm.body.head_portrait = resp.data.data
 				        	}
 				        })
@@ -136,6 +127,15 @@
 		},
 		created(){
 			this.loadInfo()
+		},
+		beforeRouteEnter (to, from, next) {
+		    next(vm=>{
+		    	let body = {
+			    	path:from.path,
+			    	query:from.query
+			    }
+		    	vm.setMsg('mineBaby','data',body)
+		    })
 		}
 	}
 </script>

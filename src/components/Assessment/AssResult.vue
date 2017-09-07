@@ -1,7 +1,6 @@
 <!-- 测评结果页 -->
 <template>
 	<div class="ass-result">
-		<x-header :left-options="{backText: '返回列表',preventGoBack:true}" @on-click-back="backToList" title="测评结果" class="vux-1px-b"></x-header>
 		<div class="ass-info vux-1px-b">
 			<p class="ass-title">适应性行为测评</p>
 			<p class="des">测试者：朱智鑫</p>
@@ -29,9 +28,12 @@
 			getPDF(){
 				
 			},
-			backToList(){
-				this.$router.push({name:'Assessment'})
+			loadInfo(){
+				document.title = '测评结果'
 			}
+		},
+		mounted(){
+			this.loadInfo()
 		}
 	}
 </script>

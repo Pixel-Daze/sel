@@ -1,7 +1,6 @@
 <!-- 免费测评页面详情 -->
 <template>
 	<div class="ass-free-detail p-container">
-		<x-header :left-options="{backText: ''}" title="测评详情" class="vux-1px-b"></x-header>
 		<ass-info :info="assInfo" class="p-com-wrapper" v-if="endLoad"></ass-info>
 		<div class="ass-btn" @click="OpenTest">开始测试</div>
 	</div>
@@ -26,6 +25,7 @@
 			loadInfo(){
 				let vm = this
 				vm.assInfo = vm.getMsg('assDetail','info')
+				document.title = vm.assInfo.name
 				if(vm.assInfo){
 					vm.endLoad = true
 				}
@@ -70,7 +70,7 @@
 	.ass-free-detail{
 		.p-com-wrapper{
 			background-color: #fff;
-			height: calc(100% - 1.2rem - 46px);
+			height: calc(100% - 1.2rem);
 		}
 		.ass-btn{
 			position: absolute;

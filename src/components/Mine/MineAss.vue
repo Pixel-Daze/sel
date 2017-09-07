@@ -1,7 +1,6 @@
 <!-- 我的测评 -->
 <template>
 	<div class="mine-ass p-container">
-		<x-header :left-options="{backText: ''}" title="我的测评"></x-header>
 		<tab :line-width="1" custom-bar-width="60px">
 	        <tab-item :selected="selected=='0'" @on-item-click="onItemClick">未完成</tab-item>
 	        <tab-item :selected="selected=='1'" @on-item-click="onItemClick">已完成</tab-item>
@@ -41,6 +40,7 @@
 				let vm = this,body = {
 					user_id:vm.getMsg('base','userInfo').user_id
 				}
+				document.title = '我的测评'
 				api.getMineAss(body).then(resp=>{
 					if(resp.data.res=='0'){
 						vm.allList = resp.data.data
@@ -106,7 +106,7 @@
 			border-bottom-color: $text-green-color;
 		}
 		.p-com-wrapper{
-			height: calc(100% - 90px);
+			height: calc(100% - 44px);
 		}
 		.ass-btn{
 			color: #fff;

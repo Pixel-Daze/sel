@@ -28,6 +28,7 @@
 			loadInfo(){
 				let vm = this
 				vm.assInfo = vm.getMsg('assDetail','info')
+				document.title = vm.assInfo.name
 				if(vm.assInfo){
 					vm.endLoad = true
 				}

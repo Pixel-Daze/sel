@@ -1,7 +1,9 @@
 <!-- app-base -->
 <template>
 	<div class="app-base p-container">
-		<router-view class="router-view"></router-view>	
+    <transition name="pixel-pop-in">
+      <router-view class="router-view"></router-view> 
+    </transition>
 		<tabbar v-model="selected">
       <tabbar-item class="activeBg" @click.native="changeTab(0)">
         <span slot="icon" class="icon iconfont icon-ceping"></span>
@@ -56,6 +58,33 @@
   .app-base{
       .router-view {
         width: 100%;
+      }
+      .pixel-pop-out-enter-active,
+      .pixel-pop-out-leave-active,
+      .pixel-pop-in-enter-active,
+      .pixel-pop-in-leave-active {
+        will-change: transform;
+        transition: all 500ms ease;
+        height: 100%;
+        position: absolute;
+        backface-visibility: hidden;
+        perspective: 1000;
+      }
+      .pixel-pop-out-enter {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+      }
+      .pixel-pop-out-leave-active {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+      }
+      .pixel-pop-in-enter {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+      }
+      .pixel-pop-in-leave-active {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
       }
   }
 </style>

@@ -1,6 +1,5 @@
 <template>
 	<div class="course-price  p-container">
-		<x-header :left-options="{backText: ''}" :title="courseInfo.name" class="vux-1px-b"></x-header>
 		<div class="prism-player" id="J_prismPlayer" style="position: absolute"></div>
 		<div class="info-swiper">
 	       	<tab :line-width=2 active-color='#01ab41' v-model="index">
@@ -43,6 +42,7 @@
 			loadInfo(){
 				let vm = this
 				vm.courseInfo = vm.getMsg('courseDetail','info')
+				document.title = vm.courseInfo.name
 				let body = {
 					media:vm.courseInfo.media
 				}
@@ -77,7 +77,7 @@
 			position: relative !important;
 		}
 		.info-swiper{
-			height: calc(100% - 230px - 46px - 1.2rem) !important;
+			height: calc(100% - 230px - 1.2rem) !important;
 			.vux-slider{
 				height: calc(100%  - 44px) !important;
 				.vux-swiper{

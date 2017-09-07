@@ -1,6 +1,5 @@
 <template>
 	<div class="ass-que-detail p-container" v-if="endLoad">
-		<x-header :left-options="{backText: ''}" :title="assInfo.name" class="vux-1px-b"></x-header>
 		<div class="p-com-wrapper">
 			<div class="cent">
 				<div class="num">{{Info.question_index}}/{{Info.maxIndex}}</div>
@@ -87,6 +86,7 @@
 					}
 				})
 				vm.assInfo = vm.getMsg('assDetail','info')
+				document.title = vm.assInfo.name
 			},
 			InitAnswer(result,questions){
 				let vm = this
@@ -204,6 +204,7 @@
 			.ques{
 				width: 9.306667rem;
 				padding: 0 0.346667rem 0.2rem;
+				font-size: 17px;
 			}
 			.dimension{
 				padding: 0.266667rem 0.346667rem 0;
