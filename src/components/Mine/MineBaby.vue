@@ -6,7 +6,7 @@
 		</div>
 		<group>
 	      	<x-input title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
-	      	<selector v-model="body.gender" title="性别" :options="sexList" @on-change="changeSex"></selector>
+	      	<pixel-selector v-if="endLoad" title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
 	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
 	    </group>
 	    <div class="btn-container">
@@ -16,12 +16,13 @@
 </template>
 <script>
 	import {Group,Datetime,XInput,Selector,XButton,XHeader} from 'vux'
+	import {PixelSelector} from './mineComponent'
 	import * as api from '../../api/mineApi'
 	export default {
 		data(){
 			return {
 				body:{
-					head_portrait:'http://img4.imgtn.bdimg.com/it/u=2104185324,1359413794&fm=26&gp=0.jpg',
+					head_portrait:'',
 					relation:'0',
 					name:'',
 					gender:'0',
@@ -29,15 +30,16 @@
 					user_id:'',
 					child_id:'0'
 				},
-				sexList:[{key: '0', value: '男'}, {key: '1', value: '女'}]
+				sexList:[{key: '0', value: '男生'}, {key: '1', value: '女生'}],
+				endLoad:false
 			}
 		},
 		components:{
-			Group,Datetime,XInput,Selector,XButton,XHeader
+			Group,Datetime,XInput,Selector,XButton,XHeader,PixelSelector
 		},
 		methods:{
-			changeSex(val){
-				// console.log(val)
+			chengeSex(val){
+				this.body.gender = val
 			},
 			changeDate(val){
 				// console.log(val)
@@ -69,7 +71,10 @@
 							vm.body.gender = resp.data.data[0].gender
 							vm.body.name = resp.data.data[0].name
 							vm.body.head_portrait = resp.data.data[0].head_portrait
+						}else{
+							vm.body.head_portrait = window.config.head_pic
 						}
+						vm.endLoad = true
 					}
 				})
 			},
@@ -163,6 +168,10 @@
 				height: 46px;
 				font-size: 20px;
 			}
+		}
+		.weui-cell_access .weui-cell__ft {
+		    text-align: left;
+		    padding-left: 16px;
 		}
 	}
 </style>
