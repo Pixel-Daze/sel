@@ -2,6 +2,7 @@
     "res":0,
     "msg":"",
     "data":{
+    	"answer":"",
         "question_id":2,
         "evaluation_id":1,
         "question_index":1,

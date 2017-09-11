@@ -19,14 +19,12 @@
 
 			</div>
 			<div class="btn-container">
-		    	<span v-if="Info.question_index==1&&Info.maxIndex>1" class="first_btn" @click="next">下一题</span>
 		    	<div v-if="Info.question_index!=1&&Info.maxIndex!=Info.question_index" class="btn_g">
-		    		<span @click="prev">上一题</span>
-		    		<span @click="next">下一题</span>
+		    		<span class="first_btn" @click="prev">上一题</span>
 		    	</div>
 		    	<div v-if="Info.question_index==Info.maxIndex" class="btn_g">
 		    		<span @click="prev">上一题</span>
-		    		<span class="submit activeBg" @click="next">提交测评</span>
+		    		<span class="submit activeBg" @click="next">查看报告</span>
 		    	</div>
 		    </div>
 		</div>
@@ -102,15 +100,14 @@
 			getItem(item,index){
 				let vm = this
 				vm.curIndex = index
+				setTimeout(()=>{
+					vm.next()
+				},100)
 			},
 			next(){
 				let vm = this
 				if((vm.questions.dimensions.length!=vm.answer.length)||vm.checkAnswer()){
-					vm.$vux.toast.show({
-						text: '请选择答案',
-						type: 'text',
-						width: '3.5rem'
-					})
+					
 				}else{
 					let str = ''
 					vm.answer.forEach((item,index)=>{
@@ -156,12 +153,24 @@
 				api.updateevalution(body).then(resp=>{
 					if(resp.data.res == '0'){
 						if(vm.Info.question_index==vm.Info.maxIndex){
+							/*做完最后一题，等待提交*/
 							let info = vm.getMsg('assDetail','info')
-							let body = {
+							/*let body = {
 								name : info.name,
 								details : info.details
 							}
-							vm.$router.push({path:'/assResult'})
+							vm.$vux.confirm.show({
+								// 组件除show外的属性
+								title: '提示',
+        						content: '您已完成'+vm.assInfo.name+'，是否前往查看测评结果？',
+								onCancel () {
+								   	
+								},
+								onConfirm () {
+								   vm.$router.push({path:'/assResult'})
+								}
+							})*/
+							
 						}else{
 							vm.getNext()
 						}
