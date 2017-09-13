@@ -1,12 +1,12 @@
 <template>
-	<div class="ass-que-detail p-container" v-if="endLoad">
-		<div class="p-com-wrapper">
+	<div class="ass-que-detail" v-if="endLoad">
+		<div>
 			<div class="cent">
 				<div class="num">{{Info.question_index}}/{{Info.maxIndex}}</div>
 				<pro-bar class="pro" :percent="percent"></pro-bar>
 			</div>
 			
-			<div class="ass-que">
+			<div class="ass-que" v-if="questions.dimensions.length==1">
 				<div class="ques">
 					{{Info.question_index}}、{{questions.question}}
 				</div>
@@ -16,15 +16,38 @@
 				      	<radio :options="item.options" v-model="item.answer" @on-change="change" @click.native="getItem(item,index)"></radio>
 				    </group>
 				</div>
+			</div>
+			<div class="ass-que" v-if="questions.dimensions.length>1">
+				<div class="ques">
+					{{Info.question_index}}、{{questions.question}}
+				</div>
+				<div v-for="(item,index) in questions.dimensions">
+					<p class="dimension">{{item.dimension}}</p>
+					<group>
+				      	<radio :options="item.options" v-model="item.answer" @on-change="change" @click.native="getItemTwo(item,index)"></radio>
+				    </group>
+				</div>
 
 			</div>
-			<div class="btn-container">
+
+			<div class="btn-container" v-if="questions.dimensions.length==1">
 		    	<div v-if="Info.question_index!=1&&Info.maxIndex!=Info.question_index" class="btn_g">
 		    		<span class="first_btn" @click="prev">上一题</span>
 		    	</div>
 		    	<div v-if="Info.question_index==Info.maxIndex" class="btn_g">
 		    		<span @click="prev">上一题</span>
-		    		<span class="submit activeBg" @click="next">查看报告</span>
+		    		<span class="submit activeBg" @click="submit">查看报告</span>
+		    	</div>
+		    </div>
+		    <div class="btn-container" v-if="questions.dimensions.length>1">
+		    	<span v-if="Info.question_index==1&&Info.maxIndex>1" class="first_btn" @click="next">下一题</span>
+		    	<div v-if="Info.question_index!=1&&Info.maxIndex!=Info.question_index" class="btn_g">
+		    		<span @click="prev">上一题</span>
+		    		<span @click="next">下一题</span>
+		    	</div>
+		    	<div v-if="Info.question_index==Info.maxIndex" class="btn_g">
+		    		<span @click="prev">上一题</span>
+		    		<span class="submit activeBg" @click="submit">查看报告</span>
 		    	</div>
 		    </div>
 		</div>
@@ -72,6 +95,9 @@
 							})
 						}
 						vm.percent = vm.Info.question_index/vm.Info.maxIndex*100
+						if(vm.percent==100&&vm.Info.answer!=''){
+							vm.setMsg('assDetail','submitFlag',true)
+						}
 						vm.endLoad = true
 					}else if(resp.data.res == 1 && resp.data.msg == "当前题目已经做完！"){
 						this.$vux.alert.show({
@@ -103,6 +129,10 @@
 				setTimeout(()=>{
 					vm.next()
 				},100)
+			},
+			getItemTwo(item,index){
+				let vm = this
+				vm.curIndex = index
 			},
 			next(){
 				let vm = this
@@ -155,22 +185,7 @@
 						if(vm.Info.question_index==vm.Info.maxIndex){
 							/*做完最后一题，等待提交*/
 							let info = vm.getMsg('assDetail','info')
-							/*let body = {
-								name : info.name,
-								details : info.details
-							}
-							vm.$vux.confirm.show({
-								// 组件除show外的属性
-								title: '提示',
-        						content: '您已完成'+vm.assInfo.name+'，是否前往查看测评结果？',
-								onCancel () {
-								   	
-								},
-								onConfirm () {
-								   vm.$router.push({path:'/assResult'})
-								}
-							})*/
-							
+							vm.setMsg('assDetail','submitFlag',true)
 						}else{
 							vm.getNext()
 						}
@@ -187,6 +202,44 @@
 				}
 				vm.loadInfo(body)
 				vm.$router.push({path:'assQueDetail',query:body})
+			},
+			submit(){
+				let vm = this
+				if(vm.getMsg('assDetail','submitFlag')){
+					let info = vm.getMsg('assDetail','info')
+					let body = {
+						name : info.name,
+						details : info.details
+					}
+					vm.$vux.confirm.show({
+						// 组件除show外的属性
+						title: '提示',
+        				content: '您已完成'+vm.assInfo.name+'，是否前往查看测评结果？',
+						onCancel () {
+								   	
+						},
+						onConfirm () {
+							vm.getReport()
+						}
+					})
+				}else{
+					vm.$vux.alert.show({
+						title: '提示',
+						content: '请选择答案再提交'
+					})
+				}
+			},
+			getReport(){
+				let vm = this,body = {
+					evaluation_id:vm.$route.query.evaluation_id,
+					user_id:vm.$route.query.user_id,
+					child_id:vm.$route.query.child_id
+				}
+				api.qryReport(body).then(resp=>{
+					if(resp.data.res=='0'){
+						vm.$router.push({path:'/assResult'})
+					}
+				})
 			}
 		},
 		created(){
@@ -217,6 +270,7 @@
 			}
 			.dimension{
 				padding: 0.266667rem 0.346667rem 0;
+				font-size: 16px;
 			}
 		}
 		.btn-container{

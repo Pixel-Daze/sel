@@ -32,3 +32,7 @@ export function updateevalution(body){
 	return fetch(baseUrl+'updateevalution',body)
 }
 
+export function qryReport(body){
+	return fetch(baseUrl+'QryReport',body)
+}
+
