@@ -6,7 +6,7 @@
 		</div>
 		<group>
 	      	<x-input class="name" title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
-	      	<pixel-selector v-if="endLoad" title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
+	      	<pixel-selector title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
 	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
 	    </group>
 	    <div class="btn-container">
@@ -30,7 +30,7 @@
 					user_id:'',
 					child_id:'0'
 				},
-				sexList:[{key: '0', value: '男生'}, {key: '1', value: '女生'}],
+				sexList:[{key: '0', value: '男',icon:'icon-boy'}, {key: '1', value: '女',icon:'icon-girl'}],
 				endLoad:false
 			}
 		},
@@ -160,6 +160,15 @@
 				display: none;
 			}
 		}
+		.weui-cells{
+			margin: 1.17647059em 15px 0;
+		}
+		.weui-cell{
+			padding: 13px 0;
+			&:before{
+				left: 0;
+			}
+		}
 		.headIcon{
 			width: 1.8rem;
 			height: 1.8rem;
@@ -174,7 +183,7 @@
 			}
 		}
 		.btn-container{
-			padding:0.8rem 0.426667rem 0;
+			padding:0.8rem 15px 0;
 			button{
 				height: 46px;
 				font-size: 20px;

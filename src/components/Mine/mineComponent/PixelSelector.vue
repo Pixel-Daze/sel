@@ -3,8 +3,9 @@
 		<span class="title">{{title}}</span>
 		<div class="i-area">
 			<span class="cell vux-1px" :class="
-			{selected:valueId == cell.key}" v-for="cell in options" @click="onSelect(cell.key)">
-				{{cell.value}}
+			{selected:valueId == cell.key}" :id="cell.icon" v-for="cell in options" @click="onSelect(cell.key)">
+				<span class="icon iconfont" :class="cell.icon"></span>
+				<span class="label">{{cell.value}}</span>
 			</span>
 		</div>
 	</div>
@@ -52,18 +53,41 @@
     		text-align: right;
 			.cell{
 				position: relative;
-				padding: 2px 8px;
+				padding: 2px 12px 4px 8px;
 				margin-right: 10px;
 				text-align: center;
 				display: inline-block;
 				&::before{
 					border-radius: 0.266667rem;
 				}
+				.icon-girl{
+					color: pink;
+				}
+				.icon-boy{
+					color:$text-green-color;
+				}
 			}
-			.selected{
-				color: $text-green-color;
+			.selected#icon-boy{
+				background-color: $text-green-color;
 				&::before{
 					border-color: $text-green-color;
+				}
+			}
+			.selected#icon-girl{
+				background-color: pink;
+				&:before{
+					border-color: pink;
+				}
+			}
+			.selected{
+				color: #fff;
+				border-radius: 0.136667rem;
+				.icon-boy{
+					color: #fff;
+				}
+				.icon-girl{
+					color: #fff;
+					
 				}
 			}
 		}
