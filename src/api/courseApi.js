@@ -9,3 +9,7 @@ export function getCourseList(body){
 export function getVideoPlayAuth(body){
 	return fetch(baseUrl+'GetVideoPlayAuth',body)
 }
+
+export function videoPlaybackRecord(body){
+	return fetch(baseUrl+'VideoPlaybackRecord',body)
+}

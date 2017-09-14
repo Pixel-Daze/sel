@@ -1,6 +1,9 @@
 <template>
 	<div class="course-free  p-container">
-		<div class="prism-player" id="J_prismPlayer" style="position: absolute" ></div>
+		<div v-if="!showFlag" class="video-pic">
+			<img :src="cover" alt="">
+		</div>
+		<div v-show="showFlag" class="prism-player" id="J_prismPlayer" style="position: absolute" ></div>
 		<div class="info-swiper">
 	       	<tab :line-width=2 active-color='#01ab41' v-model="index">
 	        	<tab-item class="vux-center" :selected="selected === item" v-for="(item, index) in list" @click="selected = item" :key="index">{{item}}</tab-item>
@@ -30,7 +33,9 @@
 				index:0,
 				selected:'介绍',
 				list:['介绍','资源'],
-				player:{}
+				player:{},
+				showFlag:false,
+				cover:''
 			}
 		},
 		components:{
@@ -46,6 +51,7 @@
 				}
 				api.getVideoPlayAuth(body).then(resp=>{
 					if(resp.data.res=='0'){
+						vm.cover = resp.data.data.coverurl
 						vm.getMedia(vm.courseInfo.media,resp.data.data)
 					}
 				})
@@ -64,8 +70,15 @@
 		        });
 			},
 			openStudy(){
-				let vm = this
+				let vm = this,body = {
+					course_id:vm.courseInfo.course_id,
+					user_id:vm.getMsg('base','userInfo').user_id
+				}
+				/* 发送观看记录 */
+				api.videoPlaybackRecord(body)
+				vm.showFlag = true
 				vm.player.play()
+				
 			}
 		},
 		mounted(){
@@ -77,6 +90,15 @@
 	.course-free{
 		.prism-player{
 			position: relative !important;
+		}
+		.video-pic{
+			height: 230px;
+			width: 100%;
+			img{
+				width: 100%;
+				height: 100%;
+				display: inline-block;
+			}
 		}
 		.info-swiper{
 			height: calc(100% - 230px - 1.2rem) !important;

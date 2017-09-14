@@ -48,6 +48,8 @@
 		.i-area{
 			flex: 1;
 			padding-left: 16px;
+			padding-right: 2px;
+    		text-align: right;
 			.cell{
 				position: relative;
 				padding: 2px 8px;

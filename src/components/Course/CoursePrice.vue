@@ -1,6 +1,9 @@
 <template>
 	<div class="course-price  p-container">
-		<div class="prism-player" id="J_prismPlayer" style="position: absolute"></div>
+		<div v-if="!showFlag" class="video-pic">
+			<img :src="cover" alt="">
+		</div>
+		<div v-show="showFlag" class="prism-player" id="J_prismPlayer" style="position: absolute"></div>
 		<div class="info-swiper">
 	       	<tab :line-width=2 active-color='#01ab41' v-model="index">
 	        	<tab-item class="vux-center" :selected="selected === item" v-for="(item, index) in list" @click="selected = item" :key="index">{{item}}</tab-item>
@@ -18,7 +21,7 @@
 	    </div>
 	    <div class="price-wrap">
 			<span class="price vux-1px-t">{{courseInfo.price}}元</span>
-			<span class="ass-btn">立即购买</span>
+			<span class="ass-btn" @click="buy_course">立即购买</span>
 		</div>
 	</div>
 </template>
@@ -33,6 +36,9 @@
 				index:0,
 				selected:'介绍',
 				list:['介绍','资源'],
+				player:{},
+				showFlag:false,
+				cover:''
 			}
 		},
 		components:{
@@ -48,6 +54,7 @@
 				}
 				api.getVideoPlayAuth(body).then(resp=>{
 					if(resp.data.res=='0'){
+						vm.cover = resp.data.data.coverurl
 						vm.getMedia(vm.courseInfo.media,resp.data.data)
 					}
 				})
@@ -64,6 +71,13 @@
 		            playauth : data.playAuth,
 		            cover: data.coverurl
 		        });
+			},
+			buy_course(){
+			    let vm = this
+				vm.$vux.alert.show({
+					title: '提示',
+					content: '付费课程暂未开放，敬请期待'
+				})
 			}
 		},
 		mounted(){
@@ -75,6 +89,15 @@
 	.course-price{
 		.prism-player{
 			position: relative !important;
+		}
+		.video-pic{
+			height: 230px;
+			width: 100%;
+			img{
+				width: 100%;
+				height: 100%;
+				display: inline-block;
+			}
 		}
 		.info-swiper{
 			height: calc(100% - 230px - 1.2rem) !important;

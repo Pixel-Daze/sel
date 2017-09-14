@@ -40,22 +40,39 @@
 				let vm = this,body = {
 					user_id:vm.getMsg('base','userInfo').user_id
 				}
+				if(vm.getMsg('mineAss','index')){
+					vm.selected = vm.getMsg('mineAss','index')
+				}
 				document.title = '我的测评'
 				api.getMineAss(body).then(resp=>{
 					if(resp.data.res=='0'){
 						vm.allList = resp.data.data
-						resp.data.data.forEach(item=>{
-							if(item.current_question_id!='-1'){
-								vm.assList.push(item)
-							}
-						})
+						vm.render(vm.allList)
+						
 					}
 					vm.endLoad = true
 				})
 			},
+			render(data){
+				let vm = this
+				if(vm.selected=='0'){
+					data.forEach(item=>{
+						if(item.current_question_id!='-1'){
+							vm.assList.push(item)
+						}
+					})
+				}else if(vm.selected=='1'){
+					data.forEach(item=>{
+						if(item.current_question_id=='-1'){
+							vm.assList.push(item)
+						}
+					})
+				}
+			},
 			onItemClick(index){
 				let vm = this
 				vm.assList = []
+				vm.setMsg('mineAss','index',index)
 				if(index=='0'){
 					vm.allList.forEach(item=>{
 						if(item.current_question_id!='-1'){

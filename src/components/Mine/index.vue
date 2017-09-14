@@ -58,6 +58,7 @@
 				this.$router.push({path:'/mineBaby'})
 			},
 			goAss(){
+				this.setMsg('mineAss','index',0)
 				this.$router.push({path:'/mineAss'})
 			},
 			goCourse(){

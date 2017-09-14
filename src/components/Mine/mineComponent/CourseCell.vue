@@ -1,6 +1,6 @@
 <template>
-	<div class="mine-course-cell">
-		<div class="container vux-1px-b">
+	<div class="mine-course-cell activeBg vux-1px-b">
+		<div class="container">
 			<img :src="cell.picture" alt="">
 			<div class="info">
 				<div class="name">{{cell.name}}</div>

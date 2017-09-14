@@ -5,7 +5,7 @@
 			<img :src="body.head_portrait" alt="" @click="addPic">
 		</div>
 		<group>
-	      	<x-input title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
+	      	<x-input class="name" title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
 	      	<pixel-selector v-if="endLoad" title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
 	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
 	    </group>
@@ -149,6 +149,17 @@
 		height: 100%;
 		width: 100%;
 		background: #fff;
+		.name{
+			.weui-cell__bd{
+				padding-right: 11px;
+				.weui-input{
+					text-align: right;
+				}
+			}
+			.weui-cell__ft{
+				display: none;
+			}
+		}
 		.headIcon{
 			width: 1.8rem;
 			height: 1.8rem;
@@ -170,7 +181,6 @@
 			}
 		}
 		.weui-cell_access .weui-cell__ft {
-		    text-align: left;
 		    padding-left: 16px;
 		}
 	}
