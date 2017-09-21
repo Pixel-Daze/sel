@@ -1,7 +1,6 @@
 <template>
 	<div class="login">
-		<x-header :left-options="{showBack: false}" title="登录"></x-header>
-		<img src="../../../static/imgs/login/logo.png" alt="">
+		<img src="../../../static/imgs/login/logo_1.png" alt="">
 		<group>
 	      	<x-input title="手机号码" name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" v-model="body.telno"></x-input>
 	      	<x-input title="验证码" class="weui-vcode" v-model="body.number">
@@ -16,7 +15,7 @@
 	</div>
 </template>
 <script>
-	import {XHeader,XInput,Group,XButton} from 'vux'
+	import {XInput,Group,XButton} from 'vux'
 	import * as api from '../../api/assessmentApi'
 	export default {
 		data(){
@@ -31,7 +30,7 @@
 			}
 		},
 		components:{
-			XHeader,XInput,Group,XButton
+			XInput,Group,XButton
 		},
 		methods:{
 			sendCode(){
@@ -119,6 +118,9 @@
 			    }
 		    	vm.setMsg('login','data',body)
 		    })
+		},
+		mounted(){
+			document.title = '登录'
 		}
 	}
 </script>

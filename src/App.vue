@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  	<loading v-model="isLoading" text="努力加载中"></loading>
+  	<!-- <loading v-model="isLoading" text="努力加载中"></loading> -->
     <transition name="pixel-pop-in">
       <router-view class="router-view"></router-view> 
     </transition>
@@ -28,9 +28,12 @@ export default {
 html,body,#app {
 	height:100%;
   background:#f2f2f2;
+  
 }
       .router-view {
         width: 100%;
+        height:100%;
+        margin:0 auto;
       }
       .pixel-pop-out-enter-active,
     .pixel-pop-out-leave-active,

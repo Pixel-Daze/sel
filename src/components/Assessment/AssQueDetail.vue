@@ -244,7 +244,15 @@
 		},
 		created(){
 			this.loadInfo()
-		}
+		},
+		watch: {
+	   		'$route' (to, from) {
+	   			console.log(this.$route)
+	   			// console.log(to)
+	   			// console.log(from)
+	     		// console.log(this.getStatus(this.$route.path))
+	   		}
+	 	}
 	}
 </script>
 <style lang='scss'>
@@ -284,6 +292,7 @@
 				height: 1.066667rem;
 				line-height: 1.066667rem;
 				font-size: 0.426667rem;
+				border-radius: 5px;
 			}
 			.btn_g{
 				width: 9.146667rem;
@@ -298,6 +307,7 @@
 					color: #01b38a;
 					border: 1px solid #01b38a;
 					padding: 0 1.333333rem;
+					border-radius: 5px;
 				}
 				.submit{
 					border: 1px solid #fff;

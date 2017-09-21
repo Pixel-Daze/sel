@@ -14,9 +14,10 @@
 		</div>
 		<div class="ass-attr">
 			<p class="title">
-				<span class="icon iconfont icon-flag"></span>为什么测试
+				<span class="icon iconfont icon-flag"></span>
+				测评详情
 			</p>
-			<div class="detail">{{info.details}}</div>
+			<div class="detail" v-html="info.details"></div>
 		</div>
 		<div class="ass-pdf activeBg" @click="getPDF">
 			<span class="icon iconfont icon-pdf"></span>
