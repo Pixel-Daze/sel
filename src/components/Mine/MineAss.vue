@@ -99,7 +99,7 @@
 								evaluation_id:item.evaluation_id,
 								user_id:vm.getMsg('base','userInfo').user_id,
 								child_id:resp.data.data[0].child_id,
-								index:1
+								index:0
 							}
 							vm.$router.push({path:'assQueDetail',query:body})
 						}

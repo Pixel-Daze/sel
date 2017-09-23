@@ -10,10 +10,10 @@
 				<div class="ques">
 					{{Info.question_index}}、{{questions.question}}
 				</div>
-				<div v-for="(item,index) in questions.dimensions">
+				<div v-for="(item,index) in questions.dimensions" @click="getItem(item,index)">
 					<p class="dimension">{{item.dimension}}</p>
 					<group>
-				      	<radio :options="item.options" v-model="item.answer" @on-change="change" @click.native="getItem(item,index)"></radio>
+				      	<radio :options="item.options" v-model="item.answer" @on-change="change"></radio>
 				    </group>
 				</div>
 			</div>
@@ -136,15 +136,17 @@
 				let vm = this
 				vm.answer[vm.curIndex] = value
 				if(vm.isNext&&value!='H'){
-					vm.next()
+					// vm.next()
 				}
 			},
 			getItem(item,index){
 				let vm = this
 				vm.curIndex = index
 				vm.isNext = true
-				item.answer = ''
-				item.answer = 'H'
+				setTimeout(()=>{
+					vm.next()
+				},100)
+				console.log('前置1')
 			},
 			getItemTwo(item,index){
 				let vm = this
