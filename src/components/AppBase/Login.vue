@@ -129,8 +129,8 @@
 		background-color: #fff;
 		height: 100%;
 		img{
-			width: 4rem;
-			padding: 1rem 0;
+			width: 10rem;
+			padding-bottom: 1rem;
 			display: block;
 			margin:0 auto;
 		}

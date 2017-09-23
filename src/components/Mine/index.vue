@@ -19,7 +19,7 @@
 		    </tabbar>
 		</div>
 		<div class="login">
-		<img src="../../../static/imgs/login/logo.png" alt="">
+		<img src="../../../static/imgs/login/logo_1.png" alt="">
 			<group>
 		      	<x-input title="手机号码" name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" v-model="body.telno"></x-input>
 		      	<x-input title="验证码" class="weui-vcode" v-model="body.number">
@@ -220,8 +220,8 @@
 		background-color: #fff;
 		height: 100%;
 		img{
-			width: 4rem;
-			padding: 1rem 0;
+			width: 10rem;
+			padding-bottom: 1rem;
 			display: block;
 			margin:0 auto;
 		}

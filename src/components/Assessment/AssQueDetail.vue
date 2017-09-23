@@ -66,7 +66,12 @@
 				assInfo:{},
 				answer:[],
 				curIndex:0,
-				questions:[]
+				questions:[],
+				isNext:false,
+				defaultProps:{
+					label:'value',
+					value:'key'
+				}
 			}
 		},
 		components:{
@@ -74,11 +79,12 @@
 		},
 		methods:{
 			loadInfo(data){
+				let q_index = this.getMsg('assDetail','curIndex')||this.$route.query.index
 				let vm = this,body = {
 					evaluation_id:data?data.evaluation_id:vm.$route.query.evaluation_id,
 					user_id:data?data.user_id:vm.$route.query.user_id,
 					child_id:data?data.child_id:vm.$route.query.child_id,
-					index:data?data.index:vm.$route.query.index
+					index:data?data.index:q_index
 				}
 				// 重置
 				vm.answer = []
@@ -119,16 +125,26 @@
 					vm.$set(vm.questions.dimensions[index],'answer',item)
 				})
 			},
+			chooseInfo(data){
+				console.log(data)
+				let vm = this
+				vm.answer[0] = data.key
+				vm.next()
+			},
+			// 此处为黑魔法，vux-radio组件bug
 			change(value, label){
 				let vm = this
 				vm.answer[vm.curIndex] = value
+				if(vm.isNext&&value!='H'){
+					vm.next()
+				}
 			},
 			getItem(item,index){
 				let vm = this
 				vm.curIndex = index
-				setTimeout(()=>{
-					vm.next()
-				},100)
+				vm.isNext = true
+				item.answer = ''
+				item.answer = 'H'
 			},
 			getItemTwo(item,index){
 				let vm = this
@@ -166,8 +182,9 @@
 					child_id:vm.$route.query.child_id,
 					index:parseInt(vm.Info.question_index)-1
 				}
+				vm.setMsg('assDetail','curIndex',parseInt(vm.Info.question_index)-1)
+				vm.isNext = false
 				vm.loadInfo(body)
-				vm.$router.push({path:'assQueDetail',query:body})
 			},
 			upAnswer(answer){
 				let vm = this,body = {
@@ -200,8 +217,9 @@
 					child_id:vm.$route.query.child_id,
 					index:parseInt(vm.Info.question_index)+1
 				}
+				vm.setMsg('assDetail','curIndex',parseInt(vm.Info.question_index)+1)
+				vm.isNext = false
 				vm.loadInfo(body)
-				vm.$router.push({path:'assQueDetail',query:body})
 			},
 			submit(){
 				let vm = this
@@ -244,15 +262,7 @@
 		},
 		created(){
 			this.loadInfo()
-		},
-		watch: {
-	   		'$route' (to, from) {
-	   			console.log(this.$route)
-	   			// console.log(to)
-	   			// console.log(from)
-	     		// console.log(this.getStatus(this.$route.path))
-	   		}
-	 	}
+		}
 	}
 </script>
 <style lang='scss'>
