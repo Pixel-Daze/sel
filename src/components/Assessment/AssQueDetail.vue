@@ -67,7 +67,6 @@
 				answer:[],
 				curIndex:0,
 				questions:[],
-				isNext:false,
 				defaultProps:{
 					label:'value',
 					value:'key'
@@ -131,13 +130,9 @@
 				vm.answer[0] = data.key
 				vm.next()
 			},
-			// 此处为黑魔法，vux-radio组件bug
 			change(value, label){
 				let vm = this
 				vm.answer[vm.curIndex] = value
-				if(vm.isNext&&value!='H'){
-					// vm.next()
-				}
 			},
 			getItem(item,index){
 				let vm = this
@@ -146,7 +141,6 @@
 				setTimeout(()=>{
 					vm.next()
 				},100)
-				console.log('前置1')
 			},
 			getItemTwo(item,index){
 				let vm = this
@@ -185,7 +179,6 @@
 					index:parseInt(vm.Info.question_index)-1
 				}
 				vm.setMsg('assDetail','curIndex',parseInt(vm.Info.question_index)-1)
-				vm.isNext = false
 				vm.loadInfo(body)
 			},
 			upAnswer(answer){
@@ -220,7 +213,6 @@
 					index:parseInt(vm.Info.question_index)+1
 				}
 				vm.setMsg('assDetail','curIndex',parseInt(vm.Info.question_index)+1)
-				vm.isNext = false
 				vm.loadInfo(body)
 			},
 			submit(){
