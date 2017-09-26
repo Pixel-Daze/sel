@@ -73,11 +73,20 @@
 		        });
 			},
 			buy_course(){
-			    let vm = this
-				vm.$vux.alert.show({
-					title: '提示',
-					content: '付费课程暂未开放，敬请期待'
-				})
+			    let vm = this,body = {
+			    	name:vm.courseInfo.name,
+			    	course_id:vm.courseInfo.course_id,
+			    	price:vm.courseInfo.price,
+			    	openid:vm.getCookie('openid')
+			    }
+			    api.coursePay(body).then(resp=>{
+			    	console.log(resp)
+			    })
+				// vm.$vux.alert.show({
+				// 	title: '提示',
+				// 	content: '付费课程暂未开放，敬请期待'
+				// })
+
 			}
 		},
 		mounted(){

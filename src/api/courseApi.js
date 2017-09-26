@@ -13,3 +13,8 @@ export function getVideoPlayAuth(body){
 export function videoPlaybackRecord(body){
 	return fetch(baseUrl+'VideoPlaybackRecord',body)
 }
+
+// 课程支付下单
+export function coursePay(body){
+	return fetch(baseUrl+'wxPayOrder',body)
+}
