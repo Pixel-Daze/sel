@@ -30,6 +30,11 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
+    // 只使用moment.js中文包，减小体积
+    new webpack.ContextReplacementPlugin(
+    /moment[\\\/]locale$/,
+    /^\.\/(zh-cn)$/
+    ),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

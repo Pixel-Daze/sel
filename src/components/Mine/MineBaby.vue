@@ -6,7 +6,7 @@
 		</div>
 		<group>
 	      	<x-input class="name" title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
-	      	<pixel-selector title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
+	      	<pixel-selector v-if="endLoad" title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
 	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
 	    </group>
 	    <div class="btn-container">
@@ -74,8 +74,8 @@
 						}else{
 							vm.body.head_portrait = window.config.head_pic
 						}
-						vm.endLoad = true
 					}
+					vm.endLoad = true
 				})
 			},
 			checkInfo(){

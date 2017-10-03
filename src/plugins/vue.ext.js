@@ -80,7 +80,8 @@ export default {
                         'onMenuShareAppMessage',
                         'hideMenuItems',
                         'previewImage',
-                        'uploadImage'
+                        'uploadImage',
+                        'chooseWXPay'
                     ]
                 });
             }

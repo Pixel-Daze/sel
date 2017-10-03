@@ -13,6 +13,7 @@
 	import {AssInfo} from './assComponent'
 	import * as api from '../../api/assessmentApi'
 	import * as mineApi from '../../api/mineApi'
+	import * as courseApi from '../../api/courseApi'
 	export default {
 		name:'assPriceDetail',
 		data(){
@@ -48,7 +49,8 @@
 									child_id:resp.data.data[0].child_id,
 									index:0
 								}
-								vm.$router.push({path:'assQueDetail',query:body})
+								vm.buy_course(body)
+								// vm.$router.push({path:'assQueDetail',query:body})
 							}else{
 								vm.$vux.confirm.show({
 								  	// 组件除show外的属性
@@ -76,10 +78,42 @@
 							vm.$router.push({name:'Login'})
 						}
 					})
-				}
-				
-				
-				
+				}	
+			},
+			buy_course(data){
+			    let vm = this,body = {
+			    	name:vm.assInfo.name,
+			    	course_id:vm.assInfo.evaluation_id,
+			    	price:vm.assInfo.price,
+			    	openid:vm.getCookie('openid'),
+			    	user_id:vm.getMsg('base','userInfo').user_id,
+			    	child_id:data.child_id
+			    }
+			    courseApi.coursePay(body).then(resp=>{
+			    	if(resp.data.res=='0'){
+			    		vm.OpenPay(resp.data.data)
+			    	}
+			    })
+			},
+			OpenPay(data){
+				let arr = this.getCookie('wxconfig').split('|')
+				WeixinJSBridge.invoke(
+			       'getBrandWCPayRequest', {
+			           "appId":arr[0],     //公众号名称，由商户传入     
+			           "timeStamp":data.TimeStamp,         //时间戳，自1970年以来的秒数     
+			           "nonceStr":data.Nonce_str, //随机串     
+			           "package":'prepay_id='+data.Prepay_id,     
+			           "signType":"MD5",         //微信签名方式：     
+			           "paySign":data.Sign //微信签名 
+			       },
+			       function(res){     
+			           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+
+			           }else{
+			           	console.log(res)
+			           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+			       }
+			   ); 
 			}
 		},
 		created(){

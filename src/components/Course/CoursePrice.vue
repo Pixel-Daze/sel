@@ -49,6 +49,7 @@
 				let vm = this
 				vm.courseInfo = vm.getMsg('courseDetail','info')
 				document.title = vm.courseInfo.name
+				vm.configWxjssdk()
 				let body = {
 					media:vm.courseInfo.media
 				}
@@ -89,19 +90,27 @@
 				// 	title: '提示',
 				// 	content: '付费课程暂未开放，敬请期待'
 				// })
-
 			},
 			openPay(data){
-				wx.chooseWXPay({
-				    timestamp: parseInt(data.TimeStamp), 
-				    nonceStr: data.Nonce_str, // 支付签名随机串，不长于 32 位
-				    package: 'prepay_id='+data.Prepay_id, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-				    signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-				    paySign: data.Sign, // 支付签名
-				    success: function (res) {
-				        // 支付成功后的回调函数
-				    }
-				});
+				let arr = this.getCookie('wxconfig').split('|')
+				WeixinJSBridge.invoke(
+			       'getBrandWCPayRequest', {
+			           "appId":arr[0],     //公众号名称，由商户传入     
+			           "timeStamp":data.TimeStamp,         //时间戳，自1970年以来的秒数     
+			           "nonceStr":data.Nonce_str, //随机串     
+			           "package":'prepay_id='+data.Prepay_id,     
+			           "signType":"MD5",         //微信签名方式：     
+			           "paySign":data.Sign //微信签名 
+			       },
+			       function(res){     
+			           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+
+			           }else{
+			           	console.log(res)
+			           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+			       }
+			   ); 
+
 			}
 		},
 		mounted(){
