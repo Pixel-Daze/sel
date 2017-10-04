@@ -70,15 +70,29 @@
 		        });
 			},
 			openStudy(){
-				let vm = this,body = {
-					course_id:vm.courseInfo.course_id,
-					user_id:vm.getMsg('base','userInfo').user_id
+				let vm = this
+				if(vm.getMsg('base','userInfo')!=null){
+					let body = {
+						course_id:vm.courseInfo.course_id,
+						user_id:vm.getMsg('base','userInfo').user_id
+					}
+					/* 发送观看记录 */
+					api.videoPlaybackRecord(body)
+					vm.showFlag = true
+					vm.player.play()
+				}else{
+					vm.$vux.confirm.show({
+						// 组件除show外的属性
+						title: '提示',
+        				content: '前往登录',
+						onCancel () {
+								    	
+						},
+						onConfirm () {
+							vm.$router.push({name:'Login'})
+						}
+					})
 				}
-				/* 发送观看记录 */
-				api.videoPlaybackRecord(body)
-				vm.showFlag = true
-				vm.player.play()
-				
 			}
 		},
 		mounted(){

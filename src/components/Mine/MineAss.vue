@@ -8,7 +8,7 @@
 	    <div class="p-com-wrapper" v-if="assList.length>0&&endLoad">
 	    	<ass-cell v-for="item in assList" :cell="item" key="item">
 	    		<span slot="btn" v-if="item.current_question_id!='-1'" class="ass-btn" @click="assGo(item)">继续测评</span>
-	    		<span slot="btn" v-else class="ass-btn" @click="assRes">查看报告</span>
+	    		<span slot="btn" v-else class="ass-btn" @click="assRes(item)">查看报告</span>
 	    	</ass-cell>
 	    </div>
 	    <div class="p-com-wrapper" v-if="assList.length==0&&endLoad">
@@ -88,11 +88,16 @@
 				}
 			},
 			assGo(item){
-				let vm = this,body = {
-					user_id:vm.getMsg('base','userInfo').user_id
-				}
+				let vm = this
 				vm.setMsg('assDetail','info',item)
-				api.qrychild(body).then(resp=>{
+				let body = {
+					evaluation_id:item.evaluation_id,
+					user_id:vm.getMsg('base','userInfo').user_id,
+					child_id:resp.data.data[0].child_id,
+					index:0
+				}
+				vm.$router.push({path:'assQueDetail',query:body})
+				/*api.qrychild(body).then(resp=>{
 					if(resp.data.res == 0){
 						if(resp.data.data.length>0){
 							let body = {
@@ -104,10 +109,16 @@
 							vm.$router.push({path:'assQueDetail',query:body})
 						}
 					}
-				})
+				})*/
 			},
-			assRes(){
-				this.$router.push({path:'/assResult'})
+			assRes(item){
+				let vm = this , body = {
+					evaluation_id:item.evaluation_id,
+					user_id:vm.getMsg('base','userInfo').user_id,
+					child_id:item.child_id
+					
+				}
+				this.$router.push({path:'/assResult',query:body})
 			}
 		},
 		mounted(){

@@ -19,7 +19,14 @@ export default {
     ...mapState({
       isLoading: state => state.loading.isLoading
     })
-  }
+  }/*,
+  beforeUpdate(){
+    if (location.href.indexOf('?#') == -1) {
+      let arr = location.href.split('#')
+      let url = arr[0]+'?#'+arr[1]
+      location.href = url
+    }
+  }*/
 }
 </script>
 

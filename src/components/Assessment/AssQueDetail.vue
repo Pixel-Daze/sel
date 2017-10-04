@@ -190,7 +190,8 @@
 					text_result:'',
 					report_result:'',
 					answer:answer,
-					maxIndex:vm.Info.maxIndex
+					maxIndex:vm.Info.maxIndex,
+					question_id:vm.Info.question_id
 				}
 				api.updateevalution(body).then(resp=>{
 					if(resp.data.res == '0'){
@@ -247,11 +248,12 @@
 					user_id:vm.$route.query.user_id,
 					child_id:vm.$route.query.child_id
 				}
-				api.qryReport(body).then(resp=>{
-					if(resp.data.res=='0'){
-						vm.$router.push({path:'/assResult'})
-					}
-				})
+				vm.$router.push({path:'/assResult',query:body})
+				// api.qryReport(body).then(resp=>{
+				// 	if(resp.data.res=='0'){
+				// 		vm.$router.push({path:'/assResult',query:body})
+				// 	}
+				// })
 			}
 		},
 		created(){

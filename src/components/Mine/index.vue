@@ -18,8 +18,8 @@
 		      </tabbar-item>
 		    </tabbar>
 		</div>
-		<div class="login">
-		<img src="../../../static/imgs/login/logo_1.png" alt="">
+		<div class="login" v-if="loginFlag=='0'">
+			<img src="../../../static/imgs/login/logo_1.png" alt="">
 			<group>
 		      	<x-input title="手机号码" name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" v-model="body.telno"></x-input>
 		      	<x-input title="验证码" class="weui-vcode" v-model="body.number">
@@ -126,7 +126,8 @@
 				let vm = this,body = {
 					telno:vm.body.telno,
 					number:vm.body.number,
-					openid:vm.getCookie('openid')
+					openid:vm.getCookie('openid'),
+					name:decodeURI(vm.getCookie('nickname'))
 				}
 				if(vm.checkInfo()){
 					api.login(body).then(resp=>{

@@ -57,7 +57,7 @@
 			},
 			goDetail(cell){
 				this.setMsg('courseDetail','info',cell)
-				if(parseInt(cell.price)>0){
+				if(Number(cell.price)>0){
 					this.$router.push({path:'/coursePrice'})
 				}else if(cell.price==0){
 					this.$router.push({path:'/courseFree'})

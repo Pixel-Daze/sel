@@ -19,10 +19,11 @@
 	        	</swiper-item>
 	      	</swiper>
 	    </div>
-	    <div class="price-wrap">
+	    <div class="price-wrap" v-if="isBuy=='1'">
 			<span class="price vux-1px-t">{{courseInfo.price}}元</span>
 			<span class="ass-btn" @click="buy_course">立即购买</span>
 		</div>
+		<div class="ass-buy-btn" @click="openStudy" v-if="isBuy=='0'">开始学习</div>
 	</div>
 </template>
 <script>
@@ -38,7 +39,8 @@
 				list:['介绍','资源'],
 				player:{},
 				showFlag:false,
-				cover:''
+				cover:'',
+				isBuy:'1'// 0:已支付 1:未支付
 			}
 		},
 		components:{
@@ -58,6 +60,8 @@
 						vm.cover = resp.data.data.coverurl
 						vm.getMedia(vm.courseInfo.media,resp.data.data)
 					}
+				}).then(()=>{
+					vm.IsPay()
 				})
 			},
 			getMedia(media,data){
@@ -74,25 +78,37 @@
 		        });
 			},
 			buy_course(){
-			    let vm = this,body = {
-			    	name:vm.courseInfo.name,
-			    	course_id:vm.courseInfo.course_id,
-			    	price:vm.courseInfo.price,
-			    	openid:vm.getCookie('openid'),
-			    	user_id:vm.getMsg('base','userInfo').user_id
+			    let vm = this
+			    if(vm.getMsg('base','userInfo')!=null){
+			    	let body = {
+				    	name:vm.courseInfo.name,
+				    	course_id:vm.courseInfo.course_id,
+				    	price:Number(vm.courseInfo.price)*100,
+				    	openid:vm.getCookie('openid'),
+				    	user_id:vm.getMsg('base','userInfo').user_id
+				    }
+				    api.coursePay(body).then(resp=>{
+				    	if(resp.data.res=='0'){
+				    		vm.openPay(resp.data.data)
+				    	}
+				    })
+			    }else{
+			    	vm.$vux.confirm.show({
+						// 组件除show外的属性
+						title: '提示',
+        				content: '前往登录',
+						onCancel () {
+								    	
+						},
+						onConfirm () {
+							vm.$router.push({name:'Login'})
+						}
+					})
 			    }
-			    api.coursePay(body).then(resp=>{
-			    	if(resp.data.res=='0'){
-			    		vm.openPay(resp.data.data)
-			    	}
-			    })
-				// vm.$vux.alert.show({
-				// 	title: '提示',
-				// 	content: '付费课程暂未开放，敬请期待'
-				// })
+			    
 			},
 			openPay(data){
-				let arr = this.getCookie('wxconfig').split('|')
+				let arr = this.getCookie('wxconfig').split('|'),vm = this
 				WeixinJSBridge.invoke(
 			       'getBrandWCPayRequest', {
 			           "appId":arr[0],     //公众号名称，由商户传入     
@@ -104,13 +120,61 @@
 			       },
 			       function(res){     
 			           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-
+			           		let body = {
+			           			course_id:vm.courseInfo.course_id,
+			           			user_id:vm.getMsg('base','userInfo').user_id
+			           		}
+			           		api.uppaycourse(body).then(resp=>{
+			           			if(resp.data.res=='0'){
+			           				alert('支付成功')
+			           				vm.isBuy = '0'
+			           			}
+			           		})
 			           }else{
-			           	console.log(res)
+			           		alert('支付失败')
 			           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
 			       }
 			   ); 
 
+			},
+			openStudy(){
+				let vm = this
+				if(vm.getMsg('base','userInfo')!=null){
+					let body = {
+						course_id:vm.courseInfo.course_id,
+						user_id:vm.getMsg('base','userInfo').user_id
+					}
+					/* 发送观看记录 */
+					api.videoPlaybackRecord(body)
+					vm.showFlag = true
+					vm.player.play()
+				}else{
+					vm.$vux.confirm.show({
+						// 组件除show外的属性
+						title: '提示',
+        				content: '前往登录',
+						onCancel () {
+								    	
+						},
+						onConfirm () {
+							vm.$router.push({name:'Login'})
+						}
+					})
+				}
+			},
+			IsPay(){
+				let vm = this
+				if(vm.getMsg('base','userInfo')!=null){
+					let body = {
+						course_id:vm.courseInfo.course_id,
+						user_id:vm.getMsg('base','userInfo').user_id
+					}
+					api.qrypaycourse(body).then(resp=>{
+						if(resp.data.res=='0'){
+							vm.isBuy = resp.data.data
+						}
+					})
+				}
 			}
 		},
 		mounted(){
@@ -155,6 +219,20 @@
 						color: #6d6d6d;
 					}
 				}
+			}
+		}
+		.ass-buy-btn{
+			position: absolute;
+			bottom: 0;
+			color: #fff;
+			background-color: #f9532d;
+			height: 1.2rem;
+			width: 10rem;
+			line-height: 1.2rem;
+			text-align: center;
+			font-size: 0.426667rem;
+			&:active{
+				background-color: rgba(249,83,45,.8);
 			}
 		}
 		.price-wrap{

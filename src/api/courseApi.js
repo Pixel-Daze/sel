@@ -18,3 +18,13 @@ export function videoPlaybackRecord(body){
 export function coursePay(body){
 	return fetch(baseUrl+'wxPayOrder',body)
 }
+
+// 上传支付成功
+export function uppaycourse(body){
+	return fetch(baseUrl+'uppaycourse',body)
+}
+
+// 查询用户是否支付
+export function qrypaycourse(body){
+	return fetch(baseUrl+'qrypaycourse',body)
+}

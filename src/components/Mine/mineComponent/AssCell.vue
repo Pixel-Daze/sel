@@ -6,7 +6,7 @@
 				<div class="name">{{cell.name}}</div>
 				<div class="abstract text-font">{{cell.abstract}}</div>
 				<div class="other">
-					<span class="time text-gray">测试时间：{{cell.evaluation_time|time_con}}</span>
+					<span class="time text-gray">测试时间：{{cell.evaluation_time|time_cell}}</span>
 					<slot name="btn"></slot>
 				</div>
 			</div>
@@ -20,8 +20,10 @@
 			cell:Object
 		},
 		filters:{
-			time_con(value){
-				return moment(value).format('YYYY-MM-DD HH:mm:ss')
+			time_cell(value){
+				if(value){
+					return moment(value).format('YYYY-MM-DD HH:mm:ss')
+				}
 			}
 		}
 	}

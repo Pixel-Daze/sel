@@ -31,34 +31,47 @@
 				}
 			},
 			OpenTest(){
-				let vm = this,body = {
-					user_id:vm.getMsg('base','userInfo').user_id
-				}
-				mineApi.qrychild(body).then(resp=>{
-					if(resp.data.res == 0){
-						if(resp.data.data.length>0){
-							let body = {
-								evaluation_id:vm.assInfo.evaluation_id,
-								user_id:vm.getMsg('base','userInfo').user_id,
-								child_id:resp.data.data[0].child_id,
-								index:0
-							}
-							vm.$router.push({path:'assQueDetail',query:body})
-						}else{
-							vm.$vux.confirm.show({
-							  	// 组件除show外的属性
-							  	onCancel () {
-							    	
-							  	},
-							  	onConfirm () {
-							  		vm.$router.push({name:'Login'})
-							  	}
-							})
-						}
+				let vm = this
+				if(vm.getMsg('base','userInfo')!=null){
+					let body = {
+						user_id:vm.getMsg('base','userInfo').user_id
 					}
-				})
-				
-				
+					mineApi.qrychild(body).then(resp=>{
+						if(resp.data.res == 0){
+							if(resp.data.data.length>0){
+								let body = {
+									evaluation_id:vm.assInfo.evaluation_id,
+									user_id:vm.getMsg('base','userInfo').user_id,
+									child_id:resp.data.data[0].child_id,
+									index:0
+								}
+								vm.$router.push({path:'assQueDetail',query:body})
+							}else{
+								vm.$vux.confirm.show({
+								  	// 组件除show外的属性
+								  	onCancel () {
+								    	
+								  	},
+								  	onConfirm () {
+								  		vm.$router.push({name:'Login'})
+								  	}
+								})
+							}
+						}
+					})
+				}else{
+					vm.$vux.confirm.show({
+						// 组件除show外的属性
+						title: '提示',
+        				content: '前往登录',
+						onCancel () {
+								    	
+						},
+						onConfirm () {
+							vm.$router.push({name:'Login'})
+						}
+					})
+				}
 			}
 		},
 		created(){

@@ -44,6 +44,10 @@ Vue.use(ConfirmPlugin)
 /* store */
 import store from './store'
 
+/*filter*/
+// import filter from './filter'
+// Vue.use(filter)
+
 /* router */
 
 Vue.config.productionTip = false

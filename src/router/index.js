@@ -37,7 +37,7 @@ var routerMaps = [
   {name:'MineAss',path:'/mineAss',component:MineAss},
   {name:'MineCourse',path:'/mineCourse',component:MineCourse},
   {name:'Login',path:'/login',component:Login},
-	{path: '*', redirect: '/appbase/assessment'}
+	{path: '*', redirect: '/appbase/assessment',component:Assessment}
 ]
 
 const scrollBehavior = (to, from, savedPosition) => {
@@ -53,7 +53,7 @@ const scrollBehavior = (to, from, savedPosition) => {
 
 const router = new Router({
 	mode:routerMode,
-	scrollBehavior,
+	// scrollBehavior,
 	routes:routerMaps
 })
 

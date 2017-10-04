@@ -66,7 +66,8 @@
 				let vm = this,body = {
 					telno:vm.body.telno,
 					number:vm.body.number,
-					openid:vm.getCookie('openid')
+					openid:vm.getCookie('openid'),
+					name:decodeURI(vm.getCookie('nickname'))
 				}
 				if(vm.checkInfo()){
 					api.login(body).then(resp=>{
@@ -121,6 +122,7 @@
 		},
 		mounted(){
 			document.title = '登录'
+			console.log(this.$router)
 		}
 	}
 </script>
