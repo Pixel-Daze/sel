@@ -45,7 +45,7 @@
 				}
 				document.title = '我的测评'
 				api.getMineAss(body).then(resp=>{
-					if(resp.data.res=='0'){
+					if(resp.data.res=='0'&&resp.data.data!=null){
 						vm.allList = resp.data.data
 						vm.render(vm.allList)
 						
@@ -93,7 +93,7 @@
 				let body = {
 					evaluation_id:item.evaluation_id,
 					user_id:vm.getMsg('base','userInfo').user_id,
-					child_id:resp.data.data[0].child_id,
+					child_id:item.child_id,
 					index:0
 				}
 				vm.$router.push({path:'assQueDetail',query:body})

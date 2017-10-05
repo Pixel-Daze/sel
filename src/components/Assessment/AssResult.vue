@@ -5,7 +5,7 @@
 		<div class="ass-info vux-1px-b">
 			<p class="ass-title">{{resInfo.name}}</p>
 			<p class="des">测试者：{{username}}</p>
-			<p class="des">测试时间：{{resInfo.time|time_con}}</p>
+			<p class="des">测试时间：{{resInfo.reporttime|time_con}}</p>
 		</div>
 		<div class="ass-attr">
 			<p class="title">

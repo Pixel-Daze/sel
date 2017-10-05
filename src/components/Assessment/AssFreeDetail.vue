@@ -38,7 +38,7 @@
 					}
 					mineApi.qrychild(body).then(resp=>{
 						if(resp.data.res == 0){
-							if(resp.data.data.length>0){
+							if(resp.data.data!=null){
 								let body = {
 									evaluation_id:vm.assInfo.evaluation_id,
 									user_id:vm.getMsg('base','userInfo').user_id,
@@ -49,11 +49,13 @@
 							}else{
 								vm.$vux.confirm.show({
 								  	// 组件除show外的属性
+								  	title: '提示',
+        							content: '您还未绑定儿童信息，是否前往绑定',
 								  	onCancel () {
 								    	
 								  	},
 								  	onConfirm () {
-								  		vm.$router.push({name:'Login'})
+								  		vm.$router.push({path:'/mineBaby'})
 								  	}
 								})
 							}

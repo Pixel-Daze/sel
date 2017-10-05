@@ -28,7 +28,8 @@
 					gender:'0',
 					birth_date:'',
 					user_id:'',
-					child_id:'0'
+					child_id:'0',
+					maxDate: ''// 预留作为最大日期
 				},
 				sexList:[{key: '0', value: '男',icon:'icon-boy'}, {key: '1', value: '女',icon:'icon-girl'}],
 				endLoad:false
@@ -65,14 +66,12 @@
 				vm.configWxjssdk()
 				api.qrychild(body).then(resp=>{
 					if(resp.data.res == 0){
-						if(resp.data.data.length>0){
+						if(resp.data.data!=null){
 							vm.body.child_id = resp.data.data[0].child_id
 							vm.body.birth_date = vm.formatDate(resp.data.data[0].birth_date)
 							vm.body.gender = resp.data.data[0].gender
 							vm.body.name = resp.data.data[0].name
 							vm.body.head_portrait = resp.data.data[0].head_portrait
-						}else{
-							vm.body.head_portrait = window.config.head_pic
 						}
 					}
 					vm.endLoad = true
@@ -80,7 +79,14 @@
 			},
 			checkInfo(){
 				let vm = this
-				if(vm.body.name==''){
+				if(vm.body.head_portrait==''){
+					this.$vux.toast.show({
+						text: '请上传头像',
+						type: 'text',
+						width: '3.5rem'
+					})
+					return false
+				}else if(vm.body.name==''){
 					this.$vux.toast.show({
 						text: '请输入姓名',
 						type: 'text',
@@ -180,6 +186,7 @@
 				width: inherit;
 				height: inherit;
 				border-radius: 50%;
+				color: gray;
 			}
 		}
 		.btn-container{
