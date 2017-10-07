@@ -246,7 +246,8 @@
 				let vm = this,body = {
 					evaluation_id:vm.$route.query.evaluation_id,
 					user_id:vm.$route.query.user_id,
-					child_id:vm.$route.query.child_id
+					child_id:vm.$route.query.child_id,
+					typeid:'0'
 				}
 				vm.$router.push({path:'/assResult',query:body})
 				// api.qryReport(body).then(resp=>{

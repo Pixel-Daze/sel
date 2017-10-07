@@ -36,3 +36,8 @@ export function qryReport(body){
 	return fetch(baseUrl+'QryReport',body)
 }
 
+// 查看报告
+export function qryReports(body){
+	return fetch(baseUrl+'QryReports',body)
+}
+

@@ -114,11 +114,10 @@
 			assRes(item){
 				let vm = this , body = {
 					evaluation_id:item.evaluation_id,
-					user_id:vm.getMsg('base','userInfo').user_id,
-					child_id:item.child_id
+					user_evaluation_id:item.user_evaluation_id
 					
 				}
-				this.$router.push({path:'/assResult',query:body})
+				this.$router.push({path:'/assReport',query:body})
 			}
 		},
 		mounted(){

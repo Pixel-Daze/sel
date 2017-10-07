@@ -17,7 +17,7 @@ export default {
 
         Vue.filter('time_con',(value)=>{
             if(value){
-                return moment(value.substring(0,8)).format('YYYY-MM-DD')
+                return moment(value.substring(0,8)).format('YYYY-MM-DD')+' '+value.substr(8,2)+':'+value.substr(10,2)+':'+value.substr(12,2)
             }
         })
 
