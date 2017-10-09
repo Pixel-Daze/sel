@@ -6,7 +6,7 @@
 				<div class="name">{{cell.name}}</div>
 				<div class="abstract text-font">{{cell.abstract}}</div>
 				<div class="other">
-					<span class="time text-gray">有效期至：</span>
+					<span class="time text-gray">有效期至：{{cell.valid_period|date_cell}}</span>
 					<slot name="btn"></slot>
 				</div>
 			</div>
@@ -14,9 +14,17 @@
 	</div>
 </template>
 <script>
+	import moment from 'moment'
 	export default{
 		props:{
 			cell:Object
+		},
+		filters:{
+			date_cell(value){
+				if(value){
+					return moment(value.toString()).format('YYYY-MM-DD')
+				}
+			}
 		}
 	}
 </script>
