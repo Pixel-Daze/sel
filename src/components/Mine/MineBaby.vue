@@ -79,14 +79,7 @@
 			},
 			checkInfo(){
 				let vm = this
-				if(vm.body.head_portrait==''){
-					this.$vux.toast.show({
-						text: '请上传头像',
-						type: 'text',
-						width: '3.5rem'
-					})
-					return false
-				}else if(vm.body.name==''){
+				if(vm.body.name==''){
 					this.$vux.toast.show({
 						text: '请输入姓名',
 						type: 'text',

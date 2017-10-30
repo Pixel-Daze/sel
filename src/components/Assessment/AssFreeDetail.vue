@@ -50,7 +50,7 @@
 								vm.$vux.confirm.show({
 								  	// 组件除show外的属性
 								  	title: '提示',
-        							content: '您还未绑定儿童信息，是否前往绑定',
+        							content: '您还未添加儿童信息，是否前往添加',
 								  	onCancel () {
 								    	
 								  	},
