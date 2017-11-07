@@ -1,7 +1,7 @@
 import * as api from '../../api/courseApi'
 
 const state = {
-	courseList:[],
+	courseList:[],// 课程列表
 }
 
 const actions = {

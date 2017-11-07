@@ -1,5 +1,5 @@
 const state = {
-	isLoading: false
+	isLoading: false //全局loading,暂时移除
 }
 
 const mutations = {

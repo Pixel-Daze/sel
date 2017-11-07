@@ -1,7 +1,7 @@
 import * as api from '../../api/assessmentApi'
 
 const state = {
-	assList:[],
+	assList:[],//测评列表
 }
 
 const actions = {

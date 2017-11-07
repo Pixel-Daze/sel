@@ -13,7 +13,7 @@
 		data(){
 			return {
 				resInfo:{},
-				username:'',
+				username:'',// 用户姓名
 				isLoading:true
 			}
 		},
