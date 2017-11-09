@@ -53,6 +53,21 @@ export default {
             if (parts.length == 2) return parts.pop().split(";").shift();
         }
 
+        /* 设置cookie,用于本地调试 */
+        Vue.prototype.initCookie = () => {
+            let body = {
+                headimgurl:'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoydrbmKaIwaoQhlpallLfohKBKofPrDdWNwsA8yAPG1jAoo6mKDGnUAjWl3HM35cOibdMC13c0Tmw/0',
+                nickname:'%E5%8F%91%E5%8F%91%E5%91%86%E5%93%9F;',
+                openid:'oYTI41fq6Qc1zfNcmD2KXMh2h32Q',
+                sid:'pMfqD6aCNTzKGQAWPhxExldOeY1uD07V',
+                wxconfig:'wx31402a79b03c8279|1510125383|10d26a806fd526b2fced92cec79652df|9bc19c94781e156458b1ba4dc09a0a902cc5bc19'
+            }
+            for(let param in body){
+                document.cookie = param+'='+body[param]
+            } 
+        }
+    
+
         //配置微信jssdk
         Vue.prototype.configWxjssdk = () =>{
             let arr = getCookie('wxconfig').split('|')

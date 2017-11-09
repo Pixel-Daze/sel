@@ -41,3 +41,8 @@ export function qryReports(body){
 	return fetch(baseUrl+'QryReports',body)
 }
 
+// 获取单个课程
+export function getAssById(body){
+	return fetch(baseUrl+'GetEvalutionByID',body)
+}
+

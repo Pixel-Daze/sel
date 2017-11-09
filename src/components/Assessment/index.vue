@@ -55,11 +55,11 @@
 				}
 			},
 			goDetail(cell){
-				this.setMsg('assDetail','info',cell)
+				// this.setMsg('assDetail','info',cell)
 				if(Number(cell.price)>0){
-					this.$router.push({path:'/assPriceDetail'})
+					this.$router.push({path:'/assPriceDetail',query:{evaluation_id:cell.evaluation_id}})
 				}else if(cell.price==0){
-					this.$router.push({path:'/assFreeDetail'})
+					this.$router.push({path:'/assFreeDetail',query:{evaluation_id:cell.evaluation_id}})
 				}
 			}
 		},

@@ -23,12 +23,14 @@
 		},
 		methods:{
 			loadInfo(){
-				let vm = this
-				vm.assInfo = vm.getMsg('assDetail','info')
-				document.title = vm.assInfo.name
-				if(vm.assInfo){
+				let vm = this,body = {evaluation_id:vm.$route.query.evaluation_id}
+				api.getAssById(body).then(resp=>{
+					if(resp.data.res=='0'){
+						vm.assInfo = resp.data.data
+					}
 					vm.endLoad = true
-				}
+				})
+				document.title = vm.assInfo.name
 			},
 			OpenTest(){
 				let vm = this

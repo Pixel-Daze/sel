@@ -50,6 +50,11 @@
     },
     created(){
       this.loadInfo()
+      // 开发环境手动初始化cookie
+      if(process.env.NODE_ENV == 'development'){
+        this.initCookie()  
+      }
+      
     }
 	}
 </script>
