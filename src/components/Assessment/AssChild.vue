@@ -30,7 +30,7 @@
 			loadInfo(){
 				let vm = this
 				document.title = '儿童信息'
-			}
+			},
 		},
 		mounted(){
 			this.loadInfo()

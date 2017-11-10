@@ -46,3 +46,8 @@ export function getAssById(body){
 	return fetch(baseUrl+'GetEvalutionByID',body)
 }
 
+// 获取测评结果
+export function getAssRes(body){
+	return fetch(jsonUrl+'static/json/AssResult.json')
+}
+

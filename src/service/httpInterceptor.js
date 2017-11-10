@@ -34,7 +34,7 @@ export const response = function(response){
             content: '程序正在修复中'
         })
     }
-    if(response.data.res!==0&&checkUrl(response)){
+    if(response.data.res!=0&&checkUrl(response)){
     	Vue.$vux.alert.show({
 			title: '提示',
 			content: response.data.msg

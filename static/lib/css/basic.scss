@@ -17,6 +17,14 @@
 	background-color: $text-green-color;
 }
 
+.bgYellow{
+	background-color: $text-yellow-color;
+}
+
+.bgBlue{
+	background-color: $text-blue-color;
+}
+
 .text-red{
 	color: $text-red-color;
 }
@@ -31,6 +39,14 @@
 
 .text-green{
 	color: $text-green-color;
+}
+
+.text-yellow{
+	color: $text-yellow-color;
+}
+
+.text-blue{
+	color: $text-blue-color
 }
 
 .activeBg{
@@ -75,4 +91,20 @@
 
 .p-com-wrapper{
 	height: calc(100% - 46px);
+}
+
+// 固定在页面底部的方形按钮
+.ass-b-btn{
+	position: absolute;
+	bottom: 0;
+	color: #fff;
+	background-color: $text-green-color;
+	height: 1.2rem;
+	width: 10rem;
+	line-height: 1.2rem;
+	text-align: center;
+	font-size: 0.426667rem;
+	&:active{
+		background-color: $text-green-active-color;
+	}
 }

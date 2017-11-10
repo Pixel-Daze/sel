@@ -66,6 +66,15 @@ export default {
                 document.cookie = param+'='+body[param]
             } 
         }
+
+        /* 根据对象属性排序 */
+        Vue.prototype.sortByAttr = (property) => {
+            return function(a,b){
+                var value1 = a[property];
+                var value2 = b[property];
+                return value1 - value2;
+            }
+        }
     
 
         //配置微信jssdk

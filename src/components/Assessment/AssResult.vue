@@ -1,59 +1,79 @@
 <!-- 测评结果页 -->
 <template>
-	<div class="ass-result">
-		<loading v-model="isLoading" text="正在生成报告"></loading>
-		<res-info :username=username :resInfo=resInfo></res-info>
+	<div class="ass-result p-container">
+		<loading v-model="isLoading" text="正在生成报告报告结果"></loading>
+		<div v-if="!isLoading"  class="p-com-wrapper">
+			<div class="res-head">
+				<p class="ass-title text-green">社会技能发展水平</p>
+				<p class="des">测试儿童：{{assRes.child.name}}</p>
+				<p class="des">测试时间：{{assRes.evaluation_time}}</p>
+			</div>
+			<div class="res-sum">
+				<p class="title">整体社会技能水平</p>
+				<p class="text-green score">{{assRes.result.f_index}}</p>
+				<p >SEL报告分</p>
+				<div class="sum-wrap">
+					<div>
+						<p class="text-green score">{{sum.total}}</p>
+						<p>与同年龄段儿童相比</p>
+					</div>
+					<div>
+						<p class="text-green score pos"><span class="icon iconfont icon-up"></span>{{sum.percent_combined}}%</p>
+						<p style="margin-bottom:0.266667rem;">超过同年龄段儿童比例</p>
+						<p class="text-green score pos">
+							<span class="icon iconfont icon-up" style="top:0.053333rem;"></span>{{sum.percent_gender}}%</p>
+						<p>超过同年龄段{{assRes.child.gender}}童比例</p>
+					</div>
+				</div>
+			</div>
+			<div class="res-detail">
+				<p class="title">社会技能-细分维度</p>
+				<level-bar v-for="item in detail" :key="item" :bar=item></level-bar>
+			</div>
+			<div class="ass-b-btn">获取完整报告</div>
+		</div>
 	</div>
 </template>
 <script>
 	import * as api from '../../api/assessmentApi'
+	import {LevelBar} from './assComponent'
 	import { Loading } from 'vux'
-	import {ResInfo} from './assComponent'
 	export default{
 		data(){
 			return {
-				resInfo:{},
-				username:'',// 用户姓名
-				isLoading:true
+				isLoading:true,
+				assRes:{},
+				sum:{},
+				detail:[]
 			}
 		},
 		components:{
-			Loading,ResInfo
+			LevelBar,Loading
 		},
 		methods:{
-			getPDF(){
-				let vm = this,body = {
-					evaluation_id:vm.$route.query.evaluation_id,
-					user_id:vm.$route.query.user_id,
-					child_id:vm.$route.query.child_id,
-					typeid:vm.$route.query.typeid //生成：0 查看：1
-				}
-				api.qryReport(body).then(resp=>{
-					if(resp.data.res==0){
-						if(resp.data.data.reporttime=='00010101000000'){
-							body.typeid = '1',
-							vm.pluginGet(body)
-						}else{
-							vm.resInfo = resp.data.data
-							vm.username = decodeURI(vm.getCookie('nickname'))
-							vm.isLoading = false
-						}
-					}
-				})
-			},
-			pluginGet(body){
-				let vm = this
-				api.qryReport(body).then(resp=>{
-					if(resp.data.res==0){
-						vm.resInfo = resp.data.data
-						vm.username = decodeURI(vm.getCookie('nickname'))
-						vm.isLoading = false
-					}
-				})
-			},
 			loadInfo(){
+				let vm = this
 				document.title = '测评结果'
-				this.getPDF()
+				api.getAssRes().then(resp=>{
+					if(resp.data.res=='0'){
+						vm.assRes =  resp.data.data
+						vm.sum = vm.assRes.result.level
+						vm.detail = vm.getDetail(vm.sum.dimension,vm.assRes.result.rpt_score.dimension)
+						console.log(vm.detail)
+					}
+					vm.isLoading = false
+				})
+			},
+			// 测评细节条目对象合并,翻译文字
+			getDetail(levelArr,scoreArr){
+				let vm = this,map = {assertion:'坚定自信',communication:'沟通能力',cooperation:'合作性',empathy:'同理心',engagement:'社会参与',responsibility:'责任感',selfcontrol:'自控力'},tans = {"高于平均水平":'high',"低于平均水平":'down',"平均水平":'ave'}
+				levelArr.forEach((item,index)=>{
+					Object.assign(item,scoreArr[index])
+					vm.$set(item,'name_tip',map[item.name])
+					vm.$set(item,'level_tip',tans[item.level])
+				})
+
+				return _.sortBy(levelArr, 'name')
 			}
 		},
 		mounted(){
@@ -63,8 +83,63 @@
 </script>
 <style lang='scss'>
 	.ass-result{
-		height: 100%;
-		background-color: #fff;
+		.p-com-wrapper{
+			height: calc(100% - 1.2rem);
+		}
+		.res-head{
+			text-align: center;
+			padding: 0.5rem 0.266667rem;
+			font-size: 0.426667rem;
+			background-color: #fff;
+			margin-bottom: 0.5rem;
+			.ass-title{
+				font-size: 0.533333rem;
+				font-weight: bold;
+				padding-bottom: 0.4rem;
+			}	
+		}
+		.res-sum{
+			padding: 0.5rem 0.266667rem;
+			font-size: 0.4rem;
+			background-color: #fff;
+			margin-bottom: 0.5rem;
+			.title{
+				font-weight: bold;
+				font-size: 0.48rem;
+				margin-bottom: 0.2rem;
+				color: #575656;
+			}
+			.score{
+				font-weight: bold;
+				font-size: 0.48rem;
+				margin-bottom: 0.05rem;
+				position: relative;
+				.icon{
+					left: 0;top: 0.08rem;position: absolute;
+				}
+			}
+			.pos{
+				padding-left:0.45rem;
+			}
+			.sum-wrap{
+				display: flex;
+				margin-top: 0.266667rem;
+				>div{
+					flex: 1;
+				}
+			}
+		}
+		.res-detail{
+			padding: 0.5rem 0.266667rem;
+			background-color: #fff;
+			margin-bottom: 0.5rem;
+			.title{
+				font-weight: bold;
+				font-size: 0.48rem;
+				margin-bottom: 0.2rem;
+				color: #575656;
+			}
+		}
 		.weui-toast{
 			width: 10em;
 		}

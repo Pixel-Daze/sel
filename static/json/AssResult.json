@@ -1,14 +1,75 @@
 {
-	"result":"0",
+	"res":"0",
 	"msg":"",
 	"data":{
-		"headInfo":{
-			"title":"社会技能发展水平",
-			"username":"珍珠",
-			"reporttime":"2017-12-01"
+		"report_time":"2017-11-07",
+		"evaluation_time":"2017-11-07",
+		"child":{
+			"id":"1508009216",
+			"name":"示例儿童",
+			"gender":"女",
+			"birth":"2011-08-23"
 		},
-		"baseInfo":{
-			
-		}
+		"user":{
+			"name":"示例家长",
+			"gender":"男",
+			"role":"爸爸"
+		},
+		"result":{
+			"f_index":"72",
+			"level":{
+				"total":"远高于平均水平",
+				"percent_combined":"55",
+				"percent_gender":"43",
+				"dimension":[
+					{"name":"communication", "level":"低于平均水平"},
+					{"name":"cooperation", "level":"低于平均水平"},
+					{"name":"assertion", "level":"高于平均水平"},
+					{"name":"responsibility", "level":"高于平均水平"},
+					{"name":"empathy", "level":"平均水平"},
+					{"name":"engagement", "level":"高于平均水平"},
+					{"name":"selfcontrol", "level":"高于平均水平"}
+				]
+			},
+			"raw_score":{
+				"total":"100",
+				"68lower":"80",
+				"68upper":"120",
+				"95lower":"90",
+				"95upper":"110",
+				"dimension":[
+					{"name":"communication", "score":"67"},
+					{"name":"cooperation", "score":"55"},
+					{"name":"assertion", "score":"78"},
+					{"name":"responsibility", "score":"65"},
+					{"name":"empathy", "score":"62"},
+					{"name":"engagement", "score":"70"},
+					{"name":"selfcontrol", "score":"69"}
+				]
+			},
+			"rpt_score":{
+				"total":"100",
+				"68lower":"80",
+				"68upper":"120",
+				"95lower":"90",
+				"95upper":"110",
+				"dimension":[
+					{"name":"communication", "score":"67"},
+					{"name":"cooperation", "score":"55"},
+					{"name":"assertion", "score":"78"},
+					{"name":"responsibility", "score":"65"},
+					{"name":"empathy", "score":"62"},
+					{"name":"engagement", "score":"70"},
+					{"name":"selfcontrol", "score":"69"}
+				]
+			},
+			"sdd_score":{
+				"total":"100",
+				"68lower":"80",
+				"68upper":"120",
+				"95lower":"90",
+				"95upper":"110"
+			}
+		}	
 	}
 }
