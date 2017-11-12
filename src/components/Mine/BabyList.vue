@@ -49,7 +49,6 @@
 		.vux-no-group-title{
 			margin-top: 0; 
 			.weui-cell img{ width: 0.8rem;display: block;margin-right: 0.4rem; }
-			.weui-cell__ft{&:after{width: 0.266667rem;height: 0.266667rem;}}
 		}
 		.add{
 			display: flex;align-items: center;padding: 0.266667rem 0.4rem;

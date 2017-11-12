@@ -108,3 +108,8 @@
 		background-color: $text-green-active-color;
 	}
 }
+
+// 所有cell箭头写死
+.weui-cell__ft:after{
+	width: 0.266667rem !important;height: 0.266667rem !important;
+}
