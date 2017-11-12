@@ -110,6 +110,8 @@
 }
 
 // 所有cell箭头写死
-.weui-cell__ft:after{
+.weui-cell_select .weui-cell__bd:after,.weui-cell__ft:after{
 	width: 0.266667rem !important;height: 0.266667rem !important;
 }
+
+.weui-cell_select .weui-cell__bd:after{right: 0.08rem !important;}

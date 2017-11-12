@@ -18,7 +18,7 @@
 		      </tabbar-item>
 		    </tabbar>
 		    <group>
-				<cell title="个人信息" is-link>
+				<cell title="个人信息" is-link @click.native="goMineInfo">
 					<span slot="icon" class="icon iconfont icon-head_default"></span>
 					<!-- <img slot="icon" src="/static/imgs/test/icon.jpg"> -->
 				</cell>
@@ -88,7 +88,10 @@
 				}
 			},
 			goBaby(){
-				this.$router.push({path:'/mineBaby'})
+				this.$router.push({path:'/babyList'})
+			},
+			goMineInfo(){
+				this.$router.push({path:'/mineInfo'})
 			},
 			goAss(){
 				this.setMsg('mineAss','index',0)

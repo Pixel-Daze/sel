@@ -1,4 +1,4 @@
-<!-- 我的宝贝 -->
+<!-- 我的宝贝-改造为新增儿童页面 -->
 <template>
 	<div class="mine-baby">
 		<div class="headIcon">
@@ -8,6 +8,7 @@
 	      	<x-input class="name" title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
 	      	<pixel-selector v-if="endLoad" title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
 	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
+	      	<selector ref="defaultValueRef" title="家长身份" :options="list"></selector>
 	    </group>
 	    <div class="btn-container">
 	    	<x-button type="primary" action-type="button" @click.native="save">保存</x-button>
@@ -31,8 +32,9 @@
 					child_id:'0',
 					maxDate: ''// 预留作为最大日期
 				},
+				list:[],
 				sexList:[{key: '0', value: '男',icon:'icon-boy'}, {key: '1', value: '女',icon:'icon-girl'}],
-				endLoad:false
+				endLoad:true
 			}
 		},
 		components:{
@@ -130,7 +132,7 @@
 			}
 		},
 		created(){
-			this.loadInfo()
+			// this.loadInfo()
 		},
 		beforeRouteEnter (to, from, next) {
 		    next(vm=>{
@@ -167,6 +169,9 @@
 			&:before{
 				left: 0;
 			}
+		}
+		.vux-selector{
+			padding: 3px 0;
 		}
 		.headIcon{
 			width: 1.8rem;

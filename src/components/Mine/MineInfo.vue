@@ -2,7 +2,7 @@
 <template>
 	<div class="mine-info">
 		<div class="headIcon">
-			<img :src="body.head_portrait" alt="" @click="addPic">
+			<img :src="body.head_portrait" alt="">
 		</div>
 		<group>
 			<x-input class="name" title="昵称" placeholder="请输入昵称"></x-input>
@@ -69,6 +69,10 @@
 			loadInfo(){
 				let vm = this
 				document.title = '个人中心'
+			},
+			changeDate(){},
+			save(){
+				this.$router.push({path:"/appbase/mine"})
 			}
 		},
 		mounted(){

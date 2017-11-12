@@ -5,20 +5,8 @@
 			<cell title="珍珠" is-link>
 				<img slot="icon" src="/static/imgs/test/icon.jpg">
 			</cell>
-			<cell title="珍珠" is-link>
-				<img slot="icon" src="/static/imgs/test/icon.jpg">
-			</cell>
-			<cell title="珍珠" is-link>
-				<img slot="icon" src="/static/imgs/test/icon.jpg">
-			</cell>
-			<cell title="珍珠" is-link>
-				<img slot="icon" src="/static/imgs/test/icon.jpg">
-			</cell>
-			<cell title="珍珠" is-link>
-				<img slot="icon" src="/static/imgs/test/icon.jpg">
-			</cell>
 		</group>
-		<div class="add">
+		<div class="add" @click="addBaby()">
 			<span class="icon iconfont icon-add"></span>
 			<span class="tip">添加宝贝</span>
 		</div>
@@ -36,6 +24,9 @@
 		methods:{
 			loadInfo(){
 				document.title = '我的宝贝'
+			},
+			addBaby(){
+				this.$router.push({path:'/mineBaby'})
 			}
 		},
 		mounted(){
