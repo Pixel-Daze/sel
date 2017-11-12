@@ -17,6 +17,12 @@
 		        <span slot="label">我的宝贝</span>
 		      </tabbar-item>
 		    </tabbar>
+		    <group>
+				<cell title="个人信息" is-link>
+					<span slot="icon" class="icon iconfont icon-head_default"></span>
+					<!-- <img slot="icon" src="/static/imgs/test/icon.jpg"> -->
+				</cell>
+			</group>
 		</div>
 		<div class="login" v-if="loginFlag=='0'">
 			<img src="../../../static/imgs/login/logo_1.png" alt="">
@@ -36,7 +42,7 @@
 	
 </template>
 <script>
-	import { Tabbar, TabbarItem ,XInput,Group,XButton} from 'vux'
+	import { Tabbar, TabbarItem,XInput,Group,XButton,Cell} from 'vux'
 	import { IconHeader } from './mineComponent'
 	import * as api from '../../api/assessmentApi'
 	export default{
@@ -180,7 +186,7 @@
 	      	Tabbar,
 	      	TabbarItem,
 	      	IconHeader,
-	      	XInput,Group,XButton
+	      	XInput,Group,XButton,Cell
 	    },
 	    created(){
 	    	this.loadInfo()
@@ -189,6 +195,12 @@
 </script>
 <style lang='scss'>
 	.mine{
+		.vux-no-group-title{
+			margin-top: 0.266667rem; 
+			.weui-cell span{ width: 0.8rem;display: block;}
+			.icon{color:#229cee;font-size: 0.533333rem;}
+			.weui-cell__ft{&:after{width: 0.266667rem;height: 0.266667rem;}}
+		}
 		.weui-tabbar{
 			position: relative;
 			.weui-tabbar__item{
