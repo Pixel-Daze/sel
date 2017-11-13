@@ -19,7 +19,7 @@
 	</div>
 </template>
 <script>
-	import {Tab, TabItem,XHeader} from 'vux'
+	import {Tab, TabItem} from 'vux'
 	import { AssCell } from './mineComponent'
 	import ErrorInfo from '../AppBase/ErrorInfo'
 	import * as api from '../../api/mineApi'
@@ -33,7 +33,7 @@
 			}
 		},
 		components:{
-			Tab, TabItem, XHeader,AssCell,ErrorInfo
+			Tab, TabItem,AssCell,ErrorInfo
 		},
 		methods:{
 			loadInfo(){

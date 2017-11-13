@@ -61,35 +61,6 @@
 <style lang='scss'>
   @import '../../../static/lib/css/widget/tabbar/tabbar.scss';
   .app-base{
-      .router-view {
-        width: 100%;
-      }
-      .pixel-pop-out-enter-active,
-      .pixel-pop-out-leave-active,
-      .pixel-pop-in-enter-active,
-      .pixel-pop-in-leave-active {
-        will-change: transform;
-        transition: all 500ms ease;
-        height: 100%;
-        position: absolute;
-        backface-visibility: hidden;
-        perspective: 1000;
-      }
-      .pixel-pop-out-enter {
-        opacity: 0;
-        transform: translate3d(-100%, 0, 0);
-      }
-      .pixel-pop-out-leave-active {
-        opacity: 0;
-        transform: translate3d(100%, 0, 0);
-      }
-      .pixel-pop-in-enter {
-        opacity: 0;
-        transform: translate3d(100%, 0, 0);
-      }
-      .pixel-pop-in-leave-active {
-        opacity: 0;
-        transform: translate3d(-100%, 0, 0);
-      }
+      
   }
 </style>

@@ -2,7 +2,7 @@
 <template>
 	<div class="level-bar-wrap">
 		<div class="left">
-			<p class="name text-green">{{bar.name_tip}}&emsp;{{bar.name}}</p>
+			<p class="name text-green">{{bar.name_tip}}&emsp;{{bar.name|capStr}}</p>
 			<div class="bar-contain">
 				<div class="level-bar">
 					<div class="progress-bar" :style="{width:bar.score+'%'}" :class="{'bgGreen':bar.level_tip=='high','bgYellow':bar.level_tip=='down','bgBlue':bar.level_tip=='ave'}"></div>

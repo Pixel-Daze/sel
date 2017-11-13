@@ -1,12 +1,53 @@
 <!-- 儿童信息详情 -->
 <template>
-	<div class="baby-detail">
-		
+	<div class="baby-detail p-container">
+		<tab :line-width="1" custom-bar-width="60px">
+	        <tab-item :selected="selected=='0'" @on-item-click="onItemClick">宝贝信息</tab-item>
+	        <tab-item :selected="selected=='1'" @on-item-click="onItemClick">测评报告</tab-item>
+	    </tab>
+	    <transition name="pixel-pop-in">
+	      <router-view class="router-view p-com-wrapper"></router-view> 
+	    </transition>
 	</div>
 </template>
 <script>
+	import {Tab, TabItem} from 'vux'
 	export default{
-
+		data(){
+			return {
+				selected:'0',
+			}
+		},
+		methods:{
+			onItemClick(index){
+				let vm = this
+				if(index=='0'){
+					vm.$router.replace({path:'/babyDetail/babyInfo'})
+				}else if(index=='1'){
+					vm.$router.replace({path:'/babyDetail/babyAss'})
+				}
+			}
+		},
+		components:{
+			Tab,TabItem
+		}
 	}
 </script>
-<style lang='scss'></style>
+<style lang='scss'>
+	@import '../../../static/lib/css/base/variable/base-color.scss';
+	.baby-detail{
+		.vux-tab .vux-tab-item.vux-tab-selected{
+			color: $text-green-color;
+			border-bottom-color: $text-green-color;
+		}
+		.p-com-wrapper{
+			height: calc(100% - 44px);
+		}
+		.ass-btn{
+			color: #fff;
+			background-color: $text-green-color;
+			padding: 0.08rem 0.133333rem;
+			border-radius: 0.08rem;
+		}
+	}
+</style>

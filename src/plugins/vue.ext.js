@@ -15,12 +15,6 @@ export default {
             }
         }
 
-        Vue.filter('time_con',(value)=>{
-            if(value){
-                return moment(value.substring(0,8)).format('YYYY-MM-DD')+' '+value.substr(8,2)+':'+value.substr(10,2)+':'+value.substr(12,2)
-            }
-        })
-
 		/* 存储本地信息
 		   格式：{"app":{"selected":"appIndex"}}
 		   规则：如果没有则创建，有就更新 */

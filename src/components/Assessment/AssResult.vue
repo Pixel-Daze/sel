@@ -28,7 +28,7 @@
 			</div>
 			<div class="res-detail">
 				<p class="title">社会技能-细分维度</p>
-				<level-bar v-for="item in detail" :key="item" :bar=item></level-bar>
+				<level-bar v-for="item in detail" :key="item.name" :bar=item></level-bar>
 			</div>
 			<div class="ass-b-btn">获取完整报告</div>
 		</div>
@@ -59,7 +59,6 @@
 						vm.assRes =  resp.data.data
 						vm.sum = vm.assRes.result.level
 						vm.detail = vm.getDetail(vm.sum.dimension,vm.assRes.result.rpt_score.dimension)
-						console.log(vm.detail)
 					}
 					vm.isLoading = false
 				})

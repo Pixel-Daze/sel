@@ -45,8 +45,8 @@ Vue.use(ConfirmPlugin)
 import store from './store'
 
 /*filter*/
-// import filter from './filter'
-// Vue.use(filter)
+import filter from './filter'
+Vue.use(filter)
 
 /* router */
 

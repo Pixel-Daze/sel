@@ -2,7 +2,7 @@
 <template>
 	<div class="baby-list">
 		<group>
-			<cell title="珍珠" is-link>
+			<cell title="珍珠" is-link @click.native="goDetail">
 				<img slot="icon" src="/static/imgs/test/icon.jpg">
 			</cell>
 		</group>
@@ -27,6 +27,9 @@
 			},
 			addBaby(){
 				this.$router.push({path:'/mineBaby'})
+			},
+			goDetail(){
+				this.$router.push({path:'/babyDetail/babyInfo'})
 			}
 		},
 		mounted(){
