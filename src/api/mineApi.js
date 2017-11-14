@@ -23,3 +23,11 @@ export function getMineCourse(body){
 	// return fetch(jsonUrl+'static/json/myCourse.json')
 	return fetch(baseUrl+'QryMyCourse',body)
 }
+
+export function getProvinceList(body){
+	return fetch(baseUrl+"GetProvinces",body)
+}
+
+export function getCityList(body){
+	return fetch(baseUrl+'GetCities',body)
+}

@@ -4,12 +4,13 @@
 		<div class="headIcon">
 			<img :src="body.head_portrait" alt="">
 		</div>
+		<!-- {{areaList}} -->
 		<group>
 			<x-input class="name" title="昵称" placeholder="请输入昵称"></x-input>
 	      	<x-input class="name" title="姓名" placeholder="请输入姓名"></x-input>
 	      	<pixel-selector title="性别" :options="sexList" :value="body.gender" ></pixel-selector>
 	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
-	      	<popup-picker title="常驻地" :data="areaList" :columns="2" show-name></popup-picker>
+	      	<popup-picker title="常驻地" :data="areaList" :columns="2" v-model="area" @on-shadow-change="areaChange" show-name></popup-picker>
 	    </group>
 	    <div class="btn-container">
 	    	<x-button type="primary" action-type="button" @click.native="save">保存</x-button>
@@ -34,31 +35,8 @@
 					maxDate: ''// 预留作为最大日期
 				},
 				sexList:[{key: '0', value: '男',icon:'icon-boy'}, {key: '1', value: '女',icon:'icon-girl'}],
-				areaList: [{
-			        name: '广东',
-			        value: 'china001',
-			        parent: 0
-			      }, {
-			        name: '广西',
-			        value: 'china002',
-			        parent: 0
-			      }, {
-			        name: '广州',
-			        value: 'gz',
-			        parent: 'china001'
-			      }, {
-			        name: '深圳',
-			        value: 'sz',
-			        parent: 'china001'
-			      }, {
-			        name: '广西001',
-			        value: 'gx001',
-			        parent: 'china002'
-			      }, {
-			        name: '广西002',
-			        value: 'gx002',
-			        parent: 'china002'
-			      }],
+				areaList: [],
+				area:[],
 				endLoad:false
 			}
 		},
@@ -69,10 +47,37 @@
 			loadInfo(){
 				let vm = this
 				document.title = '个人中心'
+				vm.getProvince()
 			},
 			changeDate(){},
 			save(){
 				this.$router.push({path:"/appbase/mine"})
+			},
+			areaChange(val){
+				let vm = this,body={
+					provinceid:val[0]
+				}
+				let has = vm.areaList.some(element => {
+					return element["parent"] === val[0]
+				});
+				if (!has){
+					vm.$store.dispatch('FETCH_CITY_LIST',body)
+					.then(resp=>{
+						vm.areaList = vm.$store.getters.areaList
+					})
+				}
+			},
+			getProvince(){
+				let vm = this,body={}
+				vm.areaList = vm.$store.getters.areaList
+				if(vm.areaList.length == 0){
+					vm.$store.dispatch('FETCH_PROVINCE_LIST',body)
+					.then(resp=>{
+						vm.$store.dispatch('FETCH_CITY_LIST',{provinceid:110000}).then(resp=>{
+							vm.areaList = vm.$store.getters.areaList
+						})
+					})
+				}
 			}
 		},
 		mounted(){
