@@ -26,10 +26,17 @@
 				}else if(index=='1'){
 					vm.$router.replace({path:'/babyDetail/babyAss'})
 				}
+			},
+			loadInfo(){
+				let vm = this,path=['BabyInfo','BabyAss']
+		        vm.selected = _.indexOf(path,vm.$route.name)
 			}
 		},
 		components:{
 			Tab,TabItem
+		},
+		mounted(){
+			this.loadInfo()
 		}
 	}
 </script>

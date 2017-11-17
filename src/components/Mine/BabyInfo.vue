@@ -3,7 +3,7 @@
 	<div class="baby-info">
 		<div class="headIcon">
 			<img v-if="body.head_portrait" :src="body.head_portrait" alt="" @click="addPic">
-			<img v-else: alt="" @click="addPic">
+			<img v-else alt="" @click="addPic">
 		</div>
 		<group>
 	      	<x-input class="name" title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
@@ -38,11 +38,6 @@
 				endLoad:true
 			}
 		},
-		methods:{
-			loadInfo(){
-				document.title = '宝贝信息'
-			}
-		},
 		components:{
 			Group,Datetime,XInput,Selector,XButton,XHeader,PixelSelector
 		},
@@ -70,7 +65,7 @@
 				let vm = this,body = {
 					user_id:vm.getMsg('base','userInfo').user_id
 				}
-				document.title = '我的宝贝'
+				document.title = '宝贝信息'
 				vm.configWxjssdk()
 				api.qrychild(body).then(resp=>{
 					if(resp.data.res == 0){
