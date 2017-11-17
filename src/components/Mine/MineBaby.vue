@@ -2,7 +2,8 @@
 <template>
 	<div class="mine-baby">
 		<div class="headIcon">
-			<img :src="body.head_portrait" alt="" @click="addPic">
+			<img v-if="body.head_portrait" :src="body.head_portrait" alt="" @click="addPic">
+			<img v-else: alt="" @click="addPic">
 		</div>
 		<group>
 	      	<x-input class="name" title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
@@ -146,56 +147,11 @@
 	}
 </script>
 <style lang='scss'>
+	@import './scss/fn.scss';
 	.mine-baby{
 		height: 100%;
 		width: 100%;
 		background: #fff;
-		.name{
-			.weui-cell__bd{
-				padding-right: 11px;
-				.weui-input{
-					text-align: right;
-				}
-			}
-			.weui-cell__ft{
-				display: none;
-			}
-		}
-		.weui-cells{
-			margin: 1.17647059em 15px 0;
-		}
-		.weui-cell{
-			padding: 13px 0;
-			&:before{
-				left: 0;
-			}
-		}
-		.vux-selector{
-			padding: 3px 0;
-		}
-		.headIcon{
-			width: 1.8rem;
-			height: 1.8rem;
-			border-radius: 50%;
-			background: #dae2e2;
-			margin: 1rem auto 1.3rem;
-			text-align: center;
-			img{
-				width: inherit;
-				height: inherit;
-				border-radius: 50%;
-				color: gray;
-			}
-		}
-		.btn-container{
-			padding:0.8rem 15px 0;
-			button{
-				height: 46px;
-				font-size: 20px;
-			}
-		}
-		.weui-cell_access .weui-cell__ft {
-		    padding-left: 16px;
-		}
+		@include baby-info;
 	}
 </style>
