@@ -31,3 +31,8 @@ export function getProvinceList(body){
 export function getCityList(body){
 	return fetch(baseUrl+'GetCities',body)
 }
+
+/* 获取儿童与家长关系 */
+export function getRelation(body){
+	return fetch(baseUrl+'GetRelation',body)
+}

@@ -59,6 +59,8 @@
 						vm.assRes =  resp.data.data
 						vm.sum = vm.assRes.result.level
 						vm.detail = vm.getDetail(vm.sum.dimension,vm.assRes.result.rpt_score.dimension)
+					}else{
+						
 					}
 					vm.isLoading = false
 				})

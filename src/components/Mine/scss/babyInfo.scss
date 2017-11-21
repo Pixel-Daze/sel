@@ -4,6 +4,7 @@
 			padding-right: 11px;
 			.weui-input{
 				text-align: right;
+				color: #999;
 			}
 		}
 		.weui-cell__ft{
@@ -21,6 +22,7 @@
 	}
 	.vux-selector{
 		padding: 3px 0;
+		select{direction: rtl;color: #999;padding-right: 0.426667rem;}
 	}
 	.headIcon{
 		width: 10rem;

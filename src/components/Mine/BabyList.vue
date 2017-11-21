@@ -2,8 +2,8 @@
 <template>
 	<div class="baby-list">
 		<group>
-			<cell title="珍珠" is-link @click.native="goDetail">
-				<img slot="icon" src="/static/imgs/test/icon.jpg">
+			<cell :title="baby.name" is-link @click.native="goDetail(baby)" v-for="baby in babyList">
+				<img slot="icon" :src="baby.head_portrait">
 			</cell>
 		</group>
 		<div class="add" @click="addBaby()">
@@ -14,9 +14,12 @@
 </template>
 <script>
 	import {Cell,Group} from 'vux'
+	import * as api from '../../api/mineApi'
 	export default {
 		data(){
-			return {}
+			return {
+				babyList:[]
+			}
 		},
 		components:{
 			Cell,Group
@@ -24,11 +27,20 @@
 		methods:{
 			loadInfo(){
 				document.title = '我的宝贝'
+				this.getBabyList()
+			},
+			getBabyList(){
+				let vm = this , body = {user_id:vm.getMsg('base','userInfo').user_id}
+				api.qrychild(body).then(resp=>{
+					if(resp.data.res==0){
+						vm.babyList = resp.data.data
+					}
+				})
 			},
 			addBaby(){
 				this.$router.push({path:'/mineBaby'})
 			},
-			goDetail(){
+			goDetail(baby){
 				this.$router.push({path:'/babyDetail/babyInfo'})
 			}
 		},

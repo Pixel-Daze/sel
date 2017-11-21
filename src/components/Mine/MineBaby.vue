@@ -3,13 +3,13 @@
 	<div class="mine-baby">
 		<div class="headIcon">
 			<img v-if="body.head_portrait" :src="body.head_portrait" alt="" @click="addPic">
-			<img v-else: alt="" @click="addPic">
+			<img v-else alt="" @click="addPic">
 		</div>
 		<group>
 	      	<x-input class="name" title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
-	      	<pixel-selector v-if="endLoad" title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
-	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
-	      	<selector ref="defaultValueRef" title="家长身份" :options="list"></selector>
+	      	<pixel-selector title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
+	      	<datetime v-model="body.birth_date" title="生日"></datetime>
+	      	<selector title="家长身份" :options="list" v-model="body.relation"></selector>
 	    </group>
 	    <div class="btn-container">
 	    	<x-button type="primary" action-type="button" @click.native="save">保存</x-button>
@@ -24,29 +24,34 @@
 		data(){
 			return {
 				body:{
-					head_portrait:'',
-					relation:'0',
-					name:'',
-					gender:'0',
-					birth_date:'',
-					user_id:'',
-					child_id:'0',
-					maxDate: ''// 预留作为最大日期
+					head_portrait:'', //儿童头像地址
+					name:'', //儿童姓名
+					gender:'0', // 儿童性别
+					birth_date:'', // 儿童生日
+					user_id:'', // 用户id
+					child_id:'0', //儿童id
+					relation:'' // 用户儿童关系
 				},
-				list:[],
-				sexList:[{key: '0', value: '男',icon:'icon-boy'}, {key: '1', value: '女',icon:'icon-girl'}],
-				endLoad:true
+				maxDate: '',// 预留作为最大日期
+				list:[], //儿童关系列表
+				sexList:[{key: '0', value: '男',icon:'icon-boy'}, {key: '1', value: '女',icon:'icon-girl'}]
 			}
 		},
 		components:{
 			Group,Datetime,XInput,Selector,XButton,XHeader,PixelSelector
 		},
 		methods:{
+			/* @desc:获取儿童与家长关系，初始化list */
+			initRelation(){
+				let vm = this
+				api.getRelation().then(resp=>{
+					if(resp.data.res == 0){
+						vm.list = vm.objToky(resp.data.data)
+					}
+				})
+			},
 			chengeSex(val){
 				this.body.gender = val
-			},
-			changeDate(val){
-				// console.log(val)
 			},
 			save(){
 				let vm = this
@@ -62,23 +67,9 @@
 				
 			},
 			loadInfo(){
-				let vm = this,body = {
-					user_id:vm.getMsg('base','userInfo').user_id
-				}
 				document.title = '我的宝贝'
-				vm.configWxjssdk()
-				api.qrychild(body).then(resp=>{
-					if(resp.data.res == 0){
-						if(resp.data.data!=null){
-							vm.body.child_id = resp.data.data[0].child_id
-							vm.body.birth_date = vm.formatDate(resp.data.data[0].birth_date)
-							vm.body.gender = resp.data.data[0].gender
-							vm.body.name = resp.data.data[0].name
-							vm.body.head_portrait = resp.data.data[0].head_portrait
-						}
-					}
-					vm.endLoad = true
-				})
+				this.initRelation()
+				this.configWxjssdk()
 			},
 			checkInfo(){
 				let vm = this
@@ -90,6 +81,13 @@
 					})
 					return false
 				}else if(vm.body.birth_date == ''){
+					this.$vux.toast.show({
+						text: '请输入生日',
+						type: 'text',
+						width: '3.5rem'
+					})
+					return false
+				}else if(vm.body.relation == ''){
 					this.$vux.toast.show({
 						text: '请输入生日',
 						type: 'text',
@@ -122,7 +120,6 @@
 				        let body = {
 				        	mediaid:res.serverId
 				        }
-				        // console.log(vm.body.name = res.serverId)
 				        api.UploadChildImg(body).then(resp=>{
 				        	if(resp.data.res=='0'){
 				        		vm.body.head_portrait = resp.data.data
@@ -133,7 +130,7 @@
 			}
 		},
 		created(){
-			// this.loadInfo()
+			this.loadInfo()
 		},
 		beforeRouteEnter (to, from, next) {
 		    next(vm=>{

@@ -69,6 +69,15 @@ export default {
                 return value1 - value2;
             }
         }
+
+        /* 拆分key-value */
+        Vue.prototype.objToky = (obj) => {
+            let res = []
+            for(let key in obj){
+                res.push({key:key,value:obj[key]})
+            }
+            return res
+        }
     
 
         //配置微信jssdk
