@@ -2,7 +2,7 @@
 <template>
 	<div class="baby-list">
 		<group>
-			<cell :title="baby.name" is-link @click.native="goDetail(baby)" v-for="baby in babyList">
+			<cell :title="baby.name" is-link @click.native="goDetail(baby)" v-for="baby in babyList" :key="baby.child_id">
 				<img slot="icon" :src="baby.head_portrait">
 			</cell>
 		</group>
@@ -41,7 +41,7 @@
 				this.$router.push({path:'/mineBaby'})
 			},
 			goDetail(baby){
-				this.$router.push({path:'/babyDetail/babyInfo'})
+				this.$router.push({path:'/babyDetail/babyInfo',query:{child_id:baby.child_id}})
 			}
 		},
 		mounted(){

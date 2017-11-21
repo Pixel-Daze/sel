@@ -26,7 +26,7 @@
 				body:{
 					head_portrait:'', //儿童头像地址
 					name:'', //儿童姓名
-					gender:'0', // 儿童性别
+					gender:'1', // 儿童性别
 					birth_date:'', // 儿童生日
 					user_id:'', // 用户id
 					child_id:'0', //儿童id
@@ -34,7 +34,7 @@
 				},
 				maxDate: '',// 预留作为最大日期
 				list:[], //儿童关系列表
-				sexList:[{key: '0', value: '男',icon:'icon-boy'}, {key: '1', value: '女',icon:'icon-girl'}]
+				sexList:[{key: '1', value: '男',icon:'icon-boy'}, {key: '2', value: '女',icon:'icon-girl'}]
 			}
 		},
 		components:{
@@ -59,6 +59,10 @@
 					vm.body.user_id = vm.getMsg('base','userInfo').user_id
 					api.addchild(vm.body).then(resp=>{
 						if(resp.data.res == 0){
+							vm.$vux.alert.show({
+								title: '提示',
+								content: '添加儿童信息成功'
+							})
 							let data = vm.getMsg('mineBaby','data')
 							vm.$router.push({path:data.path,query:data.query})
 						}
@@ -82,16 +86,16 @@
 					return false
 				}else if(vm.body.birth_date == ''){
 					this.$vux.toast.show({
-						text: '请输入生日',
+						text: '请选择出生日期',
 						type: 'text',
-						width: '3.5rem'
+						width: '4rem'
 					})
 					return false
 				}else if(vm.body.relation == ''){
 					this.$vux.toast.show({
-						text: '请输入生日',
+						text: '请选择家长身份',
 						type: 'text',
-						width: '3.5rem'
+						width: '4rem'
 					})
 					return false
 				}else{

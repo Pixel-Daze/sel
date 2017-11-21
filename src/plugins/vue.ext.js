@@ -61,7 +61,7 @@ export default {
             } 
         }
 
-        /* 根据对象属性排序 */
+        /* @desc:根据对象属性排序 */
         Vue.prototype.sortByAttr = (property) => {
             return function(a,b){
                 var value1 = a[property];
@@ -70,7 +70,7 @@ export default {
             }
         }
 
-        /* 拆分key-value */
+        /* @desc:拆分key-value */
         Vue.prototype.objToky = (obj) => {
             let res = []
             for(let key in obj){
@@ -78,7 +78,6 @@ export default {
             }
             return res
         }
-    
 
         //配置微信jssdk
         Vue.prototype.configWxjssdk = () =>{

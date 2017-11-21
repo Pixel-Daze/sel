@@ -28,13 +28,13 @@
 					head_portrait:'',
 					relation:'0',
 					name:'',
-					gender:'0',
+					gender:'1',
 					birth_date:'',
 					user_id:'',
-					child_id:'0',
-					maxDate: ''// 预留作为最大日期
+					child_id:'0'
 				},
-				sexList:[{key: '0', value: '男',icon:'icon-boy'}, {key: '1', value: '女',icon:'icon-girl'}],
+				maxDate: '',// 预留作为最大日期
+				sexList:[{key: '1', value: '男',icon:'icon-boy'}, {key: '2', value: '女',icon:'icon-girl'}],
 				areaList: [],
 				area:[],
 				endLoad:false

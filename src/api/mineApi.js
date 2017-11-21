@@ -32,7 +32,12 @@ export function getCityList(body){
 	return fetch(baseUrl+'GetCities',body)
 }
 
-/* 获取儿童与家长关系 */
+/* @desc:获取儿童与家长关系 */
 export function getRelation(body){
 	return fetch(baseUrl+'GetRelation',body)
+}
+
+/* @desc:获取单个儿童信息 */
+export function getChildById(body){
+	return fetch(baseUrl+'qrysinglechild',body)
 }

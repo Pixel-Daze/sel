@@ -53,9 +53,6 @@
 								  	// 组件除show外的属性
 								  	title: '提示',
         							content: '您还未添加儿童信息，是否前往添加',
-								  	onCancel () {
-								    	
-								  	},
 								  	onConfirm () {
 								  		vm.$router.push({path:'/mineBaby'})
 								  	}
@@ -68,9 +65,6 @@
 						// 组件除show外的属性
 						title: '提示',
         				content: '前往登录',
-						onCancel () {
-								    	
-						},
 						onConfirm () {
 							vm.$router.push({name:'Login'})
 						}
