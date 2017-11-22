@@ -242,7 +242,10 @@
 					child_id:vm.$route.query.child_id,
 					typeid:'0'
 				}
-				vm.$router.push({path:'/assResult',query:body})
+				if(vm.$route.query.keyname=='ssis'){
+					vm.$router.push({path:'/assResult',query:body})	
+				}
+				
 			}
 		},
 		created(){

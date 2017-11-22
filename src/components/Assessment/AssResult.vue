@@ -2,7 +2,7 @@
 <template>
 	<div class="ass-result p-container">
 		<loading v-model="isLoading" text="正在生成报告报告结果"></loading>
-		<!-- <div v-if="!isLoading&&repSucc" class="p-com-wrapper">
+		<div v-if="!isLoading&&repSucc" class="p-com-wrapper">
 			<div class="res-head">
 				<p class="ass-title text-green">社会技能发展水平</p>
 				<p class="des">测试儿童：{{assRes.child.name}}</p>
@@ -31,7 +31,7 @@
 				<level-bar v-for="item in detail" :key="item.name" :bar=item></level-bar>
 			</div>
 			<div class="ass-b-btn">获取完整报告</div>
-		</div> -->
+		</div>
 		<div v-if="!isLoading&&!repSucc" class="p-com-wrapper">
 			<div class="error-info">
 				<img src="../../../static/imgs/error.png" alt="">
@@ -72,14 +72,11 @@
 				document.title = '测评结果'
 				vm.isLoading = true
 				api.getAssRes(body).then(resp=>{
-					console.log(resp)
-					if(resp.data.res=='0'){
+					if(resp.data.res=='0'&&resp.data.data){
 						vm.assRes =  resp.data.data
 						vm.sum = vm.assRes.result.level
 						vm.detail = vm.getDetail(vm.sum.dimension,vm.assRes.result.rpt_score.dimension)
 						vm.repSucc = true
-					}else{
-						
 					}
 					vm.isLoading = false
 				})

@@ -68,7 +68,8 @@
 						user_id:vm.getMsg('base','userInfo').user_id,
 						child_id:vm.child.child_id,
 						index:0,
-						assName:vm.$route.query.assName
+						assName:vm.$route.query.assName,
+						keyname:vm.$route.query.keyname
 					}
 					vm.$router.push({path:'assQueDetail',query:body})
 				}else{

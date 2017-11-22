@@ -1,7 +1,7 @@
 <template>
 	<div class="course-free  p-container">
 		<div v-if="!showFlag" class="video-pic">
-			<img :src="cover" alt="">
+			<img :src="courseInfo.picture" alt="">
 		</div>
 		<div v-show="showFlag" class="prism-player" id="J_prismPlayer" style="position: absolute" ></div>
 		<div class="info-swiper">
@@ -10,9 +10,7 @@
 	      	</tab>
 	      	<swiper v-model="index" :show-dots="false">
 	        	<swiper-item v-for="(item, index) in list" :key="index">
-	        		<div  class="tab-swiper vux-center course-des" v-if="index == 0">
-	          			{{courseInfo.details}}
-	          		</div>
+	        		<div  class="tab-swiper vux-center course-des" v-if="index == 0" v-html="courseInfo.details"></div>
 	          		<div class="tab-swiper vux-center" v-if="index == 1">
 	          			
 	          		</div>
@@ -28,14 +26,13 @@
 	export default {
 		data(){
 			return {
-				courseInfo:{},
-				endLoad:false,
+				courseInfo:{}, // 课程信息
+				sourseList:[], // 课程信息
 				index:0,
 				selected:'介绍',
-				list:['介绍','资源'],
+				list:['介绍','课件'],
 				player:{},
-				showFlag:false,
-				cover:''
+				showFlag:false
 			}
 		},
 		components:{
@@ -43,12 +40,38 @@
 		},
 		methods:{
 			loadInfo(){
-				let vm = this
-				vm.courseInfo = vm.getMsg('courseDetail','info')
-				document.title = vm.courseInfo.name
-				let body = {
-					media:vm.courseInfo.media
+				this.getCourse()
+				this.getCourseResourse()
+			},
+			/* @desc:获取单个课程 */
+			getCourse(){
+				let vm = this , body = {
+					course_id:vm.$route.query.course_id
 				}
+				api.getCourseById(body).then(resp=>{
+					if(resp.data.res==0){
+						vm.courseInfo = resp.data.data
+						document.title = vm.courseInfo.name
+						return resp.data.data.media
+					}
+				}).then(media=>{
+					// vm.getVideoAuth(media)
+				})
+			},
+			/* @desc:获取课程资源列表 */
+			getCourseResourse(){
+				let vm = this , body = {
+					course_id:vm.$route.query.course_id
+				}
+				api.getResourse(body).then(resp=>{
+					if(resp.data.res==0){
+						vm.sourseList = resp.data.data
+					}
+				})
+			},
+			/* @desc:获取视频权限 */
+			getVideoAuth(media){
+				let vm = this , body = {media:media}
 				api.getVideoPlayAuth(body).then(resp=>{
 					if(resp.data.res=='0'){
 						vm.cover = resp.data.data.coverurl
@@ -56,6 +79,7 @@
 					}
 				})
 			},
+			/* @desc:获取视频 */
 			getMedia(media,data){
 				let vm = this
 				vm.player = new prismplayer({
