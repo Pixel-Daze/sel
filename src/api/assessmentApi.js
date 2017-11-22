@@ -48,6 +48,7 @@ export function getAssById(body){
 
 // 获取测评结果
 export function getAssRes(body){
-	return fetch(jsonUrl+'static/json/AssResult.json')
+	return fetch(baseUrl+'QryReport',body)
+	// return fetch(jsonUrl+'static/json/AssResult.json')
 }
 

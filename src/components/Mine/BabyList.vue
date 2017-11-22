@@ -29,6 +29,7 @@
 				document.title = '我的宝贝'
 				this.getBabyList()
 			},
+			/* @desc:获取儿童列表 */
 			getBabyList(){
 				let vm = this , body = {user_id:vm.getMsg('base','userInfo').user_id}
 				api.qrychild(body).then(resp=>{

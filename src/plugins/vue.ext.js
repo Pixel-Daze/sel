@@ -15,6 +15,14 @@ export default {
             }
         }
 
+        /* @desc:格式化性别 */
+        Vue.prototype.formatGender = (val) => {
+            let arr = ['','男','女']
+            if(val){
+                return arr[val]
+            }
+        }
+
 		/* 存储本地信息
 		   格式：{"app":{"selected":"appIndex"}}
 		   规则：如果没有则创建，有就更新 */

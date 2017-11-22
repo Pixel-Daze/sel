@@ -40,14 +40,19 @@
 					}
 					mineApi.qrychild(body).then(resp=>{
 						if(resp.data.res == 0){
-							if(resp.data.data!=null){
-								let body = {
+							if(resp.data.data.length>0){
+								/*let body = {
 									evaluation_id:vm.assInfo.evaluation_id,
 									user_id:vm.getMsg('base','userInfo').user_id,
 									child_id:resp.data.data[0].child_id,
 									index:0
+								}*/
+								let body = {
+									evaluation_id:vm.assInfo.evaluation_id,
+									assName:vm.assInfo.name
 								}
-								vm.$router.push({path:'assQueDetail',query:body})
+								vm.$router.push({path:'assChild',query:body})
+								// vm.$router.push({path:'assQueDetail',query:body})
 							}else{
 								vm.$vux.confirm.show({
 								  	// 组件除show外的属性
