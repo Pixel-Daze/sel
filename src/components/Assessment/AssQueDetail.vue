@@ -63,7 +63,6 @@
 				Info:{},
 				endLoad:false,
 				percent:0,
-				assInfo:{},
 				answer:[],
 				curIndex:0,
 				questions:[],
@@ -114,8 +113,7 @@
 						})
 					}
 				})
-				vm.assInfo = vm.getMsg('assDetail','info')
-				document.title = vm.assInfo.name
+				document.title = vm.$route.query.assName
 			},
 			InitAnswer(result,questions){
 				let vm = this
@@ -219,19 +217,15 @@
 			submit(){
 				let vm = this
 				if(vm.getMsg('assDetail','submitFlag')){
-					let info = vm.getMsg('assDetail','info')
-					let body = {
-						name : info.name,
-						details : info.details
-					}
 					vm.$vux.confirm.show({
 						// 组件除show外的属性
 						title: '提示',
-        				content: '您已完成'+vm.assInfo.name+'，是否前往查看测评结果？',
+        				content: '您已完成'+vm.$route.query.assName+'，是否前往查看测评结果？',
 						onCancel () {
 								   	
 						},
 						onConfirm () {
+							console.log('da')
 							vm.getReport()
 						}
 					})
@@ -249,12 +243,10 @@
 					child_id:vm.$route.query.child_id,
 					typeid:'0'
 				}
-				vm.$router.push({path:'/assResult',query:body})
-				// api.qryReport(body).then(resp=>{
-				// 	if(resp.data.res=='0'){
-				// 		vm.$router.push({path:'/assResult',query:body})
-				// 	}
-				// })
+				if(vm.$route.query.keyname=='ssis'){
+					vm.$router.push({path:'/assResult',query:body})	
+				}
+				
 			}
 		},
 		created(){

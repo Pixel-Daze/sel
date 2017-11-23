@@ -1,0 +1,32 @@
+<template>
+	<div class="source-cell vux-1px-b">
+		<!-- @desc:video:1,audio:2,pdf:3,link:4 -->
+		<span class="icon iconfont" :class="{'icon-ai-video':cell.type=='1','icon-music':cell.type=='2','icon-pdf1':cell.type=='3','icon-link':cell.type=='4'}"></span>
+		<span class="title text-overflow">0{{cell.resource_id}}.{{cell.name}}</span>
+		<span class="price text-overflow">{{cell.free|freeTo}}</span>
+	</div>
+</template>
+<script>
+	export default {
+		name:'source-cell',
+		props:{cell:Object},
+		filters:{
+			freeTo:function(val){
+				let arr = ['收费','免费']
+				return arr[val]
+			}
+		}
+	}
+</script>
+<style lang='scss'>
+	.source-cell{
+		display: flex;
+		background-color: #fff;
+		height: 1.3rem;
+		line-height: 1.3rem;
+		padding: 0 0.4rem;
+		.icon{width: 0.8rem;}
+		.title{flex: 1;}
+		.price{width: 1.2rem;}
+	}
+</style>

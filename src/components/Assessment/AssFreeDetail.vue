@@ -27,10 +27,10 @@
 				api.getAssById(body).then(resp=>{
 					if(resp.data.res=='0'){
 						vm.assInfo = resp.data.data
+						document.title = vm.assInfo.name
 					}
 					vm.endLoad = true
 				})
-				document.title = vm.assInfo.name
 			},
 			OpenTest(){
 				let vm = this
@@ -40,14 +40,13 @@
 					}
 					mineApi.qrychild(body).then(resp=>{
 						if(resp.data.res == 0){
-							if(resp.data.data!=null){
+							if(resp.data.data.length>0){
 								let body = {
 									evaluation_id:vm.assInfo.evaluation_id,
-									user_id:vm.getMsg('base','userInfo').user_id,
-									child_id:resp.data.data[0].child_id,
-									index:0
+									assName:vm.assInfo.name,
+									keyname:vm.assInfo.key_name
 								}
-								vm.$router.push({path:'assQueDetail',query:body})
+								vm.$router.push({path:'assChild',query:body})
 							}else{
 								vm.$vux.confirm.show({
 								  	// 组件除show外的属性

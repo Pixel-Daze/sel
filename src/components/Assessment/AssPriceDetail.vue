@@ -27,12 +27,14 @@
 		},
 		methods:{
 			loadInfo(){
-				let vm = this
-				vm.assInfo = vm.getMsg('assDetail','info')
-				document.title = vm.assInfo.name
-				if(vm.assInfo){
+				let vm = this,body = {evaluation_id:vm.$route.query.evaluation_id}
+				api.getAssById(body).then(resp=>{
+					if(resp.data.res=='0'){
+						vm.assInfo = resp.data.data
+						document.title = vm.assInfo.name
+					}
 					vm.endLoad = true
-				}
+				})
 			},
 			OpenTest(){
 				let vm = this,body = ''

@@ -11,7 +11,6 @@ const AssFreeDetail = resolve => require(['../components/Assessment/AssFreeDetai
 const AssPriceDetail = resolve => require(['../components/Assessment/AssPriceDetail'],resolve)
 const AssQueDetail = resolve => require(['../components/Assessment/AssQueDetail'],resolve)
 const AssResult =  resolve => require(['../components/Assessment/AssResult'],resolve)
-const AssReport = resolve => require(['../components/Assessment/AssReport'],resolve)
 const AssChild = resolve => require(['../components/Assessment/AssChild'],resolve)
 
 const Course = resolve => require(['../components/Course'],resolve)
@@ -38,7 +37,6 @@ var routerMaps = [
   {name:'AssPriceDetail',path:'/assPriceDetail',component:AssPriceDetail},
   {name:'AssQueDetail',path:'/assQueDetail',component:AssQueDetail},
   {name:'AssResult',path:'/assResult',component:AssResult},
-  {name:'AssReport',path:'/assReport',component:AssReport},
   {name:'AssChild',path:'/assChild',component:AssChild},
   {name:'CourseFree',path:'/courseFree',component:CourseFree},
   {name:'CoursePrice',path:'/coursePrice',component:CoursePrice},

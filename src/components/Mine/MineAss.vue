@@ -7,8 +7,8 @@
 	    </tab>
 	    <div class="p-com-wrapper" v-if="assList.length>0&&endLoad">
 	    	<ass-cell v-for="item in assList" :cell="item" key="item">
-	    		<span slot="btn" v-if="item.current_question_id!='-1'" class="ass-btn" @click="assGo(item)">继续测评</span>
-	    		<span slot="btn" v-else class="ass-btn" @click="assRes(item)">查看报告</span>
+	    		<span slot="btn" v-if="item.current_question_id!='-1'" class="ass-btn  text-overflow" @click="assGo(item)">继续测评</span>
+	    		<span slot="btn" v-else class="ass-btn text-overflow" @click="assRes(item)">查看报告</span>
 	    	</ass-cell>
 	    </div>
 	    <div class="p-com-wrapper" v-if="assList.length==0&&endLoad">
@@ -48,7 +48,6 @@
 					if(resp.data.res=='0'&&resp.data.data!=null){
 						vm.allList = resp.data.data
 						vm.render(vm.allList)
-						
 					}
 					vm.endLoad = true
 				})
@@ -94,30 +93,26 @@
 					evaluation_id:item.evaluation_id,
 					user_id:vm.getMsg('base','userInfo').user_id,
 					child_id:item.child_id,
-					index:0
+					index:0,
+					assName:item.name
 				}
-				vm.$router.push({path:'assQueDetail',query:body})
-				/*api.qrychild(body).then(resp=>{
-					if(resp.data.res == 0){
-						if(resp.data.data.length>0){
-							let body = {
-								evaluation_id:item.evaluation_id,
-								user_id:vm.getMsg('base','userInfo').user_id,
-								child_id:resp.data.data[0].child_id,
-								index:0
-							}
-							vm.$router.push({path:'assQueDetail',query:body})
-						}
-					}
-				})*/
+				/* @desc:暂时只有一个结果模板 */
+				if(item.key_name=='ssis'){
+					vm.$router.push({path:'/assQueDetail',query:body})	
+				}	
 			},
+			/* @desc:查看报告结果 */
 			assRes(item){
 				let vm = this , body = {
-					evaluation_id:item.evaluation_id,
-					user_evaluation_id:item.user_evaluation_id
-					
+					evaluation_id:item.evaluation_id,		
+					user_id:vm.getMsg('base','userInfo').user_id,	
+					child_id:item.child_id,
+					typeid:1, //生成：0 查看：1
 				}
-				this.$router.push({path:'/assReport',query:body})
+				/* @desc:暂时只有一个结果模板 */
+				if(item.key_name=='ssis'){
+					vm.$router.push({path:'/assResult',query:body})	
+				}
 			}
 		},
 		mounted(){

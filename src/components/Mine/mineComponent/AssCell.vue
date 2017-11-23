@@ -6,7 +6,7 @@
 				<div class="name">{{cell.name}}</div>
 				<div class="abstract text-font">{{cell.abstract}}</div>
 				<div class="other">
-					<span class="time text-gray">测试时间：{{cell.evaluation_time|time_cell}}</span>
+					<span class="time text-gray text-overflow">测试时间：{{cell.evaluation_time|time_cell}}</span>
 					<slot name="btn"></slot>
 				</div>
 			</div>

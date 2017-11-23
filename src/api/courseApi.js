@@ -6,6 +6,16 @@ export function getCourseList(body){
 	return fetch(baseUrl+'QryCourse',body)
 }
 
+/* @desc:Get Single Course */
+export function getCourseById(body){
+	return fetch(baseUrl+'GetCourseByID',body)
+}
+
+/* @desc:Get Course Resourse */
+export function getResourse(body){
+	return fetch(baseUrl+'GetResource',body)
+}
+
 export function getVideoPlayAuth(body){
 	return fetch(baseUrl+'GetVideoPlayAuth',body)
 }

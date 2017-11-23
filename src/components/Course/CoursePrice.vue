@@ -10,8 +10,7 @@
 	      	</tab>
 	      	<swiper v-model="index" :show-dots="false">
 	        	<swiper-item v-for="(item, index) in list" :key="index">
-	        		<div  class="tab-swiper vux-center course-des" v-if="index == 0">
-	          			{{courseInfo.details}}
+	        		<div  class="tab-swiper vux-center course-des" v-if="index == 0" v-html="courseInfo.details">
 	          		</div>
 	          		<div class="tab-swiper vux-center" v-if="index == 1">
 	          			
@@ -36,7 +35,7 @@
 				endLoad:false,
 				index:0,
 				selected:'介绍',
-				list:['介绍','资源'],
+				list:['介绍','课件'],
 				player:{},
 				showFlag:false,
 				cover:'',
@@ -212,7 +211,6 @@
 			}
 			.tab-swiper{
 				font-size: 0.4rem;
-				padding-top: 0.133333rem;
 				.swipe-area,.swipe-description{
 					padding:0 0.266667rem;
 					label{

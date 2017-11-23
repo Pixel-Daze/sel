@@ -40,11 +40,10 @@
 				})
 			},
 			courseGo(cell){
-				this.setMsg('courseDetail','info',cell)
-				if(parseInt(cell.price)>0){
-					this.$router.push({path:'/coursePrice'})
+				if(Number(cell.price)>0){
+					this.$router.push({path:'/coursePrice',query:{course_id:cell.course_id}})
 				}else if(cell.price==0){
-					this.$router.push({path:'/courseFree'})
+					this.$router.push({path:'/courseFree',query:{course_id:cell.course_id}})
 				}
 			}
 		},
