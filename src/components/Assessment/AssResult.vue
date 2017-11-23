@@ -68,7 +68,8 @@
 					user_id:vm.$route.query.user_id,	
 					child_id:vm.$route.query.child_id,
 					typeid:vm.$route.query.typeid, //生成：0 查看：1
-					openid:vm.getCookie('openid')
+					openid:vm.getCookie('openid'),
+					user_evaluation_id:vm.$route.query.user_evaluation_id,
 				}
 				document.title = '测评结果'
 				vm.isLoading = true

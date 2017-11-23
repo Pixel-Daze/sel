@@ -4,11 +4,10 @@
 		<div class="headIcon">
 			<img :src="body.head_portrait" alt="">
 		</div>
-		<!-- {{areaList}} -->
 		<group>
 			<x-input class="name" title="昵称" placeholder="请输入昵称" v-model="body.nick_name"></x-input>
 	      	<x-input class="name" title="姓名" placeholder="请输入姓名" v-model="body.name"></x-input>
-	      	<pixel-selector title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
+	      	<pixel-selector v-if="endLoad" title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
 	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
 	      	<popup-picker title="常驻地" :data="areaList" :columns="2" v-model="area" @on-shadow-change="areaChange" show-name></popup-picker>
 	    </group>
@@ -137,6 +136,7 @@
 						vm.body.gender = vm.$store.getters.userInfo.gender				
 						vm.body.birth_date = vm.formatDate(vm.$store.getters.userInfo.birth_date)
 						vm.area = vm.$store.getters.userInfo.residence.split('|')
+						vm.endLoad = true
 					})
 				}
 			}
@@ -172,17 +172,16 @@
 			}
 		}
 		.headIcon{
-			width: 1.8rem;
-			height: 1.8rem;
+			width: 10rem;
+			height: 4.1rem;
 			border-radius: 50%;
-			background: #dae2e2;
-			margin: 1rem auto 1.3rem;
+			padding: 1rem 0;
 			text-align: center;
 			img{
-				width: inherit;
-				height: inherit;
+				width: 1.8rem;
+				height: 1.8rem;
 				border-radius: 50%;
-				color: gray;
+				background: #dae2e2;
 			}
 		}
 		.btn-container{
