@@ -27,10 +27,10 @@
 				api.getAssById(body).then(resp=>{
 					if(resp.data.res=='0'){
 						vm.assInfo = resp.data.data
+						document.title = vm.assInfo.name
 					}
 					vm.endLoad = true
 				})
-				document.title = vm.assInfo.name
 			},
 			OpenTest(){
 				let vm = this
@@ -44,7 +44,7 @@
 								let body = {
 									evaluation_id:vm.assInfo.evaluation_id,
 									assName:vm.assInfo.name,
-									keyname:vm.assInfo.keyname
+									keyname:vm.assInfo.key_name
 								}
 								vm.$router.push({path:'assChild',query:body})
 							}else{

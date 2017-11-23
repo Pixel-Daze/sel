@@ -225,6 +225,7 @@
 								   	
 						},
 						onConfirm () {
+							console.log('da')
 							vm.getReport()
 						}
 					})

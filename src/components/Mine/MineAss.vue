@@ -98,7 +98,7 @@
 				}
 				/* @desc:暂时只有一个结果模板 */
 				if(item.key_name=='ssis'){
-					vm.$router.push({path:'assQueDetail',query:body})	
+					vm.$router.push({path:'/assQueDetail',query:body})	
 				}	
 			},
 			/* @desc:查看报告结果 */
@@ -111,7 +111,7 @@
 				}
 				/* @desc:暂时只有一个结果模板 */
 				if(item.key_name=='ssis'){
-					vm.$router.push({path:'assQueDetail',query:body})	
+					vm.$router.push({path:'/assResult',query:body})	
 				}
 			}
 		},

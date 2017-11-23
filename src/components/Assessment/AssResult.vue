@@ -30,8 +30,9 @@
 				<p class="title">社会技能-细分维度</p>
 				<level-bar v-for="item in detail" :key="item.name" :bar=item></level-bar>
 			</div>
-			<div class="ass-b-btn">获取完整报告</div>
+			
 		</div>
+		<div class="ass-b-btn" v-if="!isLoading&&repSucc">获取完整报告</div>
 		<div v-if="!isLoading&&!repSucc" class="p-com-wrapper">
 			<div class="error-info">
 				<img src="../../../static/imgs/error.png" alt="">
@@ -73,7 +74,7 @@
 				vm.isLoading = true
 				api.getAssRes(body).then(resp=>{
 					if(resp.data.res=='0'&&resp.data.data){
-						vm.assRes =  resp.data.data
+						vm.assRes =  JSON.parse(resp.data.data.data_result)
 						vm.sum = vm.assRes.result.level
 						vm.detail = vm.getDetail(vm.sum.dimension,vm.assRes.result.rpt_score.dimension)
 						vm.repSucc = true

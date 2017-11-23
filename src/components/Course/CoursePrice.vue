@@ -211,7 +211,6 @@
 			}
 			.tab-swiper{
 				font-size: 0.4rem;
-				padding-top: 0.133333rem;
 				.swipe-area,.swipe-description{
 					padding:0 0.266667rem;
 					label{
