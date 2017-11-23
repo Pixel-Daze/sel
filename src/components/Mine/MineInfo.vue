@@ -6,9 +6,9 @@
 		</div>
 		<!-- {{areaList}} -->
 		<group>
-			<x-input class="name" title="昵称" placeholder="请输入昵称"></x-input>
-	      	<x-input class="name" title="姓名" placeholder="请输入姓名"></x-input>
-	      	<pixel-selector title="性别" :options="sexList" :value="body.gender" ></pixel-selector>
+			<x-input class="name" title="昵称" placeholder="请输入昵称" v-model="body.nick_name"></x-input>
+	      	<x-input class="name" title="姓名" placeholder="请输入姓名" v-model="body.name"></x-input>
+	      	<pixel-selector title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
 	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
 	      	<popup-picker title="常驻地" :data="areaList" :columns="2" v-model="area" @on-shadow-change="areaChange" show-name></popup-picker>
 	    </group>
@@ -26,18 +26,21 @@
 			return {
 				body:{
 					head_portrait:'',
-					relation:'0',
+					nick_name:'',
 					name:'',
-					gender:'1',
+					gender:'',
 					birth_date:'',
 					user_id:'',
-					child_id:'0'
+					child_id:'0',
+					residence:''
 				},
 				maxDate: '',// 预留作为最大日期
 				sexList:[{key: '1', value: '男',icon:'icon-boy'}, {key: '2', value: '女',icon:'icon-girl'}],
 				areaList: [],
-				area:[],
-				endLoad:false
+				area:['110000','110100'],
+				cityCode:'',
+				endLoad:false,
+				userInfo:{}
 			}
 		},
 		components:{
@@ -48,10 +51,52 @@
 				let vm = this
 				document.title = '个人中心'
 				vm.getProvince()
+				vm.getUserInfo()
 			},
 			changeDate(){},
 			save(){
-				this.$router.push({path:"/appbase/mine"})
+				let vm = this
+				
+				if(vm.checkInfo()){
+					if(vm.area.length > 1){
+						vm.body.residence = vm.area[1]
+					}
+					api.updateUser(vm.body).then(resp =>{
+						if(resp.data.res == 0){
+							this.$router.push({path:"/appbase/mine"})
+						}
+					})
+				}
+			},
+			chengeSex(val){
+				this.body.gender = val
+			},
+			checkInfo(){
+				let vm = this
+				if(vm.body.name==''){
+					this.$vux.toast.show({
+						text: '请输入姓名',
+						type: 'text',
+						width: '3.5rem'
+					})
+					return false
+				}else if(vm.body.birth_date == ''){
+					this.$vux.toast.show({
+						text: '请选择出生日期',
+						type: 'text',
+						width: '4rem'
+					})
+					return false
+				}else if(vm.area.length <= 1){
+					this.$vux.toast.show({
+						text: '请选择常住地',
+						type: 'text',
+						width: '4rem'
+					})
+					return false
+				}else{
+					return true
+				}
 			},
 			areaChange(val){
 				let vm = this,body={
@@ -76,6 +121,22 @@
 						vm.$store.dispatch('FETCH_CITY_LIST',{provinceid:110000}).then(resp=>{
 							vm.areaList = vm.$store.getters.areaList
 						})
+					})
+				}
+			},
+			getUserInfo(){
+				let vm = this,body={},user_id=''
+				vm.body.user_id = user_id = vm.getMsg('base','userInfo').user_id
+				vm.body.head_portrait = vm.getMsg('base','userInfo').head_portrait
+				if(vm.userInfo){
+					vm.$store.dispatch('FETCH_USER_INFO',{ user_id:user_id})
+					.then(resp=>{
+						vm.body.head_portrait = vm.$store.getters.userInfo.head_portrait
+						vm.body.nick_name = vm.$store.getters.userInfo.nick_name
+						vm.body.name = vm.$store.getters.userInfo.name				
+						vm.body.gender = vm.$store.getters.userInfo.gender				
+						vm.body.birth_date = vm.formatDate(vm.$store.getters.userInfo.birth_date)
+						vm.area = vm.$store.getters.userInfo.residence.split('|')
 					})
 				}
 			}

@@ -41,3 +41,13 @@ export function getRelation(body){
 export function getChildById(body){
 	return fetch(baseUrl+'qrysinglechild',body)
 }
+
+/* @desc:获取个人中心信息 */
+export function qryUser(body){
+	return fetch(baseUrl + 'QryUser', body)
+}
+
+/* @desc:更新个人中心信息 */
+export function updateUser(body){
+	return fetch(baseUrl + 'UpdateUser', body)
+}
