@@ -241,7 +241,8 @@
 					evaluation_id:vm.$route.query.evaluation_id,
 					user_id:vm.$route.query.user_id,
 					child_id:vm.$route.query.child_id,
-					typeid:'0'
+					typeid:'0',
+					user_evaluation_id:''
 				}
 				if(vm.$route.query.keyname=='ssis'){
 					vm.$router.push({path:'/assResult',query:body})	

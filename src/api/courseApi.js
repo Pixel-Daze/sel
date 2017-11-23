@@ -16,6 +16,11 @@ export function getResourse(body){
 	return fetch(baseUrl+'GetResource',body)
 }
 
+/* @desc:查看课程是否用户被看过 data:'0'：没看过 */
+export function hasCourse(body){
+	return fetch(baseUrl+'QryUserCourse',body)
+}
+
 export function getVideoPlayAuth(body){
 	return fetch(baseUrl+'GetVideoPlayAuth',body)
 }

@@ -108,6 +108,7 @@
 					user_id:vm.getMsg('base','userInfo').user_id,	
 					child_id:item.child_id,
 					typeid:1, //生成：0 查看：1
+					user_evaluation_id:item.user_evaluation_id
 				}
 				/* @desc:暂时只有一个结果模板 */
 				if(item.key_name=='ssis'){

@@ -3,16 +3,16 @@
 		<!-- @desc:video:1,audio:2,pdf:3,link:4 -->
 		<span class="icon iconfont" :class="{'icon-ai-video':cell.type=='1','icon-music':cell.type=='2','icon-pdf1':cell.type=='3','icon-link':cell.type=='4'}"></span>
 		<span class="title text-overflow">0{{cell.resource_id}}.{{cell.name}}</span>
-		<span class="price text-overflow">{{cell.free|freeTo}}</span>
+		<span v-if="price" class="price text-overflow">{{cell.free|freeTo}}</span>
 	</div>
 </template>
 <script>
 	export default {
 		name:'source-cell',
-		props:{cell:Object},
+		props:{cell:Object,price:Boolean},
 		filters:{
 			freeTo:function(val){
-				let arr = ['收费','免费']
+				let arr = ['','试看']
 				return arr[val]
 			}
 		}

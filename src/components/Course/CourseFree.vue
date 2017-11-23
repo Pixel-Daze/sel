@@ -4,7 +4,7 @@
 			<img v-if="!showFlag"  :src="courseInfo.picture" alt="">
 			<div v-show="showFlag" class="prism-player" id="J_prismPlayer" style="position: absolute" ></div>
 		</div>
-		<div class="info-swiper">
+		<div class="info-swiper" :class="{'change':isLearn!='0'}">
 	       	<tab :line-width=2 active-color='#01ab41' v-model="index">
 	        	<tab-item class="vux-center" :selected="selected === item" v-for="(item, index) in list" @click="selected = item" :key="index">{{item}}</tab-item>
 	      	</tab>
@@ -12,12 +12,12 @@
 	        	<swiper-item v-for="(item, index) in list" :key="index">
 	        		<div class="tab-swiper vux-center course-des" v-if="index == 0" v-html="courseInfo.details"></div>
 	          		<div class="tab-swiper vux-center" v-if="index == 1">
-	          			<source-cell v-for="cell in sourseList" :key="cell.type" :cell=cell @click.native="openStudy(cell)"></source-cell>
+	          			<source-cell v-for="cell in sourseList" :key="cell.type" :cell=cell @click.native="achSource(cell)"></source-cell>
 	          		</div>
 	        	</swiper-item>
 	      	</swiper>
 	    </div>
-	    <div class="ass-btn" @click="openStudy">开始学习</div>
+	    <div v-if="isLearn=='0'" class="ass-btn" @click="openStudy">开始学习</div>
 	</div>
 </template>
 <script>
@@ -33,7 +33,8 @@
 				selected:'介绍',
 				list:['介绍','课件'],
 				player:{},
-				showFlag:false
+				showFlag:false,
+				isLearn:'0'
 			}
 		},
 		components:{
@@ -43,6 +44,19 @@
 			loadInfo(){
 				this.getCourse()
 				this.getCourseResourse()
+				this.hasCourse()
+			},
+			/* @desc:查询课程是否看过 */
+			hasCourse(){
+				let vm = this , body = {
+					course_id:vm.$route.query.course_id,
+					user_id:vm.getMsg('base','userInfo').user_id
+				}
+				api.hasCourse(body).then(resp=>{
+					if(resp.data.res==0){
+						vm.isLearn = resp.data.data
+					}
+				})
 			},
 			/* @desc:获取单个课程 */
 			getCourse(){
@@ -112,7 +126,6 @@
 						course_id:vm.courseInfo.course_id,
 						user_id:vm.getMsg('base','userInfo').user_id
 					}
-					vm.achSource(cell)
 					/* 发送学习记录 */
 					api.videoPlaybackRecord(body)
 					// vm.showFlag = true
@@ -177,6 +190,7 @@
 				}
 			}
 		}
+		.change{height: calc(100% - 230px) !important;}
 		.ass-btn{
 			position: absolute;
 			bottom: 0;
