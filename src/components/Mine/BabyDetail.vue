@@ -16,20 +16,22 @@
 		data(){
 			return {
 				selected:'0',
+				child_id:''
 			}
 		},
 		methods:{
 			onItemClick(index){
-				let vm = this
+				let vm = this , body = {child_id:vm.child_id}
 				if(index=='0'){
-					vm.$router.replace({path:'/babyDetail/babyInfo'})
+					vm.$router.replace({path:'/babyDetail/babyInfo',query:body})
 				}else if(index=='1'){
-					vm.$router.replace({path:'/babyDetail/babyAss'})
+					vm.$router.replace({path:'/babyDetail/babyAss',query:body})
 				}
 			},
 			loadInfo(){
 				let vm = this,path=['BabyInfo','BabyAss']
 		        vm.selected = _.indexOf(path,vm.$route.name)
+		        vm.child_id = vm.$route.query.child_id
 			}
 		},
 		components:{

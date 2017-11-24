@@ -51,3 +51,8 @@ export function qryUser(body){
 export function updateUser(body){
 	return fetch(baseUrl + 'UpdateUser', body)
 }
+
+/* @desc:查询单个儿童报告 */
+export function qryEvaluationByChildId(body){
+	return fetch(baseUrl + 'QryEvaluationByChildId',body)
+}

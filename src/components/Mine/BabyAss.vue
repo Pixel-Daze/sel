@@ -3,7 +3,7 @@
 	<div class="baby-ass">
 		<div v-if="assList.length>0&&endLoad">
 	    	<ass-cell v-for="item in assList" :cell="item" key="item">
-	    		<span slot="btn" class="ass-btn" @click="assRes(item)">查看报告</span>
+	    		<span slot="btn" class="ass-btn text-overflow" @click="assRes(item)">查看报告</span>
 	    	</ass-cell>
 	    </div>
 	    <error-info v-if="assList.length==0&&endLoad"></error-info>
@@ -12,27 +12,12 @@
 <script>
 	import { AssCell } from './mineComponent'
 	import ErrorInfo from '../AppBase/ErrorInfo'
+	import * as api from '../../api/mineApi'
 	export default {
 		name:'baby-ass',
 		data(){
 			return {
-				assList:[
-					{
-						"evaluation_id": 1,
-						"name": "适应性行为测评",
-						"category": "SEL能力评估",
-						"user_access": 0,
-						"abstract": "这是简介",
-						"details": "这是详细说明",
-						"price": 0,
-						"page_number": 10,
-						"person_count": 50,
-						"picture": "http://img4.imgtn.bdimg.com/it/u=2104185324,1359413794&fm=26&gp=0.jpg",
-						"sample_report": "/front/sel.pdf",
-						"current_question_id": "1",
-						"evaluation_time": "2017-08-29T06:13:00Z"
-					}
-				],
+				assList:[],
 				endLoad:true
 			}
 		},
@@ -42,14 +27,32 @@
 		methods:{
 			loadInfo(){
 				document.title = '宝贝信息'
+				this.getList()
+			},
+			/* @desc:获取儿童测评报告列表 */
+			getList(){
+				let vm = this , body = {
+					child_id:vm.$route.query.child_id,
+					user_id:vm.getMsg('base','userInfo').user_id
+				}
+				api.qryEvaluationByChildId(body).then(resp=>{
+					if(resp.data.res=='0'){
+						vm.assList = resp.data.data
+					}
+				})
 			},
 			assRes(item){
 				let vm = this , body = {
-					evaluation_id:item.evaluation_id,
+					evaluation_id:item.evaluation_id,		
+					user_id:vm.getMsg('base','userInfo').user_id,	
+					child_id:item.child_id,
+					typeid:1, //生成：0 查看：1
 					user_evaluation_id:item.user_evaluation_id
-					
 				}
-				this.$router.push({path:'/assReport',query:body})
+				/* @desc:暂时只有一个结果模板 */
+				if(item.key_name=='ssis'){
+					vm.$router.push({path:'/assResult',query:body})	
+				}
 			}
 		},
 		mounted(){
