@@ -246,6 +246,8 @@
 				}
 				if(vm.$route.query.keyname=='ssis'){
 					vm.$router.push({path:'/assResult',query:body})	
+				} else{
+					vm.$router.push({path:'/assNoTemplate',query:body})
 				}
 				
 			}
