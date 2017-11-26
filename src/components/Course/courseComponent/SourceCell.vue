@@ -2,7 +2,7 @@
 	<div class="source-cell vux-1px-b">
 		<!-- @desc:video:1,audio:2,pdf:3,link:4 -->
 		<span class="icon iconfont" :class="{'icon-ai-video':cell.type=='1','icon-music':cell.type=='2','icon-pdf1':cell.type=='3','icon-link':cell.type=='4'}"></span>
-		<span class="title text-overflow">0{{cell.resource_id}}.{{cell.name}}</span>
+		<span class="title text-overflow">{{cell.resource_id|sourid}}.{{cell.name}}</span>
 		<span v-if="price" class="price text-overflow">{{cell.free|freeTo}}</span>
 	</div>
 </template>
@@ -14,6 +14,13 @@
 			freeTo:function(val){
 				let arr = ['','试看']
 				return arr[val]
+			},
+			sourid:function(val){
+				if(val<10){
+					return '0'+val
+				}else{
+					return val
+				}
 			}
 		}
 	}

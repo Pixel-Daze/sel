@@ -10,7 +10,7 @@
 			</div>
 			<div class="res-sum">
 				<p class="title">整体社会技能水平</p>
-				<p class="text-green score">{{assRes.result.f_index}}</p>
+				<p class="text-green score">{{assRes.result.rpt_score.total}}</p>
 				<p >SEL报告分</p>
 				<div class="sum-wrap">
 					<div>
@@ -74,7 +74,7 @@
 				document.title = '测评结果'
 				vm.isLoading = true
 				api.getAssRes(body).then(resp=>{
-					if(resp.data.res=='0'&&resp.data.data){
+					if(resp.data.res=='0'&&resp.data.data.data_result){
 						vm.assRes =  JSON.parse(resp.data.data.data_result)
 						vm.sum = vm.assRes.result.level
 						vm.detail = vm.getDetail(vm.sum.dimension,vm.assRes.result.rpt_score.dimension)
@@ -108,7 +108,8 @@
 		.res-head{
 			text-align: center;
 			padding: 0.5rem 0.266667rem;
-			font-size: 0.426667rem;
+			/*font-size: 0.426667rem;*/
+			font-size: 14px;
 			background-color: #fff;
 			margin-bottom: 0.5rem;
 			.ass-title{
