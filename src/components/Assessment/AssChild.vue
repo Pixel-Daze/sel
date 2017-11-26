@@ -7,13 +7,16 @@
 			<cell title="性别" :value="child.gender"></cell>
 			<cell title="生日" :value="child.birth_date"></cell>
 		</group>
-		<div class="btn-container">
-	    	<x-button type="primary" action-type="button" @click.native="commit">提交信息</x-button>
-	    </div>
+	    <div v-if="isFree=='0.00'" class="ass-btn" @click="commit">开始测试</div>
+	    <div v-else class="price-wrap">
+			<span class="price vux-1px-t">{{isFree}}元</span>
+			<span class="ass-btn1" @click="buyAss">立即购买</span>
+		</div>
 	</div>
 </template>
 <script>
 	import {Group,Cell,Selector,XButton} from 'vux'
+	import * as courseApi from '../../api/courseApi'
 	import * as mineApi from '../../api/mineApi'
 	export default {
 		name:'ass-child',
@@ -25,7 +28,8 @@
 					child_id:'',
 					gender:'',
 					birth_date:''
-				}
+				},
+				isFree:''
 			}
 		},
 		components:{Group,Cell,Selector,XButton},
@@ -35,7 +39,9 @@
 				let vm = this
 				document.title = '儿童信息'
 				vm.assName = vm.$route.query.assName
+				vm.isFree = vm.$route.query.price
 				vm.getBabyList()
+				vm.configWxjssdk()
 			},
 			/* @desc:获取儿童列表 */
 			getBabyList(){
@@ -59,25 +65,76 @@
 				vm.child.birth_date = vm.formatDate(vm.child.birth_date)
 				vm.child.gender = vm.formatGender(vm.child.gender)
 			},
-			/* @desc:提交信息进入测评 */
+			/* @desc:提交信息进入免费测评 */
 			commit(){
 				let vm = this
 				if(vm.child.child_id){
-					let body = {
-						evaluation_id:vm.$route.query.evaluation_id,
-						user_id:vm.getMsg('base','userInfo').user_id,
-						child_id:vm.child.child_id,
-						index:0,
-						assName:vm.$route.query.assName,
-						keyname:vm.$route.query.keyname
-					}
-					vm.$router.push({path:'assQueDetail',query:body})
+					vm.startEva()
 				}else{
 					vm.$vux.alert.show({
 						title: '提示',
 						content: '请选择儿童'
 					})
 				}
+			},
+			startEva(){
+				let vm = this , body = {
+					evaluation_id:vm.$route.query.evaluation_id,
+					user_id:vm.getMsg('base','userInfo').user_id,
+					child_id:vm.child.child_id,
+					index:0,
+					assName:vm.$route.query.assName,
+					keyname:vm.$route.query.keyname
+				}
+				vm.$router.push({path:'assQueDetail',query:body})
+			},
+			/* @desc:购买测评 */
+			buyAss(){
+				let vm = this
+				if(vm.child.child_id){
+					vm.getOrder()
+				}else{
+					vm.$vux.alert.show({
+						title: '提示',
+						content: '请选择儿童'
+					})
+				}
+			},
+			/* @desc:下单 */
+			getOrder(){
+				let vm = this, body = {
+					name:vm.$route.query.assName,
+					course_id:vm.$route.query.evaluation_id,
+					price:Number(vm.isFree)*100,
+					openid:vm.getCookie('openid'),
+					user_id:vm.getMsg('base','userInfo').user_id,
+					child_id:vm.child.child_id
+				}
+				courseApi.coursePay(body).then(resp=>{
+					if(resp.data.res=='0'){
+						vm.openPay(resp.data.data)
+					}
+				})
+			},
+			openPay(data){
+				let arr = this.getCookie('wxconfig').split('|'),vm = this
+				WeixinJSBridge.invoke(
+			       'getBrandWCPayRequest', {
+			           "appId":arr[0],     //公众号名称，由商户传入     
+			           "timeStamp":data.TimeStamp,         //时间戳，自1970年以来的秒数     
+			           "nonceStr":data.Nonce_str, //随机串     
+			           "package":'prepay_id='+data.Prepay_id,     
+			           "signType":"MD5",         //微信签名方式：     
+			           "paySign":data.Sign //微信签名 
+			       },
+			       function(res){     
+			           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+			           		vm.startEva()
+			           }else{
+			           		alert('支付失败')
+			           }
+			       }
+			   ); 
 			}
 		},
 		mounted(){
@@ -86,6 +143,7 @@
 	}
 </script>
 <style lang='scss'>
+	@import '../../../static/lib/css/base/variable/base-color.scss';
 	.ass-child{
 		background-color: #fff;
 		.tip{padding: .3rem 0.2rem;font-size: 0.426667rem;line-height: .7rem;text-indent: 2em;}
@@ -106,6 +164,46 @@
 			button{
 				height: 46px;
 				font-size: 0.453333rem;
+			}
+		}
+		.ass-btn{
+			position: absolute;
+			bottom: 0;
+			color: #fff;
+			background-color: #8bbd41;
+			height: 1.2rem;
+			width: 10rem;
+			line-height: 1.2rem;
+			text-align: center;
+			font-size: 0.426667rem;
+			&:active{
+				background-color: rgba(249,83,45,.8);
+			}
+		}
+		.price-wrap{
+			position: absolute;
+			bottom: 0;
+			background-color: #fff;
+			height: 1.2rem;
+			width: 10rem;
+			display: flex;
+			.price{
+				flex: 1;
+				line-height: 1.2rem;
+				font-size: 0.426667rem;
+				padding-left: 0.4rem;
+				color: $text-green-color;
+			}
+			.ass-btn1{
+				color: #fff;
+				background-color: $text-green-color;
+				width: 3rem;
+				line-height: 1.2rem;
+				text-align: center;
+				font-size: 0.426667rem;
+				&:active{
+					background-color: $text-green-active-color;
+				}
 			}
 		}
 	}

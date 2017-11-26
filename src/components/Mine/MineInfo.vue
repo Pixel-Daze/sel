@@ -130,7 +130,7 @@
 				if(vm.userInfo){
 					vm.$store.dispatch('FETCH_USER_INFO',{ user_id:user_id})
 					.then(resp=>{
-						vm.body.head_portrait = vm.$store.getters.userInfo.head_portrait
+						vm.body.head_portrait = vm.getCookie('headimgurl')
 						vm.body.nick_name = vm.$store.getters.userInfo.nick_name
 						vm.body.name = vm.$store.getters.userInfo.name				
 						vm.body.gender = vm.$store.getters.userInfo.gender				

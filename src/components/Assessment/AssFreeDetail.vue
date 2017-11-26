@@ -2,7 +2,7 @@
 <template>
 	<div class="ass-free-detail p-container">
 		<ass-info :info="assInfo" class="p-com-wrapper" v-if="endLoad"></ass-info>
-		<div class="ass-btn" @click="OpenTest">开始测试</div>
+		<div class="ass-btn" @click="OpenTest">下一步</div>
 	</div>
 </template>
 <script>
@@ -23,6 +23,10 @@
 		},
 		methods:{
 			loadInfo(){
+				this.getAssDetail()
+			},
+			/* @desc:获取报告详情 */
+			getAssDetail(){
 				let vm = this,body = {evaluation_id:vm.$route.query.evaluation_id}
 				api.getAssById(body).then(resp=>{
 					if(resp.data.res=='0'){
@@ -44,7 +48,8 @@
 								let body = {
 									evaluation_id:vm.assInfo.evaluation_id,
 									assName:vm.assInfo.name,
-									keyname:vm.assInfo.key_name
+									keyname:vm.assInfo.key_name,
+									price:vm.assInfo.price
 								}
 								vm.$router.push({path:'assChild',query:body})
 							}else{

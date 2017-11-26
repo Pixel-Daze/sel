@@ -2,10 +2,7 @@
 <template>
 	<div class="ass-price-detail p-container">
 		<ass-info :info="assInfo" class="p-com-wrapper" v-if="endLoad"></ass-info>
-		<div class="price-wrap">
-			<span class="price vux-1px-t">23元</span>
-			<span class="ass-btn" @click="OpenTest">立即购买</span>
-		</div>
+		<div class="ass-btn" @click="OpenTest">下一步</div>
 	</div>
 </template>
 <script>
@@ -47,12 +44,11 @@
 							if(resp.data.data!=null){
 								let body = {
 									evaluation_id:vm.assInfo.evaluation_id,
-									user_id:vm.getMsg('base','userInfo').user_id,
-									child_id:resp.data.data[0].child_id,
-									index:0
+									assName:vm.assInfo.name,
+									keyname:vm.assInfo.key_name,
+									price:vm.assInfo.price
 								}
-								vm.buy_course(body)
-								// vm.$router.push({path:'assQueDetail',query:body})
+								vm.$router.push({path:'assChild',query:body})
 							}else{
 								vm.$vux.confirm.show({
 								  	// 组件除show外的属性
@@ -81,41 +77,6 @@
 						}
 					})
 				}	
-			},
-			buy_course(data){
-			    let vm = this,body = {
-			    	name:vm.assInfo.name,
-			    	course_id:vm.assInfo.evaluation_id,
-			    	price:vm.assInfo.price,
-			    	openid:vm.getCookie('openid'),
-			    	user_id:vm.getMsg('base','userInfo').user_id,
-			    	child_id:data.child_id
-			    }
-			    courseApi.coursePay(body).then(resp=>{
-			    	if(resp.data.res=='0'){
-			    		vm.OpenPay(resp.data.data)
-			    	}
-			    })
-			},
-			OpenPay(data){
-				let arr = this.getCookie('wxconfig').split('|')
-				WeixinJSBridge.invoke(
-			       'getBrandWCPayRequest', {
-			           "appId":arr[0],     //公众号名称，由商户传入     
-			           "timeStamp":data.TimeStamp,         //时间戳，自1970年以来的秒数     
-			           "nonceStr":data.Nonce_str, //随机串     
-			           "package":'prepay_id='+data.Prepay_id,     
-			           "signType":"MD5",         //微信签名方式：     
-			           "paySign":data.Sign //微信签名 
-			       },
-			       function(res){     
-			           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-
-			           }else{
-			           	console.log(res)
-			           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
-			       }
-			   ); 
 			}
 		},
 		created(){
@@ -129,32 +90,19 @@
 			background-color: #fff;
 			height: calc(100% - 1.2rem);
 		}
-		.price-wrap{
+		.ass-btn{
 			position: absolute;
 			bottom: 0;
-			background-color: #fff;
+			color: #fff;
+			background-color: #f9532d;
 			height: 1.2rem;
 			width: 10rem;
-			display: flex;
-			.price{
-				flex: 1;
-				line-height: 1.2rem;
-				font-size: 0.426667rem;
-				color: #f9532d;
-				padding-left: 0.4rem;
-			}
-			.ass-btn{
-				color: #fff;
-				background-color: #f9532d;
-				width: 3rem;
-				line-height: 1.2rem;
-				text-align: center;
-				font-size: 0.426667rem;
-				&:active{
-					background-color: rgba(249,83,45,.8);
-				}
+			line-height: 1.2rem;
+			text-align: center;
+			font-size: 0.426667rem;
+			&:active{
+				background-color: rgba(249,83,45,.8);
 			}
 		}
-		
 	}
 </style>

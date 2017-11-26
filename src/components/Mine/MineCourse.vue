@@ -3,7 +3,8 @@
 	<div class="mine-course p-container">
 		<div v-if="courseList.length>0&&endLoad">
 	    	<course-cell v-for="item in courseList" :cell="item" key="item" @click.native="courseGo(item)">
-	    		<span slot="btn" class="ass-btn" >免费</span>
+	    		<span v-if="item.price=='0.00'" slot="btn" class="ass-btn">免费</span>
+	    		<span v-else slot="btn" class="ass-btn">已付费</span>
 	    	</course-cell>
 	    </div>
 	    <div v-if="courseList.length==0&&endLoad">
