@@ -32,7 +32,7 @@
 			</div>
 			
 		</div>
-		<div class="ass-b-btn" v-if="!isLoading&&repSucc">获取完整报告</div>
+		<div class="ass-b-btn" v-if="!isLoading&&repSucc" @click="getReport">获取完整报告</div>
 		<div v-if="!isLoading&&!repSucc" class="p-com-wrapper">
 			<div class="error-info">
 				<img src="../../../static/imgs/error.png" alt="">
@@ -52,6 +52,7 @@
 		data(){
 			return {
 				isLoading:true,
+				allInfo:{},
 				assRes:{},
 				sum:{},
 				detail:[],
@@ -75,6 +76,7 @@
 				vm.isLoading = true
 				api.getAssRes(body).then(resp=>{
 					if(resp.data.res=='0'&&resp.data.data.data_result){
+						vm.allInfo = resp.data.data
 						vm.assRes =  JSON.parse(resp.data.data.data_result)
 						vm.sum = vm.assRes.result.level
 						vm.detail = vm.getDetail(vm.sum.dimension,vm.assRes.result.rpt_score.dimension)
@@ -93,6 +95,22 @@
 				})
 
 				return _.sortBy(levelArr, 'name')
+			},
+			getReport(){
+				let vm = this,body = {
+					user_evaluation_id:vm.allInfo.user_evaluation_id,
+					evaluation_id:vm.$route.query.evaluation_id,
+					openid:vm.getCookie('openid'),
+					user_id:vm.$route.query.user_id
+				}
+				api.qryReports(body).then(resp=>{
+					if(resp.data.res==0){
+						vm.$vux.alert.show({
+						  	title: '提示',
+						  	content: '获取报告成功'
+						})
+					}
+				})
 			}
 		},
 		mounted(){
