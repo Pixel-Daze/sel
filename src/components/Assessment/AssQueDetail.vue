@@ -77,7 +77,7 @@
 		},
 		methods:{
 			loadInfo(data){
-				let q_index = this.getMsg('assDetail','curIndex')||this.$route.query.index
+				let q_index = this.$route.query.index
 				let vm = this,body = {
 					evaluation_id:data?data.evaluation_id:vm.$route.query.evaluation_id,
 					user_id:data?data.user_id:vm.$route.query.user_id,
@@ -123,7 +123,6 @@
 				})
 			},
 			chooseInfo(data){
-				console.log(data)
 				let vm = this
 				vm.answer[0] = data.key
 				vm.next()

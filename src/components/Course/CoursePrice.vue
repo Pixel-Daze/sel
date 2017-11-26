@@ -1,10 +1,11 @@
 <template>
 	<div class="course-price  p-container">
-		<div v-if="!showFlag" class="video-pic">
-			<img :src="cover" alt="">
+		<div class="video-pic">
+			<img v-if="!showFlag"  :src="courseInfo.picture" alt="">
+			<div v-show="showFlag" class="prism-player" id="J_prismPlayer" style="position: absolute" ></div>
 		</div>
 		<div v-show="showFlag" class="prism-player" id="J_prismPlayer" style="position: absolute"></div>
-		<div class="info-swiper">
+		<div class="info-swiper" :class="{'change':isBuy!='1'}">
 	       	<tab :line-width=2 active-color='#01ab41' v-model="index">
 	        	<tab-item class="vux-center" :selected="selected === item" v-for="(item, index) in list" @click="selected = item" :key="index">{{item}}</tab-item>
 	      	</tab>
@@ -13,7 +14,7 @@
 	        		<div  class="tab-swiper vux-center course-des" v-if="index == 0" v-html="courseInfo.details">
 	          		</div>
 	          		<div class="tab-swiper vux-center" v-if="index == 1">
-	          			
+	          			<source-cell v-for="cell in sourseList" :key="cell.type" :cell=cell @click.native="check(cell)" price></source-cell>
 	          		</div>
 	        	</swiper-item>
 	      	</swiper>
@@ -22,45 +23,61 @@
 			<span class="price vux-1px-t">{{courseInfo.price}}元</span>
 			<span class="ass-btn" @click="buy_course">立即购买</span>
 		</div>
-		<div class="ass-buy-btn" @click="openStudy" v-if="isBuy=='0'">开始学习</div>
+		<!-- <div class="ass-buy-btn" @click="openStudy" v-if="isBuy=='0'">开始学习</div> -->
 	</div>
 </template>
 <script>
 	import { XHeader, Tab, TabItem, Swiper, SwiperItem } from 'vux'
+	import {SourceCell} from './courseComponent'
 	import * as api from '../../api/courseApi'
 	export default {
 		data(){
 			return {
 				courseInfo:{},
-				endLoad:false,
+				sourseList:[], // 课程信息
 				index:0,
 				selected:'介绍',
 				list:['介绍','课件'],
 				player:{},
 				showFlag:false,
-				cover:'',
-				isBuy:'1'// 0:已支付 1:未支付
+				isBuy:''// 0:已支付 1:未支付
 			}
 		},
 		components:{
-			XHeader,Tab, TabItem, Swiper, SwiperItem
+			XHeader,Tab, TabItem, Swiper, SwiperItem,SourceCell
 		},
 		methods:{
 			loadInfo(){
 				let vm = this
-				vm.courseInfo = vm.getMsg('courseDetail','info')
-				document.title = vm.courseInfo.name
-				vm.configWxjssdk()
-				let body = {
-					media:vm.courseInfo.media
+				this.getCourse()
+				this.getCourseResourse()
+				this.IsPay()
+				this.configWxjssdk()
+			},
+			/* @desc:获取单个课程 */
+			getCourse(){
+				let vm = this , body = {
+					course_id:vm.$route.query.course_id
 				}
-				api.getVideoPlayAuth(body).then(resp=>{
-					if(resp.data.res=='0'){
-						vm.cover = resp.data.data.coverurl
-						vm.getMedia(vm.courseInfo.media,resp.data.data)
+				api.getCourseById(body).then(resp=>{
+					if(resp.data.res==0){
+						vm.courseInfo = resp.data.data
+						document.title = vm.courseInfo.name
+						return resp.data.data.media
 					}
-				}).then(()=>{
-					vm.IsPay()
+				}).then(media=>{
+					
+				})
+			},
+			/* @desc:获取课程资源列表 */
+			getCourseResourse(){
+				let vm = this , body = {
+					course_id:vm.$route.query.course_id
+				}
+				api.getResourse(body).then(resp=>{
+					if(resp.data.res==0){
+						vm.sourseList = resp.data.data
+					}
 				})
 			},
 			getMedia(media,data){
@@ -72,7 +89,7 @@
 		            autoplay: false,
 		            //播放方式二：推荐
 		            vid : media,
-		            playauth : data.playAuth,
+		            source : data.playAuth,
 		            cover: data.coverurl
 		        });
 			},
@@ -145,8 +162,6 @@
 					}
 					/* 发送观看记录 */
 					api.videoPlaybackRecord(body)
-					vm.showFlag = true
-					vm.player.play()
 				}else{
 					vm.$vux.confirm.show({
 						// 组件除show外的属性
@@ -165,7 +180,7 @@
 				let vm = this
 				if(vm.getMsg('base','userInfo')!=null){
 					let body = {
-						course_id:vm.courseInfo.course_id,
+						course_id:vm.$route.query.course_id,
 						user_id:vm.getMsg('base','userInfo').user_id
 					}
 					api.qrypaycourse(body).then(resp=>{
@@ -174,7 +189,39 @@
 						}
 					})
 				}
-			}
+			},
+			/* @desc:获取资源 */
+			achSource(cell){
+				/* @desc:video:1,audio:2,pdf:3,link:4 */
+				if(cell.type=='3'||cell.type=='4'){
+					location.href=cell.url
+				}else if(cell.type=='1'){
+					this.showFlag = true
+					this.getVideoAuth(cell.url)
+				}
+			},
+			/* @desc:获取视频权限 */
+			getVideoAuth(media){
+				let vm = this , body = {media:media,formmats:'mp4'}
+				api.getVideoPlayAuth(body).then(resp=>{
+					if(resp.data.res=='0'){
+						vm.cover = resp.data.data.coverurl
+						vm.getMedia(vm.courseInfo.media,resp.data.data)
+					}
+				})
+			},
+			/* @desc:查看资源前判断是否付款 */
+			check(cell){
+				if(cell.free=='0'){
+					if(this.isBuy=='0'){
+						this.achSource(cell)
+					}else if(this.isBuy=='1'){
+						alert('此课程为收费课程，请购买后查看课件。')
+					}
+				}else{
+					this.achSource(cell)
+				}
+			},
 		},
 		mounted(){
 			this.loadInfo()
@@ -211,6 +258,8 @@
 			}
 			.tab-swiper{
 				font-size: 0.4rem;
+				height: 100% !important;
+				overflow-y: auto;
 				.swipe-area,.swipe-description{
 					padding:0 0.266667rem;
 					label{
@@ -219,6 +268,7 @@
 				}
 			}
 		}
+		.change{height: calc(100% - 230px) !important;}
 		.ass-buy-btn{
 			position: absolute;
 			bottom: 0;

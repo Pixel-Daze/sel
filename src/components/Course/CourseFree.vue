@@ -34,7 +34,7 @@
 				list:['介绍','课件'],
 				player:{},
 				showFlag:false,
-				isLearn:'0'
+				isLearn:'1'
 			}
 		},
 		components:{
@@ -86,7 +86,7 @@
 			},
 			/* @desc:获取视频权限 */
 			getVideoAuth(media){
-				let vm = this , body = {media:media}
+				let vm = this , body = {media:media,formmats:'mp4'}
 				api.getVideoPlayAuth(body).then(resp=>{
 					if(resp.data.res=='0'){
 						vm.cover = resp.data.data.coverurl
@@ -104,7 +104,7 @@
 		            autoplay: false,
 		            //播放方式二：推荐
 		            vid : media,
-		            playauth : data.playAuth,
+		            source : data.playAuth,
 		            cover: data.coverurl
 		        });
 			},

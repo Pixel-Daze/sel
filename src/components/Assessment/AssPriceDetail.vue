@@ -38,11 +38,6 @@
 			},
 			OpenTest(){
 				let vm = this,body = ''
-				vm.$vux.alert.show({
-					title: '提示',
-					content: '付费测评暂未开放，敬请期待'
-				})
-				return;
 				if(vm.getMsg('base','userInfo')!=null){
 					body = {
 						user_id:vm.getMsg('base','userInfo').user_id
