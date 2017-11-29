@@ -44,7 +44,7 @@
 					}
 					mineApi.qrychild(body).then(resp=>{
 						if(resp.data.res == 0){
-							if(resp.data.data.length>0){
+							if(resp.data.data!=null){
 								let body = {
 									evaluation_id:vm.assInfo.evaluation_id,
 									assName:vm.assInfo.name,

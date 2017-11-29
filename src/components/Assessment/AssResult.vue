@@ -107,7 +107,7 @@
 					if(resp.data.res==0){
 						vm.$vux.alert.show({
 						  	title: '提示',
-						  	content: '获取报告成功'
+						  	content: '完整报告已通过微信消息发送给您，请返回薄荷叶教育公众号主页面查看消息'
 						})
 					}
 				})
@@ -152,6 +152,7 @@
 				font-size: 0.48rem;
 				margin-bottom: 0.05rem;
 				position: relative;
+				height: 0.64rem;
 				.icon{
 					left: 0;top: 0.08rem;position: absolute;
 				}

@@ -11,7 +11,7 @@
 			</div>
 			
 		</div>
-		<div class="right" :class="{'text-green':bar.level_tip=='high','text-yellow':bar.level_tip=='down','text-blue':bar.level_tip=='ave'}">{{bar.level}}</div>
+		<div class="right" :class="{'text-green':bar.level_tip=='high','text-yellow':bar.level_tip=='down','text-blue':bar.level_tip=='ave','ave-hack':bar.level_tip=='ave'}">{{bar.level}}</div>
 	</div>
 	
 </template>
@@ -60,7 +60,10 @@
 		}
 		.right{
 			width: 1.2rem;
-			padding-top: 0.373333rem;
+			padding: 0.373333rem 0.133333rem 0;
+		}
+		.right.ave-hack{
+			padding: 0.373333rem 0.233333rem 0;
 		}
 	}
 </style>

@@ -131,7 +131,10 @@
 			           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
 			           		vm.startEva()
 			           }else{
-			           		alert('支付失败')
+			           		vm.$vux.alert.show({
+			           			title: '北京心启点教育科技有限公司',
+			           			content: '支付失败'
+			           		})
 			           }
 			       }
 			   ); 
