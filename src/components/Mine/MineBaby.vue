@@ -8,7 +8,7 @@
 		<group>
 	      	<x-input class="name" title="姓名" placeholder="请输入儿童姓名" v-model="body.name"></x-input>
 	      	<pixel-selector title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
-	      	<datetime v-model="body.birth_date" title="生日"></datetime>
+	      	<datetime v-model="body.birth_date" title="生日" :start-date=startDate :end-date=endDate></datetime>
 	      	<selector title="家长身份" :options="list" v-model="body.relation"></selector>
 	    </group>
 	    <div class="btn-container">
@@ -32,7 +32,8 @@
 					child_id:'0', //儿童id
 					relation:'' // 用户儿童关系
 				},
-				maxDate: '',// 预留作为最大日期
+				startDate:'1900-01-01',// 最小日期
+				endDate: '2030-12-31',// 最大日期
 				list:[], //儿童关系列表
 				sexList:[{key: '1', value: '男',icon:'icon-boy'}, {key: '2', value: '女',icon:'icon-girl'}]
 			}

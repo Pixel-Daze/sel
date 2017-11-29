@@ -12,7 +12,7 @@
 		    	<x-button type="primary" action-type="button" @click.native="loadInfo">点击生成报告</x-button>
 		    </div>
 		</div>
-        <div class="info">
+        <div v-if="!isLoading&&repSucc" class="info">
             <img src="../../../static/imgs/error.png" alt="">
             <p>报告生成成功</p>
         </div>

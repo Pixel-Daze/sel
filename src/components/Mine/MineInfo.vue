@@ -8,7 +8,7 @@
 			<x-input class="name" title="昵称" placeholder="请输入昵称" v-model="body.nick_name"></x-input>
 	      	<x-input class="name" title="姓名" placeholder="请输入姓名" v-model="body.name"></x-input>
 	      	<pixel-selector v-if="endLoad" title="性别" :options="sexList" :value="body.gender" @onSelect="chengeSex"></pixel-selector>
-	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日"></datetime>
+	      	<datetime v-model="body.birth_date" @on-change="changeDate" title="生日" :start-date=startDate :end-date=endDate></datetime>
 	      	<popup-picker title="常驻地" :data="areaList" :columns="2" v-model="area" @on-shadow-change="areaChange" show-name></popup-picker>
 	    </group>
 	    <div class="btn-container">
@@ -33,7 +33,8 @@
 					child_id:'0',
 					residence:''
 				},
-				maxDate: '',// 预留作为最大日期
+				startDate:'1900-01-01',// 最小日期
+				endDate: '2030-12-31',// 最大日期
 				sexList:[{key: '1', value: '男',icon:'icon-boy'}, {key: '2', value: '女',icon:'icon-girl'}],
 				areaList: [],
 				area:['110000','110100'],

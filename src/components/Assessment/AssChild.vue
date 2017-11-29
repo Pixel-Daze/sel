@@ -7,7 +7,7 @@
 			<cell title="性别" :value="child.gender"></cell>
 			<cell title="生日" :value="child.birth_date"></cell>
 		</group>
-	    <div v-if="isFree=='0.00'" class="ass-btn" @click="commit">开始测试</div>
+	    <div v-if="isFree=='0'" class="ass-btn" @click="commit">开始测试</div>
 	    <div v-else class="price-wrap">
 			<span class="price vux-1px-t">{{isFree}}元</span>
 			<span class="ass-btn1" @click="buyAss">立即购买</span>
