@@ -36,11 +36,13 @@
 				}
 				.level-bar{
 					flex: 1;
-					height: 0.4rem;
+					height: 0.2rem;
+					border-radius: 0.1rem;
 					overflow: hidden;
-					background-color: #f5f5f5;
-					-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
-					box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+					margin-top: .2rem;
+					/*background-color: #f5f5f5;*/
+					/*-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);*/
+					/*box-shadow: inset 0 1px 2px rgba(0,0,0,.1);*/
 					.progress-bar {
 					    float: left;
 					    width: 0;
@@ -49,6 +51,7 @@
 					    line-height: 20px;
 					    color: #fff;
 					    text-align: center;
+					    border-radius: 0.1rem;
 					    -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
 					    box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
 					    -webkit-transition: width .6s ease;

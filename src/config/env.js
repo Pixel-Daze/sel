@@ -9,11 +9,11 @@ let jsonUrl = ''
 let routerMode = 'hash'
 
 if(process.env.NODE_ENV == 'development'){
-	baseUrl = 'http://sel.bless-info.com/'
+	baseUrl = window.config.baseUrl
 	jsonUrl = '../'
 }else if(process.env.NODE_ENV == 'production'){
-	jsonUrl = 'http://sel.bless-info.com/front/dist/'
-	baseUrl = 'http://sel.bless-info.com/'
+	jsonUrl = window.config.jsonUrl
+	baseUrl = window.config.baseUrl
 }
 
 export {
