@@ -26,7 +26,7 @@
 				body:{
 					head_portrait:'', //儿童头像地址
 					name:'', //儿童姓名
-					gender:'1', // 儿童性别
+					gender:'', // 儿童性别
 					birth_date:'', // 儿童生日
 					user_id:'', // 用户id
 					child_id:'0', //儿童id

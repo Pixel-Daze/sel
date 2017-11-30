@@ -7,7 +7,7 @@
 				<div class="level-bar">
 					<div class="progress-bar" :style="{width:bar.score+'%'}" :class="{'bgGreen':bar.level_tip=='high','bgYellow':bar.level_tip=='down','bgBlue':bar.level_tip=='ave'}"></div>
 				</div>
-				<span :class="{'text-green':bar.level_tip=='high','text-yellow':bar.level_tip=='down','text-blue':bar.level_tip=='ave'}">{{bar.score}}</span>
+				<span class="bar-score" :class="{'text-green':bar.level_tip=='high','text-yellow':bar.level_tip=='down','text-blue':bar.level_tip=='ave'}">{{bar.score}}</span>
 			</div>
 			
 		</div>
@@ -28,9 +28,12 @@
 		display: flex;
 		.left{
 			flex: 1;padding-bottom: 0.186667rem;
-			.name{font-size: 0.4rem;padding-bottom: 0.066667rem;}
+			.name{font-size: 14px;padding-bottom: 0.066667rem;}
 			.bar-contain{
 				display: flex;
+				.bar-score{
+					font-size: 14px;
+				}
 				.level-bar{
 					flex: 1;
 					height: 0.4rem;
@@ -42,7 +45,7 @@
 					    float: left;
 					    width: 0;
 					    height: 100%;
-					    font-size: 12px;
+					    font-size: 14px;
 					    line-height: 20px;
 					    color: #fff;
 					    text-align: center;
@@ -60,10 +63,11 @@
 		}
 		.right{
 			width: 1.2rem;
-			padding: 0.373333rem 0.133333rem 0;
+			padding: 0.253333rem 0 0;
+			font-size: 14px;
 		}
 		.right.ave-hack{
-			padding: 0.373333rem 0.233333rem 0;
+			padding: 0.373333rem 0.133333rem 0;
 		}
 	}
 </style>

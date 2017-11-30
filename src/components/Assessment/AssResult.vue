@@ -120,6 +120,7 @@
 </script>
 <style lang='scss'>
 	.ass-result{
+		color: #666;
 		.p-com-wrapper{
 			height: calc(100% - 1.2rem);
 		}
@@ -131,21 +132,21 @@
 			background-color: #fff;
 			margin-bottom: 0.5rem;
 			.ass-title{
-				font-size: 0.533333rem;
+				font-size: 16px;
 				font-weight: bold;
 				padding-bottom: 0.4rem;
 			}	
 		}
 		.res-sum{
 			padding: 0.5rem 0.266667rem;
-			font-size: 0.4rem;
+			font-size: 14px;
 			background-color: #fff;
 			margin-bottom: 0.5rem;
 			.title{
-				font-weight: bold;
-				font-size: 0.48rem;
+				/*font-weight: bold;*/
+				font-size: 16px;
 				margin-bottom: 0.2rem;
-				color: #575656;
+				color: #666;
 			}
 			.score{
 				font-weight: bold;
@@ -173,10 +174,10 @@
 			background-color: #fff;
 			margin-bottom: 0.5rem;
 			.title{
-				font-weight: bold;
-				font-size: 0.48rem;
+				/*font-weight: bold;*/
+				font-size: 16px;
 				margin-bottom: 0.2rem;
-				color: #575656;
+				color: #666;
 			}
 		}
 		.weui-toast{

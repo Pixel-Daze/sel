@@ -28,7 +28,7 @@
 					head_portrait:'',
 					relation:'',
 					name:'',
-					gender:'1',
+					gender:'',
 					birth_date:'',
 					user_id:'',
 					child_id:''
