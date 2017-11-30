@@ -111,6 +111,13 @@
 						width: '3.5rem'
 					})
 					return false
+				}else if(vm.body.gender == ''){
+					this.$vux.toast.show({
+						text: '请选择性别',
+						type: 'text',
+						width: '4rem'
+					})
+					return false
 				}else if(vm.body.birth_date == ''){
 					this.$vux.toast.show({
 						text: '请选择出生日期',
