@@ -49,7 +49,7 @@
 		methods:{
 			loadInfo(){
 				let vm = this
-				document.title = '个人中心'
+				document.title = '个人信息'
 				vm.getProvince()
 				vm.getUserInfo()
 			},
@@ -96,7 +96,7 @@
 					return false
 				}else if(vm.area.length <= 1){
 					this.$vux.toast.show({
-						text: '请选择常住地',
+						text: '请选择常驻地',
 						type: 'text',
 						width: '4rem'
 					})
@@ -141,7 +141,7 @@
 						vm.body.head_portrait = vm.getCookie('headimgurl')
 						vm.body.nick_name = vm.$store.getters.userInfo.nick_name
 						vm.body.name = vm.$store.getters.userInfo.name				
-						vm.body.gender = vm.$store.getters.userInfo.gender				
+						// vm.body.gender = vm.$store.getters.userInfo.gender				
 						vm.body.birth_date = vm.formatDate(vm.$store.getters.userInfo.birth_date)
 						vm.area = vm.$store.getters.userInfo.residence.split('|')
 						vm.endLoad = true

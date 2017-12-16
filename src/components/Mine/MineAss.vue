@@ -94,14 +94,10 @@
 					user_id:vm.getMsg('base','userInfo').user_id,
 					child_id:item.child_id,
 					index:0,
-					assName:item.name
+					assName:item.name,
+					keyname:item.key_name
 				}
-				/* @desc:暂时只有一个结果模板 */
-				if(item.key_name=='ssis'){
-					vm.$router.push({path:'/assQueDetail',query:body})	
-				}else{
-					vm.$router.push({path:'/assQueDetail',query:body})
-				}
+				vm.$router.push({path:'/assQueDetail',query:body})	
 			},
 			/* @desc:查看报告结果 */
 			assRes(item){

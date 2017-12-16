@@ -132,7 +132,7 @@
 			background-color: #fff;
 			margin-bottom: 0.5rem;
 			.ass-title{
-				font-size: 16px;
+				font-size: 20px;
 				font-weight: bold;
 				padding-bottom: 0.4rem;
 			}	
@@ -146,7 +146,7 @@
 				/*font-weight: bold;*/
 				font-size: 16px;
 				margin-bottom: 0.2rem;
-				color: #666;
+    			color: #27374D;
 			}
 			.score{
 				font-weight: bold;
@@ -177,7 +177,7 @@
 				/*font-weight: bold;*/
 				font-size: 16px;
 				margin-bottom: 0.2rem;
-				color: #666;
+				color: #27374D;
 			}
 		}
 		.weui-toast{

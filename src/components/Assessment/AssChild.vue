@@ -1,7 +1,7 @@
 <!-- 测评前置选择儿童 -->
 <template>
 	<div class="ass-child">
-		<div class="tip">请选择需要进行测评的儿童，并确认儿童的<strong class="text-green">生日</strong>和<strong class="text-green">性别</strong>信息，因为{{assName}}报告结果会根据您填写的儿童信息，自动与同年龄段以及同性别的儿童进行比对。如果信息有误，将<strong class="text-green">影响报告结果</strong>。</div>
+		<div class="tip">请选择需要进行测评的儿童，并确认儿童的<strong class="text-green">生日</strong>和<strong class="text-green">性别</strong>信息，因为{{assName}}报告结果会根据您填写的儿童信息，自动与同年龄段以及同性别的儿童进行比对。如果信息有误，将<strong class="text-green">影响报告结果</strong>。<a class="text-blue" @click="goDetail">修改儿童信息请点这里></a></div>
 		<group>
 			<selector title="姓名" :options="children" placeholder="请选择儿童" v-model="child.child_id" @on-change="chooseChild"></selector>
 			<cell title="性别" :value="child.gender"></cell>
@@ -53,6 +53,7 @@
 							vm.$set(item,'key',item.child_id)
 							vm.$set(item,'value',item.name)
 						})
+						vm.child = vm.children[0]
 					}
 				})
 			},
@@ -70,6 +71,17 @@
 				let vm = this
 				if(vm.child.child_id){
 					vm.startEva()
+				}else{
+					vm.$vux.alert.show({
+						title: '提示',
+						content: '请选择儿童'
+					})
+				}
+			},
+			/* @desc:修改儿童信息 */
+			goDetail(){
+				if(this.child.child_id){
+					this.$router.push({path:'/babyDetail/babyInfo',query:{child_id:this.child.child_id}})	
 				}else{
 					vm.$vux.alert.show({
 						title: '提示',
@@ -149,7 +161,9 @@
 	@import '../../../static/lib/css/base/variable/base-color.scss';
 	.ass-child{
 		background-color: #fff;
-		.tip{padding: .3rem 0.2rem;font-size: 0.426667rem;line-height: .7rem;text-indent: 2em;}
+		.tip{padding: .3rem 0.2rem;font-size: 0.426667rem;line-height: .7rem;text-indent: 2em;
+			a{text-decoration: underline;}
+		}
 		.vux-no-group-title{
 			margin-top: 0; 
 			.weui-cell_select .weui-cell__bd{&:after{width: 0.266667rem;height: 0.266667rem;}}

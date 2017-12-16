@@ -73,6 +73,7 @@
 				}
 				if(vm.getMsg('base','userInfo')!=null){
 					vm.info = info
+					document.title = '我的'
 				}else{
 					api.qryUser(body).then(resp=>{
 						if(resp.data.res == 0){

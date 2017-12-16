@@ -70,7 +70,7 @@
 					if(resp.data.res==0){
 						vm.$vux.alert.show({
 						  	title: '提示',
-						  	content: '获取报告成功'
+						  	content: '完整报告已通过微信消息发送给您，请返回薄荷叶教育公众号主页面查看消息'
 						})
 					}
 				})
